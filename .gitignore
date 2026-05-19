@@ -1,0 +1,16 @@
+# Temporary / generated files
+*.pyc
+__pycache__/
+temp_*
+~$*.xlsx
+
+# Large raw data files (source data tracked separately)
+competitor_products.json
+competitor_products_v2.json
+competitor_products_cleaned.json
+competitor_final.json
+product_data_merged.js
+product_data_merged.json
+
+# Excel temp
+temp_input.xlsx
