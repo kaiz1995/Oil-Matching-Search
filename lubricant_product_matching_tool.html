@@ -224,11 +224,15 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC"
 var DATA = [];
 var DATA_VERSION = '';
 var DATA_LOADING = false;
+var BRANDS = ["克鲁勃", "嘉实多", "壳牌", "安索", "昆仑", "福斯", "美孚", "长城"];
+var CATEGORIES = ["导轨油", "汽轮机油/涡轮机油", "涡轮机油", "液压油", "空压机油/压缩机油", "综合", "轴承油", "钢铁行业用油", "齿轮油"];
+var CAT_MAP = {"空压机油/压缩机油": "空压机油", "汽轮机油/涡轮机油": "涡轮机油", "轴承油/循环油": "轴承油"};
+
 
 async function loadData() {
   if (DATA_LOADING) return;
   DATA_LOADING = true;
-  var dataUrl = 'https://zk55806334-lang.github.io/oil-pm-data/data.json';
+  var dataUrl = 'https://zk55806334-lang.github.io/Oil-Matching-Search/data.json';
 
   try {
     var resp = await fetch(dataUrl + '?_=' + Date.now());
@@ -237,11 +241,10 @@ async function loadData() {
       DATA = json.products;
       DATA_VERSION = json.version || '';
       localStorage.setItem('oil_pm_data', JSON.stringify(json));
-      console.log('Data loaded from remote, version:', DATA_VERSION);
       DATA_LOADING = false;
       return;
     }
-  } catch(e) { console.log('Remote load failed'); }
+  } catch(e) {}
 
   try {
     var cached = localStorage.getItem('oil_pm_data');
@@ -250,7 +253,6 @@ async function loadData() {
       if (json.products && json.products.length > 0) {
         DATA = json.products;
         DATA_VERSION = json.version || '';
-        console.log('Data loaded from cache, version:', DATA_VERSION);
         DATA_LOADING = false;
         return;
       }
@@ -260,7 +262,8 @@ async function loadData() {
   try {
     if (window.AndroidBridge) {
       var fb = AndroidBridge.getFallbackData();
-      if (fb) { var json = JSON.parse(fb);
+      if (fb) {
+        var json = JSON.parse(fb);
         if (json.products && json.products.length > 0) {
           DATA = json.products;
           DATA_VERSION = json.version || '';
@@ -270,7 +273,6 @@ async function loadData() {
   } catch(e) {}
 
   if (DATA.length === 0) {
-    console.error('All data sources failed');
     var el = document.getElementById('toast');
     if (el) { el.textContent = '\u6570\u636e\u52a0\u8f7d\u5931\u8d25\uff0c\u8bf7\u68c0\u67e5\u7f51\u7edc'; el.classList.add('show'); }
   }
@@ -280,7 +282,7 @@ async function loadData() {
 async function checkForUpdates() {
   if (!DATA_VERSION) return;
   try {
-    var resp = await fetch('https://zk55806334-lang.github.io/oil-pm-data/data.json?_=' + Date.now());
+    var resp = await fetch('https://zk55806334-lang.github.io/Oil-Matching-Search/data.json?_=' + Date.now());
     var json = await resp.json();
     if (json.version && json.version !== DATA_VERSION && json.products) {
       DATA = json.products;
@@ -291,10 +293,7 @@ async function checkForUpdates() {
         setTimeout(function() { el.classList.remove('show'); }, 3000); }
     }
   } catch(e) {}
-};
-var BRANDS = ["克鲁勃", "嘉实多", "壳牌", "安索", "昆仑", "福斯", "美孚", "长城"];
-var CATEGORIES = ["导轨油", "汽轮机油/涡轮机油", "涡轮机油", "液压油", "空压机油/压缩机油", "综合", "轴承油", "钢铁行业用油", "齿轮油"];
-var CAT_MAP = {"空压机油/压缩机油": "空压机油", "汽轮机油/涡轮机油": "涡轮机油", "轴承油/循环油": "轴承油"};
+}
 
 // ============== MATCHING ENGINE ==============
 
@@ -728,11 +727,11 @@ function switchTab(tab) {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
+  // Load data then check for updates
   loadData().then(function() { checkForUpdates(); });
 
   document.getElementById('cp-model').addEventListener('keydown', function(e) { if (e.key==='Enter') searchCompetitor(); });
   document.getElementById('cp-specs').addEventListener('keydown', function(e) { if (e.ctrlKey && e.key==='Enter') searchCompetitor(); });
-
   try {
     var state = JSON.parse(localStorage.getItem('oil_pm_last'));
     if (state) {
@@ -743,7 +742,6 @@ document.addEventListener('DOMContentLoaded', function() {
       if (state.specs) document.getElementById('cp-specs').value = state.specs;
     }
   } catch(e) {}
-
   ['cp-category','cp-brand','cp-model','cp-viscosity','cp-specs'].forEach(function(id) {
     var el = document.getElementById(id);
     if (el) { el.addEventListener('change', saveLast); if (el.tagName==='INPUT'||el.tagName==='TEXTAREA') el.addEventListener('blur', saveLast); }

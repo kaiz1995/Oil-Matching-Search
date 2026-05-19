@@ -377,7 +377,7 @@ load_data_js = '''
 async function loadData() {
   if (DATA_LOADING) return;
   DATA_LOADING = true;
-  var dataUrl = 'https://zk55806334-lang.github.io/oil-pm-data/data.json';
+  var dataUrl = 'https://zk55806334-lang.github.io/Oil-Matching-Search/data.json';
 
   try {
     var resp = await fetch(dataUrl + '?_=' + Date.now());
@@ -427,7 +427,7 @@ async function loadData() {
 async function checkForUpdates() {
   if (!DATA_VERSION) return;
   try {
-    var resp = await fetch('https://zk55806334-lang.github.io/oil-pm-data/data.json?_=' + Date.now());
+    var resp = await fetch('https://zk55806334-lang.github.io/Oil-Matching-Search/data.json?_=' + Date.now());
     var json = await resp.json();
     if (json.version && json.version !== DATA_VERSION && json.products) {
       DATA = json.products;
