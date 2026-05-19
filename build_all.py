@@ -330,7 +330,24 @@ with open(OUTPUT_JSON, 'w', encoding='utf-8') as f:
 print(f"JSON saved: {OUTPUT_JSON}")
 
 # ============================================================
-# STEP 7: Generate HTML tool
+# STEP 6b: Save data.json (standalone, with version, for Android app)
+# ============================================================
+
+from datetime import date
+today_str = date.today().isoformat()
+data_export = {
+    'version': f'{today_str}-v1',
+    'updatedAt': today_str,
+    'totalProducts': len(merged),
+    'products': merged,
+}
+OUTPUT_DATA_JSON = f'{BASE_DIR}/data.json'
+with open(OUTPUT_DATA_JSON, 'w', encoding='utf-8') as f:
+    json.dump(data_export, f, ensure_ascii=False, indent=2)
+print(f"Data JSON saved: {OUTPUT_DATA_JSON} ({len(merged)} products)")
+
+# ============================================================
+# STEP 7: Generate HTML tool (without embedded data, async loading)
 # ============================================================
 
 products = merged
@@ -349,10 +366,80 @@ for p in products:
 brands = sorted(set(p['brand'] for p in products))
 categories = sorted(set(p['category'] for p in products))
 
-data_json = json.dumps(products, ensure_ascii=False)
+# We no longer embed data_json in HTML - it loads from remote/cache
 brands_json = json.dumps(brands, ensure_ascii=False)
 categories_json = json.dumps(categories, ensure_ascii=False)
 cat_map_json = json.dumps(CAT_MAP, ensure_ascii=False)
+
+# JavaScript code for asynchronous data loading
+# Defined outside f-string to avoid {} escaping issues
+load_data_js = '''
+async function loadData() {
+  if (DATA_LOADING) return;
+  DATA_LOADING = true;
+  var dataUrl = 'https://zk55806334-lang.github.io/oil-pm-data/data.json';
+
+  try {
+    var resp = await fetch(dataUrl + '?_=' + Date.now());
+    var json = await resp.json();
+    if (json.products && json.products.length > 0) {
+      DATA = json.products;
+      DATA_VERSION = json.version || '';
+      localStorage.setItem('oil_pm_data', JSON.stringify(json));
+      DATA_LOADING = false;
+      return;
+    }
+  } catch(e) {}
+
+  try {
+    var cached = localStorage.getItem('oil_pm_data');
+    if (cached) {
+      var json = JSON.parse(cached);
+      if (json.products && json.products.length > 0) {
+        DATA = json.products;
+        DATA_VERSION = json.version || '';
+        DATA_LOADING = false;
+        return;
+      }
+    }
+  } catch(e) {}
+
+  try {
+    if (window.AndroidBridge) {
+      var fb = AndroidBridge.getFallbackData();
+      if (fb) {
+        var json = JSON.parse(fb);
+        if (json.products && json.products.length > 0) {
+          DATA = json.products;
+          DATA_VERSION = json.version || '';
+        }
+      }
+    }
+  } catch(e) {}
+
+  if (DATA.length === 0) {
+    var el = document.getElementById('toast');
+    if (el) { el.textContent = '\\u6570\\u636e\\u52a0\\u8f7d\\u5931\\u8d25\\uff0c\\u8bf7\\u68c0\\u67e5\\u7f51\\u7edc'; el.classList.add('show'); }
+  }
+  DATA_LOADING = false;
+}
+
+async function checkForUpdates() {
+  if (!DATA_VERSION) return;
+  try {
+    var resp = await fetch('https://zk55806334-lang.github.io/oil-pm-data/data.json?_=' + Date.now());
+    var json = await resp.json();
+    if (json.version && json.version !== DATA_VERSION && json.products) {
+      DATA = json.products;
+      DATA_VERSION = json.version;
+      localStorage.setItem('oil_pm_data', JSON.stringify(json));
+      var el = document.getElementById('toast');
+      if (el) { el.textContent = '\\u6570\\u636e\\u5df2\\u66f4\\u65b0\\u81f3 ' + DATA_VERSION; el.classList.add('show');
+        setTimeout(function() { el.classList.remove('show'); }, 3000); }
+    }
+  } catch(e) {}
+}
+'''
 
 HTML = f'''<!DOCTYPE html>
 <html lang="zh-CN">
@@ -577,11 +664,14 @@ body {{ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC
 </div>
 
 <script>
-var DATA = {data_json};
+var DATA = [];
+var DATA_VERSION = '';
+var DATA_LOADING = false;
 var BRANDS = {brands_json};
 var CATEGORIES = {categories_json};
 var CAT_MAP = {cat_map_json};
 
+{load_data_js}
 // ============== MATCHING ENGINE ==============
 
 function tokenize(s) {{
@@ -1014,6 +1104,9 @@ function switchTab(tab) {{
 }}
 
 document.addEventListener('DOMContentLoaded', function() {{
+  // Load data then check for updates
+  loadData().then(function() {{ checkForUpdates(); }});
+
   document.getElementById('cp-model').addEventListener('keydown', function(e) {{ if (e.key==='Enter') searchCompetitor(); }});
   document.getElementById('cp-specs').addEventListener('keydown', function(e) {{ if (e.ctrlKey && e.key==='Enter') searchCompetitor(); }});
   try {{
