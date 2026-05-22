@@ -2732,7 +2732,7 @@
       "vi": "183",
       "pour_point": "-45",
       "flash_point": "240",
-      "copper_corrosion": "1B",
+      "copper_corrosion": "1b",
       "rust_b": "无锈",
       "cleanliness_nas": "≤8",
       "wear_scar": "0.3",
@@ -2751,7 +2751,7 @@
       "vi": "182",
       "pour_point": "-42",
       "flash_point": "244",
-      "copper_corrosion": "1B",
+      "copper_corrosion": "1b",
       "rust_b": "无锈",
       "cleanliness_nas": "≤8",
       "wear_scar": "0.29",
@@ -2770,7 +2770,7 @@
       "vi": "181",
       "pour_point": "-39",
       "flash_point": "245",
-      "copper_corrosion": "1B",
+      "copper_corrosion": "1b",
       "rust_b": "无锈",
       "cleanliness_nas": "≤8",
       "cleanliness_iso": "≤-/14/11",
@@ -2837,7 +2837,8 @@
       "application_site": "炼焦炉门、压铸机、连铸机、热轧机、煤矿液压支柱等有明火、中低压系统",
       "features": "极佳抗燃性\n抗磨一般，高负载下需注意",
       "notes": "乙二醇",
-      "pour_point": "-51"
+      "kv40": "46.1",
+      "pour_point": "-55"
     },
     {
       "series": "抗燃液压液（HFC）",
@@ -2846,7 +2847,9 @@
       "industry": "冶金、电力、煤矿、压铸",
       "application_site": "炼焦炉门、压铸机、连铸机、热轧机、煤矿液压支柱等有明火、中低压系统",
       "features": "极佳抗燃性\n对环境和人体更友好",
-      "notes": "丙三醇"
+      "notes": "丙三醇",
+      "kv40": "46.2",
+      "copper_corrosion": "1a"
     },
     {
       "series": "抗磨液压油 HM",
@@ -2857,9 +2860,10 @@
       "features": "极压抗磨性、良好的抗乳化性、防锈性以及抗泡性和空气释放值\n出色的抗氧化安定性和热稳定性",
       "notes": "Ⅰ类",
       "kv40": "32.3",
-      "vi": "125",
+      "vi": "120",
       "pour_point": "-36",
-      "flash_point": "216"
+      "flash_point": "225",
+      "rust_b": "无锈"
     },
     {
       "series": "抗磨液压油 HM",
@@ -2870,9 +2874,10 @@
       "features": "极压抗磨性、良好的抗乳化性、防锈性以及抗泡性和空气释放值\n出色的抗氧化安定性和热稳定性",
       "notes": "Ⅰ类",
       "kv40": "46.8",
-      "vi": "130",
-      "pour_point": "-33",
-      "flash_point": "220"
+      "vi": "115",
+      "pour_point": "-36",
+      "flash_point": "230",
+      "rust_b": "无锈"
     },
     {
       "series": "抗磨液压油 HM",
@@ -2885,7 +2890,8 @@
       "kv40": "67.5",
       "vi": "132",
       "pour_point": "-30",
-      "flash_point": "222"
+      "flash_point": "230",
+      "rust_b": "无锈"
     },
     {
       "series": "抗磨液压油 HS-M",
@@ -3086,6 +3092,20 @@
       "vi": "98",
       "pour_point": "-6",
       "flash_point": "236",
+      "copper_corrosion": "1b"
+    },
+    {
+      "series": "CKD工业齿轮油",
+      "product_cn": "L-CKD 150重负荷工业齿轮油",
+      "packaging": "170g",
+      "industry": "钢铁、电力、矿山、水泥",
+      "application_site": "高温、重负荷、冲击负荷的苛刻工况的重载齿轮",
+      "features": "比CKC更优的极压抗磨性和热稳定性，适用于更苛刻的工况",
+      "notes": "常规矿物",
+      "kv40": "150",
+      "vi": "103",
+      "pour_point": "-30",
+      "flash_point": "240",
       "copper_corrosion": "1b"
     },
     {
