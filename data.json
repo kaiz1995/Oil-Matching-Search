@@ -2701,8 +2701,10 @@
       "application_site": "换油清洗",
       "features": "和市场主流齿轮油兼容\n具备风电齿轮油基础性能",
       "notes": "换油前设备冲洗",
+      "kv40": "150",
       "vi": "170",
-      "pour_point": "-39"
+      "pour_point": "-39",
+      "copper_corrosion": "1b"
     },
     {
       "series": "齿轮箱清洗油",
@@ -2711,7 +2713,11 @@
       "industry": "风电",
       "application_site": "换油清洗",
       "features": "和市场主流齿轮油兼容\n具备风电齿轮油基础性能",
-      "notes": "换油前设备冲洗"
+      "notes": "换油前设备冲洗",
+      "kv40": "320",
+      "vi": "172",
+      "pour_point": "-39",
+      "copper_corrosion": "1b"
     },
     {
       "series": "风电齿轮油",
@@ -2720,7 +2726,17 @@
       "industry": "风电",
       "application_site": "风电机组齿轮箱",
       "features": "抗磨损和抗微点蚀能力\n优异粘温性能和宽温工作能力\n出色的抗氧化性能与长寿命",
-      "notes": "320：主齿箱\n150/220：偏航变桨"
+      "notes": "320：主齿箱\n150/220：偏航变桨",
+      "kv40": "151.8",
+      "kv100": "23.24",
+      "vi": "183",
+      "pour_point": "-45",
+      "flash_point": "240",
+      "copper_corrosion": "1B",
+      "rust_b": "无锈",
+      "cleanliness_nas": "≤8",
+      "wear_scar": "0.3",
+      "weld_load": "2453"
     },
     {
       "series": "风电齿轮油",
@@ -2729,7 +2745,17 @@
       "industry": "风电",
       "application_site": "风电机组齿轮箱",
       "features": "抗磨损和抗微点蚀能力\n优异粘温性能和宽温工作能力\n出色的抗氧化性能与长寿命",
-      "notes": "320：主齿箱\n150/220：偏航变桨"
+      "notes": "320：主齿箱\n150/220：偏航变桨",
+      "kv40": "228.9",
+      "kv100": "31.7",
+      "vi": "182",
+      "pour_point": "-42",
+      "flash_point": "244",
+      "copper_corrosion": "1B",
+      "rust_b": "无锈",
+      "cleanliness_nas": "≤8",
+      "wear_scar": "0.29",
+      "weld_load": "2453"
     },
     {
       "series": "风电齿轮油",
@@ -2738,7 +2764,18 @@
       "industry": "风电",
       "application_site": "风电机组齿轮箱",
       "features": "抗磨损和抗微点蚀能力\n优异粘温性能和宽温工作能力\n出色的抗氧化性能与长寿命",
-      "notes": "320：主齿箱\n150/220：偏航变桨"
+      "notes": "320：主齿箱\n150/220：偏航变桨",
+      "kv40": "337.7",
+      "kv100": "42.41",
+      "vi": "181",
+      "pour_point": "-39",
+      "flash_point": "245",
+      "copper_corrosion": "1B",
+      "rust_b": "无锈",
+      "cleanliness_nas": "≤8",
+      "cleanliness_iso": "≤-/14/11",
+      "wear_scar": "0.28",
+      "weld_load": "2453"
     },
     {
       "series": "抗燃液压油（高性能）",
@@ -2748,10 +2785,10 @@
       "application_site": "抗燃、高压、对润滑性有要求的液压设备",
       "features": "兼具抗燃/润滑性",
       "notes": "天然酯",
-      "kv40": "46.93",
+      "kv40": "46.2",
       "vi": "200",
-      "pour_point": "-36",
-      "flash_point": "301"
+      "pour_point": "-33",
+      "flash_point": "305"
     },
     {
       "series": "抗燃液压油（高性能）",
@@ -2761,10 +2798,10 @@
       "application_site": "抗燃、高压、对润滑性有要求的液压设备",
       "features": "兼具抗燃/润滑性",
       "notes": "天然酯",
-      "kv40": "64.74",
+      "kv40": "68.5",
       "vi": "183",
-      "pour_point": "-30",
-      "flash_point": "302"
+      "pour_point": "-33",
+      "flash_point": "310"
     },
     {
       "series": "抗燃液压油（全合成）",
@@ -2775,9 +2812,9 @@
       "features": "更优异的抗燃/润滑性",
       "notes": "合成酯",
       "kv40": "46.93",
-      "vi": "192",
-      "pour_point": "-42",
-      "flash_point": "305"
+      "vi": "190",
+      "pour_point": "-45",
+      "flash_point": "316"
     },
     {
       "series": "抗燃液压油（全合成）",
@@ -2789,8 +2826,8 @@
       "notes": "合成酯",
       "kv40": "69.74",
       "vi": "190",
-      "pour_point": "-36",
-      "flash_point": "308"
+      "pour_point": "-39",
+      "flash_point": "318"
     },
     {
       "series": "抗燃液压液（HFW）",
