@@ -4040,5 +4040,11 @@
       "pour_point": "-39",
       "flash_point": "238"
     }
-  ]
+  ],
+  "appUpdate": {
+    "latestVersion": "1.0.1",
+    "updateNotes": "新增润滑工具模块\n修复已知问题",
+    "apkUrl": "https://github.com/zk55806334-lang/Oil-Matching-Search/releases/download/v1.0.1/RunmeiMatching.apk",
+    "forceUpdate": false
+  }
 }
