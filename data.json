@@ -4042,7 +4042,7 @@
     }
   ],
   "appUpdate": {
-    "latestVersion": "1.0.2",
+    "latestVersion": "1.0.1",
     "updateNotes": "搜索匹配逻辑优化\n支持跨字段自由组合搜索\n搜索结果关键词高亮",
     "apkUrl": "https://zk55806334-lang.github.io/Oil-Matching-Search/RunmeiMatching.apk",
     "forceUpdate": false
