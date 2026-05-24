@@ -102,7 +102,7 @@ RunmeiMatching/                 # Android 项目
 ## 使用方式
 
 ### 网页版
-直接访问 GitHub Pages：`https://zk55806334-lang.github.io/Oil-Matching-Search/`（需要自行部署 HTML 文件）
+直接访问 GitHub Pages：`https://kaiz1995.github.io/Oil-Matching-Search/`（需要自行部署 HTML 文件）
 
 或本地打开 `lubricant_product_matching_tool.html`（内置数据，离线可用）。
 
