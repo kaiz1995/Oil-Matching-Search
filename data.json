@@ -1,6 +1,6 @@
 {
-  "version": "2026-05-24-v1",
-  "updatedAt": "2026-05-24",
+  "version": "2026-05-26-v1",
+  "updatedAt": "2026-05-26",
   "versionNote": "数据最后更新时间2026.05.25 22:54",
   "totalProducts": 224,
   "products": [
@@ -4042,9 +4042,35 @@
     }
   ],
   "appUpdate": {
-    "latestVersion": "1.0.4",
-    "updateNotes": "修复复制按钮不可用的问题 \n优化更新的bug",
+    "latestVersion": "1.0.5",
+    "updateNotes": "增加版本号",
     "apkUrl": "https://kaiz1995.github.io/Oil-Matching-Search/RunmeiMatching.apk",
     "forceUpdate": false
+  },
+  "versionHistory": [
+    {
+      "version": "1.0.1",
+      "notes": "搜索匹配逻辑优化\n支持跨字段自由组合搜索\n搜索结果关键词高亮"
+    },
+    {
+      "version": "1.0.2",
+      "notes": "优化模糊搜索"
+    },
+    {
+      "version": "1.0.3",
+      "notes": "修复复制按钮不可用的问题"
+    },
+    {
+      "version": "1.0.4",
+      "notes": "修复复制按钮不可用的问题 \n优化更新的bug"
+    },
+    {
+      "version": "1.0.5",
+      "notes": "增加版本号"
+    }
+  ],
+  "releasePages": {
+    "发布页1": "https://github.com/kaiz1995/Oil-Matching-Search/blob/main/RunmeiMatching.apk",
+    "发布页2": "https://wwamc.lanzouv.com/b01bjfoqfi\n密码:emec"
   }
 }
