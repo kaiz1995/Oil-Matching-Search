@@ -4041,12 +4041,6 @@
       "flash_point": "238"
     }
   ],
-  "appUpdate": {
-    "latestVersion": "1.1.0",
-    "updateNotes": "快速搜索标题改为市场产品检索\n版本号移至右上角",
-    "apkUrl": "https://kaiz1995.github.io/Oil-Matching-Search/RunmeiMatching.apk",
-    "forceUpdate": false
-  },
   "versionHistory": [
     {
       "version": "1.0.1",
