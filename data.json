@@ -1,6 +1,6 @@
 {
-  "version": "2026-05-29-v1",
-  "updatedAt": "2026-05-29",
+  "version": "2026-06-01-v1",
+  "updatedAt": "2026-06-01",
   "versionNote": "数据更新时间2026.05.29 15:38 ——更新道达尔产品型号\n数据更新时间2026.05.29 10:15 ——更新雪佛龙产品型号",
   "totalProducts": 322,
   "products": [
@@ -3878,10 +3878,10 @@
       "application_site": "换油清洗",
       "features": "和市场主流齿轮油兼容\n具备风电齿轮油基础性能",
       "notes": "换油前设备冲洗",
-      "kv40": "150",
-      "vi": "170",
-      "pour_point": "-39",
-      "copper_corrosion": "1b"
+      "kv100": "150",
+      "pour_point": "170",
+      "flash_point": "-39",
+      "rust_a": "1b"
     },
     {
       "series": "齿轮箱清洗油",
@@ -3891,10 +3891,10 @@
       "application_site": "换油清洗",
       "features": "和市场主流齿轮油兼容\n具备风电齿轮油基础性能",
       "notes": "换油前设备冲洗",
-      "kv40": "320",
-      "vi": "172",
-      "pour_point": "-39",
-      "copper_corrosion": "1b"
+      "kv100": "320",
+      "pour_point": "172",
+      "flash_point": "-39",
+      "rust_a": "1b"
     },
     {
       "series": "风电齿轮油",
@@ -3904,16 +3904,15 @@
       "application_site": "风电机组齿轮箱",
       "features": "抗磨损和抗微点蚀能力\n优异粘温性能和宽温工作能力\n出色的抗氧化性能与长寿命",
       "notes": "偏航变桨",
-      "kv40": "151.8",
-      "kv100": "23.24",
-      "vi": "183",
-      "pour_point": "-45",
-      "flash_point": "240",
-      "copper_corrosion": "1b",
-      "rust_b": "无锈",
-      "cleanliness_nas": "≤8",
-      "wear_scar": "0.3",
-      "weld_load": "2453"
+      "kv100": "151.8",
+      "vi": "23.24",
+      "pour_point": "183",
+      "flash_point": "-45",
+      "copper_corrosion": "240",
+      "rust_a": "1b",
+      "cleanliness_nas": "无锈",
+      "cleanliness_iso": "≤8",
+      "weld_load": "0.3"
     },
     {
       "series": "风电齿轮油",
@@ -3923,16 +3922,15 @@
       "application_site": "风电机组齿轮箱",
       "features": "抗磨损和抗微点蚀能力\n优异粘温性能和宽温工作能力\n出色的抗氧化性能与长寿命",
       "notes": "偏航变桨",
-      "kv40": "228.9",
-      "kv100": "31.7",
-      "vi": "182",
-      "pour_point": "-42",
-      "flash_point": "244",
-      "copper_corrosion": "1b",
-      "rust_b": "无锈",
-      "cleanliness_nas": "≤8",
-      "wear_scar": "0.29",
-      "weld_load": "2453"
+      "kv100": "228.9",
+      "vi": "31.7",
+      "pour_point": "182",
+      "flash_point": "-42",
+      "copper_corrosion": "244",
+      "rust_a": "1b",
+      "cleanliness_nas": "无锈",
+      "cleanliness_iso": "≤8",
+      "weld_load": "0.29"
     },
     {
       "series": "风电齿轮油",
@@ -3942,17 +3940,16 @@
       "application_site": "风电机组齿轮箱",
       "features": "抗磨损和抗微点蚀能力\n优异粘温性能和宽温工作能力\n出色的抗氧化性能与长寿命",
       "notes": "主齿箱润滑",
-      "kv40": "337.7",
-      "kv100": "42.41",
-      "vi": "181",
-      "pour_point": "-39",
-      "flash_point": "245",
-      "copper_corrosion": "1b",
-      "rust_b": "无锈",
-      "cleanliness_nas": "≤8",
-      "cleanliness_iso": "≤-/14/11",
-      "wear_scar": "0.28",
-      "weld_load": "2453"
+      "kv100": "337.7",
+      "vi": "42.41",
+      "pour_point": "181",
+      "flash_point": "-39",
+      "copper_corrosion": "245",
+      "rust_a": "1b",
+      "cleanliness_nas": "无锈",
+      "cleanliness_iso": "≤8",
+      "wear_scar": "≤-/14/11",
+      "weld_load": "0.28"
     },
     {
       "series": "抗燃液压油（高性能）",
@@ -3962,10 +3959,10 @@
       "application_site": "抗燃、高压、对润滑性有要求的液压设备",
       "features": "兼具抗燃/润滑性",
       "notes": "天然酯型；兼具抗燃/润滑性",
-      "kv40": "46.2",
-      "vi": "200",
-      "pour_point": "-33",
-      "flash_point": "305"
+      "kv100": "46.2",
+      "pour_point": "200",
+      "flash_point": "-33",
+      "copper_corrosion": "305"
     },
     {
       "series": "抗燃液压油（高性能）",
@@ -3975,10 +3972,10 @@
       "application_site": "抗燃、高压、对润滑性有要求的液压设备",
       "features": "兼具抗燃/润滑性",
       "notes": "天然酯型；兼具抗燃/润滑性",
-      "kv40": "68.5",
-      "vi": "183",
-      "pour_point": "-33",
-      "flash_point": "310"
+      "kv100": "68.5",
+      "pour_point": "183",
+      "flash_point": "-33",
+      "copper_corrosion": "310"
     },
     {
       "series": "抗燃液压油（全合成）",
@@ -3988,10 +3985,10 @@
       "application_site": "抗燃、高压、对润滑性有要求的液压设备",
       "features": "更优异的抗燃/润滑性",
       "notes": "合成酯型；更优异的抗燃/润滑性",
-      "kv40": "46.93",
-      "vi": "190",
-      "pour_point": "-45",
-      "flash_point": "316"
+      "kv100": "46.93",
+      "pour_point": "190",
+      "flash_point": "-45",
+      "copper_corrosion": "316"
     },
     {
       "series": "抗燃液压油（全合成）",
@@ -4001,10 +3998,10 @@
       "application_site": "抗燃、高压、对润滑性有要求的液压设备",
       "features": "更优异的抗燃/润滑性",
       "notes": "合成酯型；更优异的抗燃/润滑性",
-      "kv40": "69.74",
-      "vi": "190",
-      "pour_point": "-39",
-      "flash_point": "318"
+      "kv100": "69.74",
+      "pour_point": "190",
+      "flash_point": "-39",
+      "copper_corrosion": "318"
     },
     {
       "series": "抗燃液压液（HFW）",
@@ -4014,8 +4011,8 @@
       "application_site": "炼焦炉门、压铸机、连铸机、热轧机、煤矿液压支柱等有明火、中低压系统",
       "features": "极佳抗燃性\n抗磨一般，高负载下需注意",
       "notes": "乙二醇型，抗燃性能优异",
-      "kv40": "46.1",
-      "pour_point": "-55"
+      "kv100": "46.1",
+      "flash_point": "-55"
     },
     {
       "series": "抗燃液压液（HFC）",
@@ -4025,8 +4022,8 @@
       "application_site": "炼焦炉门、压铸机、连铸机、热轧机、煤矿液压支柱等有明火、中低压系统",
       "features": "极佳抗燃性\n对环境和人体更友好",
       "notes": "丙三醇型，极佳抗燃性，同时抗磨优于乙二醇型；\n对环境和人体更友好",
-      "kv40": "46.2",
-      "copper_corrosion": "1a"
+      "kv100": "46.2",
+      "rust_a": "1a"
     },
     {
       "series": "抗磨液压油 HM",
@@ -4036,11 +4033,11 @@
       "application_site": "工程机械、数控机床等设备的叶片泵、柱塞泵和齿轮泵液压系统",
       "features": "极压抗磨性、良好的抗乳化性、防锈性以及抗泡性和空气释放值\n出色的抗氧化安定性和热稳定性",
       "notes": "通用标准HM 抗磨液压油",
-      "kv40": "32.3",
-      "vi": "120",
-      "pour_point": "-36",
-      "flash_point": "225",
-      "rust_b": "无锈"
+      "kv100": "32.3",
+      "pour_point": "120",
+      "flash_point": "-36",
+      "copper_corrosion": "225",
+      "cleanliness_nas": "无锈"
     },
     {
       "series": "抗磨液压油 HM",
@@ -4050,11 +4047,11 @@
       "application_site": "工程机械、数控机床等设备的叶片泵、柱塞泵和齿轮泵液压系统",
       "features": "极压抗磨性、良好的抗乳化性、防锈性以及抗泡性和空气释放值\n出色的抗氧化安定性和热稳定性",
       "notes": "通用标准HM 抗磨液压油",
-      "kv40": "46.8",
-      "vi": "115",
-      "pour_point": "-36",
-      "flash_point": "230",
-      "rust_b": "无锈"
+      "kv100": "46.8",
+      "pour_point": "115",
+      "flash_point": "-36",
+      "copper_corrosion": "230",
+      "cleanliness_nas": "无锈"
     },
     {
       "series": "抗磨液压油 HM",
@@ -4064,11 +4061,11 @@
       "application_site": "工程机械、数控机床等设备的叶片泵、柱塞泵和齿轮泵液压系统",
       "features": "极压抗磨性、良好的抗乳化性、防锈性以及抗泡性和空气释放值\n出色的抗氧化安定性和热稳定性",
       "notes": "通用标准HM 抗磨液压油",
-      "kv40": "67.5",
-      "vi": "132",
-      "pour_point": "-30",
-      "flash_point": "230",
-      "rust_b": "无锈"
+      "kv100": "67.5",
+      "pour_point": "132",
+      "flash_point": "-30",
+      "copper_corrosion": "230",
+      "cleanliness_nas": "无锈"
     },
     {
       "series": "抗磨液压油 HS-M",
@@ -4078,10 +4075,10 @@
       "application_site": "工程机械、数控机床等设备的液压系统",
       "features": "提升的综合性能，主打抗磨保护，适合常温环境",
       "notes": "精制Ⅱ类基础油，通用标准HM 抗磨液压油",
-      "kv40": "33.2",
-      "vi": "115",
-      "pour_point": "-33",
-      "flash_point": "218"
+      "kv100": "33.2",
+      "pour_point": "115",
+      "flash_point": "-33",
+      "copper_corrosion": "218"
     },
     {
       "series": "抗磨液压油 HS-M",
@@ -4091,10 +4088,10 @@
       "application_site": "工程机械、数控机床等设备的液压系统",
       "features": "提升的综合性能，主打抗磨保护，适合常温环境",
       "notes": "精制Ⅱ类基础油，通用标准HM 抗磨液压油",
-      "kv40": "46.5",
-      "vi": "110",
-      "pour_point": "-33",
-      "flash_point": "228"
+      "kv100": "46.5",
+      "pour_point": "110",
+      "flash_point": "-33",
+      "copper_corrosion": "228"
     },
     {
       "series": "抗磨液压油 HS-M",
@@ -4104,10 +4101,10 @@
       "application_site": "工程机械、数控机床等设备的液压系统",
       "features": "提升的综合性能，主打抗磨保护，适合常温环境",
       "notes": "精制Ⅱ类基础油，通用标准HM 抗磨液压油",
-      "kv40": "67.1",
-      "vi": "104",
-      "pour_point": "-27",
-      "flash_point": "235"
+      "kv100": "67.1",
+      "pour_point": "104",
+      "flash_point": "-27",
+      "copper_corrosion": "235"
     },
     {
       "series": "抗磨液压油 HV低温",
@@ -4117,12 +4114,12 @@
       "application_site": "露天、寒区作业的工程机械、矿山机械、船舶起重机等液压系统",
       "features": "具备抗磨性的同时，更强化了卓越的低温流动性和粘温特性，专为低温或温差大的环境设计",
       "notes": "标准通用低温抗磨液压油L-HV",
-      "kv40": "32.6",
-      "kv100": "10",
-      "vi": "165",
-      "pour_point": "-51",
-      "flash_point": "228",
-      "copper_corrosion": "1a"
+      "kv100": "32.6",
+      "vi": "10",
+      "pour_point": "165",
+      "flash_point": "-51",
+      "copper_corrosion": "228",
+      "rust_a": "1a"
     },
     {
       "series": "抗磨液压油 HV低温",
@@ -4132,12 +4129,12 @@
       "application_site": "露天、寒区作业的工程机械、矿山机械、船舶起重机等液压系统",
       "features": "具备抗磨性的同时，更强化了卓越的低温流动性和粘温特性，专为低温或温差大的环境设计",
       "notes": "标准通用低温抗磨液压油L-HV",
-      "kv40": "45.5",
-      "kv100": "10",
-      "vi": "164",
-      "pour_point": "-48",
-      "flash_point": "232",
-      "copper_corrosion": "1a"
+      "kv100": "45.5",
+      "vi": "10",
+      "pour_point": "164",
+      "flash_point": "-48",
+      "copper_corrosion": "232",
+      "rust_a": "1a"
     },
     {
       "series": "抗磨液压油 HV低温",
@@ -4147,12 +4144,12 @@
       "application_site": "露天、寒区作业的工程机械、矿山机械、船舶起重机等液压系统",
       "features": "具备抗磨性的同时，更强化了卓越的低温流动性和粘温特性，专为低温或温差大的环境设计",
       "notes": "标准通用低温抗磨液压油L-HV",
-      "kv40": "68.8",
-      "kv100": "10",
-      "vi": "158",
-      "pour_point": "-45",
-      "flash_point": "238",
-      "copper_corrosion": "1a"
+      "kv100": "68.8",
+      "vi": "10",
+      "pour_point": "158",
+      "flash_point": "-45",
+      "copper_corrosion": "238",
+      "rust_a": "1a"
     },
     {
       "series": "长寿命液压油",
@@ -4162,9 +4159,9 @@
       "application_site": "工作在巨大温差下的各种液压循环系统",
       "features": "卓越的综合性能：抗磨、防锈、抗泡、抗乳化\n优异的稳定性：优秀的剪切稳定性、抗氧化和抗水解\n极佳的粘温特性与低温流动性，倾点≤-55℃",
       "notes": "PAO型；超低温液压油",
-      "kv40": "31.6",
-      "vi": "150",
-      "pour_point": "-57"
+      "kv100": "31.6",
+      "pour_point": "150",
+      "flash_point": "-57"
     },
     {
       "series": "长寿命液压油",
@@ -4183,11 +4180,11 @@
       "application_site": "高精度、敏感元件、特殊环境设等对油品清洁度和部件敏感性有严苛要求的液压系统",
       "features": "无灰/无锌配方，避免损坏对锌敏感的部件（如铜合金），减少油泥生成，保持系统清洁\n优良的过滤性与抗乳化性：能迅速与水分离，有效防止过滤系统堵塞",
       "notes": "不含ZDDP的无灰/无锌配方",
-      "kv40": "44.72",
-      "kv100": "7.136",
-      "vi": "113",
-      "pour_point": "-36",
-      "flash_point": "230"
+      "kv100": "44.72",
+      "vi": "7.136",
+      "pour_point": "113",
+      "flash_point": "-36",
+      "copper_corrosion": "230"
     },
     {
       "series": "无渍液压油",
@@ -4197,10 +4194,10 @@
       "application_site": "用于高洁净要求设备，降低油泥和沉积物形成；应用于精密冲压、贴装、自动化设备；自动化生产线液压系统；高频伺服液压系统",
       "features": "无污染、低油渍、高清洁度：不易形成明显油斑，对产品外观影响小\n优异抗磨性能：保护液压泵和阀件，延长设备寿命",
       "notes": "无渍液压油",
-      "kv40": "33",
-      "vi": "140",
-      "pour_point": "-36",
-      "cleanliness_nas": "6"
+      "kv100": "33",
+      "pour_point": "140",
+      "flash_point": "-36",
+      "cleanliness_iso": "6"
     },
     {
       "series": "无渍液压油",
@@ -4210,10 +4207,10 @@
       "application_site": "用于高洁净要求设备，降低油泥和沉积物形成；应用于精密冲压、贴装、自动化设备；自动化生产线液压系统；高频伺服液压系统",
       "features": "无污染、低油渍、高清洁度：不易形成明显油斑，对产品外观影响小\n优异抗磨性能：保护液压泵和阀件，延长设备寿命",
       "notes": "无渍液压油",
-      "kv40": "47",
-      "vi": "167",
-      "pour_point": "-42",
-      "cleanliness_nas": "6"
+      "kv100": "47",
+      "pour_point": "167",
+      "flash_point": "-42",
+      "cleanliness_iso": "6"
     },
     {
       "series": "CKC工业齿轮油",
@@ -4223,12 +4220,12 @@
       "application_site": "中负荷齿轮，如矿山减速机的、正齿轮、斜齿轮",
       "features": "良好的极压抗磨性\n热氧化安定性\n防锈防腐\n抗乳化性",
       "notes": "标准通用CKC工业齿轮油",
-      "kv40": "100.2",
-      "vi": "95",
-      "pour_point": "-24",
-      "flash_point": "204",
-      "copper_corrosion": "1b",
-      "rust_b": "无锈"
+      "kv100": "100.2",
+      "pour_point": "95",
+      "flash_point": "-24",
+      "copper_corrosion": "204",
+      "rust_a": "1b",
+      "cleanliness_nas": "无锈"
     },
     {
       "series": "CKC工业齿轮油",
@@ -4238,12 +4235,12 @@
       "application_site": "中负荷齿轮，如矿山减速机的、正齿轮、斜齿轮",
       "features": "良好的极压抗磨性\n热氧化安定性\n防锈防腐\n抗乳化性",
       "notes": "标准通用CKC工业齿轮油",
-      "kv40": "154.8",
-      "vi": "95",
-      "pour_point": "-12",
-      "flash_point": "230",
-      "copper_corrosion": "1b",
-      "rust_b": "无锈"
+      "kv100": "154.8",
+      "pour_point": "95",
+      "flash_point": "-12",
+      "copper_corrosion": "230",
+      "rust_a": "1b",
+      "cleanliness_nas": "无锈"
     },
     {
       "series": "CKC工业齿轮油",
@@ -4253,12 +4250,12 @@
       "application_site": "中负荷齿轮，如矿山减速机的、正齿轮、斜齿轮",
       "features": "良好的极压抗磨性\n热氧化安定性\n防锈防腐\n抗乳化性",
       "notes": "标准通用CKC工业齿轮油",
-      "kv40": "226.6",
-      "vi": "95",
-      "pour_point": "-12",
-      "flash_point": "230",
-      "copper_corrosion": "1b",
-      "rust_b": "无锈"
+      "kv100": "226.6",
+      "pour_point": "95",
+      "flash_point": "-12",
+      "copper_corrosion": "230",
+      "rust_a": "1b",
+      "cleanliness_nas": "无锈"
     },
     {
       "series": "CKC工业齿轮油",
@@ -4268,12 +4265,12 @@
       "application_site": "中负荷齿轮，如矿山减速机的、正齿轮、斜齿轮",
       "features": "良好的极压抗磨性\n热氧化安定性\n防锈防腐\n抗乳化性",
       "notes": "标准通用CKC工业齿轮油",
-      "kv40": "331.2",
-      "vi": "95",
-      "pour_point": "-9",
-      "flash_point": "230",
-      "copper_corrosion": "1b",
-      "rust_b": "无锈"
+      "kv100": "331.2",
+      "pour_point": "95",
+      "flash_point": "-9",
+      "copper_corrosion": "230",
+      "rust_a": "1b",
+      "cleanliness_nas": "无锈"
     },
     {
       "series": "CKC工业齿轮油",
@@ -4283,12 +4280,12 @@
       "application_site": "中负荷齿轮，如矿山减速机的、正齿轮、斜齿轮",
       "features": "良好的极压抗磨性\n热氧化安定性\n防锈防腐\n抗乳化性",
       "notes": "标准通用CKC工业齿轮油",
-      "kv40": "446.7",
-      "vi": "95",
-      "pour_point": "-9",
-      "flash_point": "235",
-      "copper_corrosion": "1b",
-      "rust_b": "无锈"
+      "kv100": "446.7",
+      "pour_point": "95",
+      "flash_point": "-9",
+      "copper_corrosion": "235",
+      "rust_a": "1b",
+      "cleanliness_nas": "无锈"
     },
     {
       "series": "CKC工业齿轮油",
@@ -4298,28 +4295,27 @@
       "application_site": "中负荷齿轮，如矿山减速机的、正齿轮、斜齿轮",
       "features": "良好的极压抗磨性\n热氧化安定性\n防锈防腐\n抗乳化性",
       "notes": "标准通用CKC工业齿轮油",
-      "kv40": "665",
-      "vi": "98",
-      "pour_point": "-6",
-      "flash_point": "240",
-      "copper_corrosion": "1b",
-      "rust_b": "无锈"
+      "kv100": "665",
+      "pour_point": "98",
+      "flash_point": "-6",
+      "copper_corrosion": "240",
+      "rust_a": "1b",
+      "cleanliness_nas": "无锈"
     },
     {
       "series": "CKD工业齿轮油",
       "product_cn": "L-CKD 150重负荷工业齿轮油",
-      "packaging": "170g",
+      "packaging": "170kg",
       "industry": "钢铁、电力、矿山、水泥",
       "application_site": "高温、重负荷、冲击负荷的苛刻工况的重载齿轮",
       "features": "比CKC更优的极压抗磨性和热稳定性，适用于更苛刻的工况",
       "notes": "标准通用CKD工业齿轮油",
-      "kv40": "150",
-      "vi": "103",
-      "pour_point": "-30",
-      "flash_point": "235",
-      "copper_corrosion": "1b",
-      "rust_b": "无锈",
-      "weld_load": "2453"
+      "kv100": "150",
+      "pour_point": "103",
+      "flash_point": "-30",
+      "copper_corrosion": "235",
+      "rust_a": "1b",
+      "cleanliness_nas": "无锈"
     },
     {
       "series": "CKD工业齿轮油",
@@ -4329,13 +4325,12 @@
       "application_site": "高温、重负荷、冲击负荷的苛刻工况的重载齿轮",
       "features": "比CKC更优的极压抗磨性和热稳定性，适用于更苛刻的工况",
       "notes": "标准通用CKD工业齿轮油",
-      "kv40": "221.8",
-      "vi": "101",
-      "pour_point": "-24",
-      "flash_point": "240",
-      "copper_corrosion": "1b",
-      "rust_b": "无锈",
-      "weld_load": "3090"
+      "kv100": "221.8",
+      "pour_point": "101",
+      "flash_point": "-24",
+      "copper_corrosion": "240",
+      "rust_a": "1b",
+      "cleanliness_nas": "无锈"
     },
     {
       "series": "CKD工业齿轮油",
@@ -4345,13 +4340,12 @@
       "application_site": "高温、重负荷、冲击负荷的苛刻工况的重载齿轮",
       "features": "比CKC更优的极压抗磨性和热稳定性，适用于更苛刻的工况",
       "notes": "标准通用CKD工业齿轮油",
-      "kv40": "330.6",
-      "vi": "97",
-      "pour_point": "-21",
-      "flash_point": "245",
-      "copper_corrosion": "1b",
-      "rust_b": "无锈",
-      "weld_load": "3090"
+      "kv100": "330.6",
+      "pour_point": "97",
+      "flash_point": "-21",
+      "copper_corrosion": "245",
+      "rust_a": "1b",
+      "cleanliness_nas": "无锈"
     },
     {
       "series": "CKD工业齿轮油",
@@ -4361,13 +4355,12 @@
       "application_site": "高温、重负荷、冲击负荷的苛刻工况的重载齿轮",
       "features": "比CKC更优的极压抗磨性和热稳定性，适用于更苛刻的工况",
       "notes": "标准通用CKD工业齿轮油",
-      "kv40": "465.6",
-      "vi": "100",
-      "pour_point": "-21",
-      "flash_point": "250",
-      "copper_corrosion": "1b",
-      "rust_b": "无锈",
-      "weld_load": "3090"
+      "kv100": "465.6",
+      "pour_point": "100",
+      "flash_point": "-21",
+      "copper_corrosion": "250",
+      "rust_a": "1b",
+      "cleanliness_nas": "无锈"
     },
     {
       "series": "CKD工业齿轮油",
@@ -4377,13 +4370,12 @@
       "application_site": "高温、重负荷、冲击负荷的苛刻工况的重载齿轮",
       "features": "比CKC更优的极压抗磨性和热稳定性，适用于更苛刻的工况",
       "notes": "标准通用CKD工业齿轮油",
-      "kv40": "692.6",
-      "vi": "106",
-      "pour_point": "-21",
-      "flash_point": "260",
-      "copper_corrosion": "1b",
-      "rust_b": "无锈",
-      "weld_load": "3090"
+      "kv100": "692.6",
+      "pour_point": "106",
+      "flash_point": "-21",
+      "copper_corrosion": "260",
+      "rust_a": "1b",
+      "cleanliness_nas": "无锈"
     },
     {
       "series": "EP工业齿轮油",
@@ -4393,13 +4385,12 @@
       "application_site": "重负荷齿轮箱（正齿轮、伞齿轮），能应对冲击荷载",
       "features": "更好的承载能力与抗磨损保护",
       "notes": "矿物·极压型",
-      "kv40": "153.8",
-      "vi": "100",
-      "pour_point": "-30",
-      "flash_point": "240",
-      "copper_corrosion": "1b",
-      "rust_b": "无锈",
-      "weld_load": "3090"
+      "kv100": "153.8",
+      "pour_point": "100",
+      "flash_point": "-30",
+      "copper_corrosion": "240",
+      "rust_a": "1b",
+      "cleanliness_nas": "无锈"
     },
     {
       "series": "EP工业齿轮油",
@@ -4409,13 +4400,12 @@
       "application_site": "重负荷齿轮箱（正齿轮、伞齿轮），能应对冲击荷载",
       "features": "更好的承载能力与抗磨损保护",
       "notes": "矿物·极压型",
-      "kv40": "227.1",
-      "vi": "101",
-      "pour_point": "-24",
-      "flash_point": "255",
-      "copper_corrosion": "1b",
-      "rust_b": "无锈",
-      "weld_load": "3090"
+      "kv100": "227.1",
+      "pour_point": "101",
+      "flash_point": "-24",
+      "copper_corrosion": "255",
+      "rust_a": "1b",
+      "cleanliness_nas": "无锈"
     },
     {
       "series": "EP工业齿轮油",
@@ -4425,13 +4415,12 @@
       "application_site": "重负荷齿轮箱（正齿轮、伞齿轮），能应对冲击荷载",
       "features": "更好的承载能力与抗磨损保护",
       "notes": "矿物·极压型",
-      "kv40": "330.6",
-      "vi": "102",
-      "pour_point": "-21",
-      "flash_point": "278",
-      "copper_corrosion": "1b",
-      "rust_b": "无锈",
-      "weld_load": "3090"
+      "kv100": "330.6",
+      "pour_point": "102",
+      "flash_point": "-21",
+      "copper_corrosion": "278",
+      "rust_a": "1b",
+      "cleanliness_nas": "无锈"
     },
     {
       "series": "EP工业齿轮油",
@@ -4441,13 +4430,12 @@
       "application_site": "重负荷齿轮箱（正齿轮、伞齿轮），能应对冲击荷载",
       "features": "更好的承载能力与抗磨损保护",
       "notes": "矿物·极压型",
-      "kv40": "465.6",
-      "vi": "102",
-      "pour_point": "-15",
-      "flash_point": "282",
-      "copper_corrosion": "1b",
-      "rust_b": "无锈",
-      "weld_load": "3090"
+      "kv100": "465.6",
+      "pour_point": "102",
+      "flash_point": "-15",
+      "copper_corrosion": "282",
+      "rust_a": "1b",
+      "cleanliness_nas": "无锈"
     },
     {
       "series": "EP工业齿轮油",
@@ -4457,13 +4445,12 @@
       "application_site": "重负荷齿轮箱（正齿轮、伞齿轮），能应对冲击荷载",
       "features": "更好的承载能力与抗磨损保护",
       "notes": "矿物·极压型",
-      "kv40": "692.6",
-      "vi": "105",
-      "pour_point": "-21",
-      "flash_point": "285",
-      "copper_corrosion": "1b",
-      "rust_b": "无锈",
-      "weld_load": "3090"
+      "kv100": "692.6",
+      "pour_point": "105",
+      "flash_point": "-21",
+      "copper_corrosion": "285",
+      "rust_a": "1b",
+      "cleanliness_nas": "无锈"
     },
     {
       "series": "EP工业齿轮油（大粘度）",
@@ -4473,12 +4460,12 @@
       "application_site": "重负荷齿轮箱",
       "features": "极压抗磨保护",
       "notes": "强化极压性能",
-      "kv40": "466.0",
-      "vi": "96",
-      "pour_point": "-18",
-      "flash_point": "283",
-      "copper_corrosion": "1b",
-      "rust_b": "无锈"
+      "kv100": "466.0",
+      "pour_point": "96",
+      "flash_point": "-18",
+      "copper_corrosion": "283",
+      "rust_a": "1b",
+      "cleanliness_nas": "无锈"
     },
     {
       "series": "EP工业齿轮油（大粘度）",
@@ -4488,12 +4475,12 @@
       "application_site": "重负荷齿轮箱",
       "features": "极压抗磨保护",
       "notes": "强化极压性能",
-      "kv40": "676.7",
-      "vi": "102",
-      "pour_point": "-9",
-      "flash_point": "283",
-      "copper_corrosion": "1b",
-      "rust_b": "无锈"
+      "kv100": "676.7",
+      "pour_point": "102",
+      "flash_point": "-9",
+      "copper_corrosion": "283",
+      "rust_a": "1b",
+      "cleanliness_nas": "无锈"
     },
     {
       "series": "合成工业齿轮油 SHP",
@@ -4503,12 +4490,12 @@
       "application_site": "重工机械、矿山机械、水泥建材设备、冶金设备、化工设备等中的重负荷和冲击负荷设备",
       "features": "优异的粘温性能与宽温适用性\n卓越的热稳定性和抗氧化性\n出色的极压抗磨保护\n良好的抗乳化性和分水性能",
       "notes": "半合成型工业齿轮油",
-      "kv40": "154.1",
-      "vi": "101",
-      "pour_point": "-27",
-      "flash_point": "257",
-      "copper_corrosion": "1b",
-      "rust_b": "无锈"
+      "kv100": "154.1",
+      "pour_point": "101",
+      "flash_point": "-27",
+      "copper_corrosion": "257",
+      "rust_a": "1b",
+      "cleanliness_nas": "无锈"
     },
     {
       "series": "合成工业齿轮油 SHP",
@@ -4518,12 +4505,12 @@
       "application_site": "重工机械、矿山机械、水泥建材设备、冶金设备、化工设备等中的重负荷和冲击负荷设备",
       "features": "优异的粘温性能与宽温适用性\n卓越的热稳定性和抗氧化性\n出色的极压抗磨保护\n良好的抗乳化性和分水性能",
       "notes": "半合成型工业齿轮油",
-      "kv40": "219.3",
-      "vi": "105",
-      "pour_point": "-24",
-      "flash_point": "269",
-      "copper_corrosion": "1b",
-      "rust_b": "无锈"
+      "kv100": "219.3",
+      "pour_point": "105",
+      "flash_point": "-24",
+      "copper_corrosion": "269",
+      "rust_a": "1b",
+      "cleanliness_nas": "无锈"
     },
     {
       "series": "合成工业齿轮油 SHP",
@@ -4533,12 +4520,12 @@
       "application_site": "重工机械、矿山机械、水泥建材设备、冶金设备、化工设备等中的重负荷和冲击负荷设备",
       "features": "优异的粘温性能与宽温适用性\n卓越的热稳定性和抗氧化性\n出色的极压抗磨保护\n良好的抗乳化性和分水性能",
       "notes": "半合成型工业齿轮油",
-      "kv40": "321.9",
-      "vi": "103",
-      "pour_point": "-21",
-      "flash_point": "272",
-      "copper_corrosion": "1b",
-      "rust_b": "无锈"
+      "kv100": "321.9",
+      "pour_point": "103",
+      "flash_point": "-21",
+      "copper_corrosion": "272",
+      "rust_a": "1b",
+      "cleanliness_nas": "无锈"
     },
     {
       "series": "合成工业齿轮油 SHP",
@@ -4548,12 +4535,12 @@
       "application_site": "重工机械、矿山机械、水泥建材设备、冶金设备、化工设备等中的重负荷和冲击负荷设备",
       "features": "优异的粘温性能与宽温适用性\n卓越的热稳定性和抗氧化性\n出色的极压抗磨保护\n良好的抗乳化性和分水性能",
       "notes": "半合成型工业齿轮油",
-      "kv40": "459.7",
-      "vi": "108",
-      "pour_point": "-18",
-      "flash_point": "274",
-      "copper_corrosion": "1b",
-      "rust_b": "无锈"
+      "kv100": "459.7",
+      "pour_point": "108",
+      "flash_point": "-18",
+      "copper_corrosion": "274",
+      "rust_a": "1b",
+      "cleanliness_nas": "无锈"
     },
     {
       "series": "合成工业齿轮油 SHP",
@@ -4563,12 +4550,12 @@
       "application_site": "重工机械、矿山机械、水泥建材设备、冶金设备、化工设备等中的重负荷和冲击负荷设备",
       "features": "优异的粘温性能与宽温适用性\n卓越的热稳定性和抗氧化性\n出色的极压抗磨保护\n良好的抗乳化性和分水性能",
       "notes": "半合成型工业齿轮油",
-      "kv40": "677.0",
-      "vi": "115",
-      "pour_point": "-15",
-      "flash_point": "278",
-      "copper_corrosion": "1b",
-      "rust_b": "无锈"
+      "kv100": "677.0",
+      "pour_point": "115",
+      "flash_point": "-15",
+      "copper_corrosion": "278",
+      "rust_a": "1b",
+      "cleanliness_nas": "无锈"
     },
     {
       "series": "全合成工业齿轮油 SHC",
@@ -4578,14 +4565,13 @@
       "application_site": "极端温度环境、重负荷和冲击负荷设备、长寿命、低维护的设备要求的重型设备",
       "features": "全面提升的、卓越的综合性能",
       "notes": "PAO全合成工业齿轮油",
-      "kv40": "100",
-      "vi": "165",
-      "pour_point": "-48",
-      "flash_point": "230",
-      "copper_corrosion": "1b",
-      "rust_b": "无锈",
-      "wear_scar": "0.28",
-      "weld_load": "2453"
+      "kv100": "100",
+      "pour_point": "165",
+      "flash_point": "-48",
+      "copper_corrosion": "230",
+      "rust_a": "1b",
+      "cleanliness_nas": "无锈",
+      "weld_load": "0.28"
     },
     {
       "series": "全合成工业齿轮油 SHC",
@@ -4595,14 +4581,13 @@
       "application_site": "极端温度环境、重负荷和冲击负荷设备、长寿命、低维护的设备要求的重型设备",
       "features": "全面提升的、卓越的综合性能",
       "notes": "PAO全合成工业齿轮油",
-      "kv40": "153.0",
-      "vi": "170",
-      "pour_point": "-45",
-      "flash_point": "230",
-      "copper_corrosion": "1b",
-      "rust_b": "无锈",
-      "wear_scar": "0.28",
-      "weld_load": "2453"
+      "kv100": "153.0",
+      "pour_point": "170",
+      "flash_point": "-45",
+      "copper_corrosion": "230",
+      "rust_a": "1b",
+      "cleanliness_nas": "无锈",
+      "weld_load": "0.28"
     },
     {
       "series": "全合成工业齿轮油 SHC",
@@ -4612,14 +4597,13 @@
       "application_site": "极端温度环境、重负荷和冲击负荷设备、长寿命、低维护的设备要求的重型设备",
       "features": "全面提升的、卓越的综合性能",
       "notes": "PAO全合成工业齿轮油",
-      "kv40": "218.9",
-      "vi": "170",
-      "pour_point": "-42",
-      "flash_point": "240",
-      "copper_corrosion": "1b",
-      "rust_b": "无锈",
-      "wear_scar": "0.28",
-      "weld_load": "2453"
+      "kv100": "218.9",
+      "pour_point": "170",
+      "flash_point": "-42",
+      "copper_corrosion": "240",
+      "rust_a": "1b",
+      "cleanliness_nas": "无锈",
+      "weld_load": "0.28"
     },
     {
       "series": "全合成工业齿轮油 SHC",
@@ -4629,14 +4613,13 @@
       "application_site": "极端温度环境、重负荷和冲击负荷设备、长寿命、低维护的设备要求的重型设备",
       "features": "全面提升的、卓越的综合性能",
       "notes": "PAO全合成工业齿轮油",
-      "kv40": "326.4",
-      "vi": "175",
-      "pour_point": "-42",
-      "flash_point": "245",
-      "copper_corrosion": "1b",
-      "rust_b": "无锈",
-      "wear_scar": "0.28",
-      "weld_load": "2453"
+      "kv100": "326.4",
+      "pour_point": "175",
+      "flash_point": "-42",
+      "copper_corrosion": "245",
+      "rust_a": "1b",
+      "cleanliness_nas": "无锈",
+      "weld_load": "0.28"
     },
     {
       "series": "全合成工业齿轮油 SHC",
@@ -4646,14 +4629,13 @@
       "application_site": "极端温度环境、重负荷和冲击负荷设备、长寿命、低维护的设备要求的重型设备",
       "features": "全面提升的、卓越的综合性能",
       "notes": "PAO全合成工业齿轮油",
-      "kv40": "468.7",
-      "vi": "178",
-      "pour_point": "-39",
-      "flash_point": "250",
-      "copper_corrosion": "1b",
-      "rust_b": "无锈",
-      "wear_scar": "0.28",
-      "weld_load": "2453"
+      "kv100": "468.7",
+      "pour_point": "178",
+      "flash_point": "-39",
+      "copper_corrosion": "250",
+      "rust_a": "1b",
+      "cleanliness_nas": "无锈",
+      "weld_load": "0.28"
     },
     {
       "series": "全合成工业齿轮油 SHC",
@@ -4663,14 +4645,13 @@
       "application_site": "极端温度环境、重负荷和冲击负荷设备、长寿命、低维护的设备要求的重型设备",
       "features": "全面提升的、卓越的综合性能",
       "notes": "PAO全合成工业齿轮油",
-      "kv40": "687.4",
-      "vi": "176",
-      "pour_point": "-36",
-      "flash_point": "250",
-      "copper_corrosion": "1b",
-      "rust_b": "无锈",
-      "wear_scar": "0.28",
-      "weld_load": "2453"
+      "kv100": "687.4",
+      "pour_point": "176",
+      "flash_point": "-36",
+      "copper_corrosion": "250",
+      "rust_a": "1b",
+      "cleanliness_nas": "无锈",
+      "weld_load": "0.28"
     },
     {
       "series": "全合成工业齿轮油 SHC",
@@ -4680,14 +4661,13 @@
       "application_site": "极端温度环境、重负荷和冲击负荷设备、长寿命、低维护的设备要求的重型设备",
       "features": "全面提升的、卓越的综合性能",
       "notes": "PAO全合成工业齿轮油",
-      "kv40": "947.1",
-      "vi": "183",
-      "pour_point": "-36",
-      "flash_point": "250",
-      "copper_corrosion": "1b",
-      "rust_b": "无锈",
-      "wear_scar": "0.27",
-      "weld_load": "2453"
+      "kv100": "947.1",
+      "pour_point": "183",
+      "flash_point": "-36",
+      "copper_corrosion": "250",
+      "rust_a": "1b",
+      "cleanliness_nas": "无锈",
+      "weld_load": "0.27"
     },
     {
       "series": "蜗轮蜗杆油 CKE/P",
@@ -4697,10 +4677,10 @@
       "application_site": "轻中负荷、运行平稳的蜗轮蜗杆副，如普通减速机",
       "features": "良好的油性、减摩性，成本较低\n适用于轻中负荷、运行平稳的传动",
       "notes": "矿物\n用于常规工况",
-      "kv40": "153.8",
-      "vi": "98",
-      "pour_point": "-18",
-      "flash_point": "240"
+      "kv100": "153.8",
+      "pour_point": "98",
+      "flash_point": "-18",
+      "copper_corrosion": "240"
     },
     {
       "series": "蜗轮蜗杆油 SHC GW",
@@ -4710,12 +4690,12 @@
       "application_site": "高负荷、强冲击、极温环境下的蜗轮蜗杆，如电梯曳引机、野外重型机械、钢铁水泥设备",
       "features": "极高的粘度指数、粘温性能优异，宽温适用\n摩擦系数极低、卓越的极压抗磨性\n长寿命",
       "notes": "聚醚（PAG）型齿轮油\n用于苛刻工况",
-      "kv40": "147.1",
-      "vi": "200",
-      "pour_point": "-36",
-      "flash_point": "240",
-      "copper_corrosion": "1b",
-      "wear_scar": "0.28"
+      "kv100": "147.1",
+      "pour_point": "200",
+      "flash_point": "-36",
+      "copper_corrosion": "240",
+      "rust_a": "1b",
+      "weld_load": "0.28"
     },
     {
       "series": "蜗轮蜗杆油 SHC GW",
@@ -4725,12 +4705,12 @@
       "application_site": "高负荷、强冲击、极温环境下的蜗轮蜗杆，如电梯曳引机、野外重型机械、钢铁水泥设备",
       "features": "极高的粘度指数、粘温性能优异，宽温适用\n摩擦系数极低、卓越的极压抗磨性\n长寿命",
       "notes": "聚醚（PAG）型齿轮油\n用于苛刻工况",
-      "kv40": "221.1",
-      "vi": "220",
-      "pour_point": "-39",
-      "flash_point": "258",
-      "copper_corrosion": "1b",
-      "wear_scar": "0.28"
+      "kv100": "221.1",
+      "pour_point": "220",
+      "flash_point": "-39",
+      "copper_corrosion": "258",
+      "rust_a": "1b",
+      "weld_load": "0.28"
     },
     {
       "series": "蜗轮蜗杆油 SHC GW",
@@ -4740,12 +4720,12 @@
       "application_site": "高负荷、强冲击、极温环境下的蜗轮蜗杆，如电梯曳引机、野外重型机械、钢铁水泥设备",
       "features": "极高的粘度指数、粘温性能优异，宽温适用\n摩擦系数极低、卓越的极压抗磨性\n长寿命",
       "notes": "聚醚（PAG）型齿轮油\n用于苛刻工况",
-      "kv40": "321.3",
-      "vi": "229",
-      "pour_point": "-33",
-      "flash_point": "248",
-      "copper_corrosion": "1b",
-      "wear_scar": "0.28"
+      "kv100": "321.3",
+      "pour_point": "229",
+      "flash_point": "-33",
+      "copper_corrosion": "248",
+      "rust_a": "1b",
+      "weld_load": "0.28"
     },
     {
       "series": "蜗轮蜗杆油 SHC GW",
@@ -4755,13 +4735,12 @@
       "application_site": "高负荷、强冲击、极温环境下的蜗轮蜗杆，如电梯曳引机、野外重型机械、钢铁水泥设备",
       "features": "极高的粘度指数、粘温性能优异，宽温适用\n摩擦系数极低、卓越的极压抗磨性\n长寿命",
       "notes": "聚醚（PAG）型齿轮油\n用于苛刻工况",
-      "kv40": "464.6",
-      "vi": "238",
-      "pour_point": "-27",
-      "flash_point": "245",
-      "copper_corrosion": "1b",
-      "wear_scar": "0.29",
-      "weld_load": "3090"
+      "kv100": "464.6",
+      "pour_point": "238",
+      "flash_point": "-27",
+      "copper_corrosion": "245",
+      "rust_a": "1b",
+      "weld_load": "0.29"
     },
     {
       "series": "蜗轮蜗杆油 SHC GW",
@@ -4771,13 +4750,12 @@
       "application_site": "高负荷、强冲击、极温环境下的蜗轮蜗杆，如电梯曳引机、野外重型机械、钢铁水泥设备",
       "features": "极高的粘度指数、粘温性能优异，宽温适用\n摩擦系数极低、卓越的极压抗磨性\n长寿命",
       "notes": "聚醚（PAG）型齿轮油\n用于苛刻工况",
-      "kv40": "698.5",
-      "vi": "255",
-      "pour_point": "-30",
-      "flash_point": "247",
-      "copper_corrosion": "1b",
-      "wear_scar": "0.26",
-      "weld_load": "3090"
+      "kv100": "698.5",
+      "pour_point": "255",
+      "flash_point": "-30",
+      "copper_corrosion": "247",
+      "rust_a": "1b",
+      "weld_load": "0.26"
     },
     {
       "series": "蜗轮蜗杆油 SHC GW",
@@ -4787,13 +4765,12 @@
       "application_site": "高负荷、强冲击、极温环境下的蜗轮蜗杆，如电梯曳引机、野外重型机械、钢铁水泥设备",
       "features": "极高的粘度指数、粘温性能优异，宽温适用\n摩擦系数极低、卓越的极压抗磨性\n长寿命",
       "notes": "聚醚（PAG）型齿轮油\n用于苛刻工况",
-      "kv40": "975",
-      "vi": "260",
-      "pour_point": "-27",
-      "flash_point": "248",
-      "copper_corrosion": "1b",
-      "wear_scar": "0.27",
-      "weld_load": "3090"
+      "kv100": "975",
+      "pour_point": "260",
+      "flash_point": "-27",
+      "copper_corrosion": "248",
+      "rust_a": "1b",
+      "weld_load": "0.27"
     },
     {
       "series": "矿物型油气润滑剂 OAM",
@@ -4803,11 +4780,11 @@
       "application_site": "常规温度和负荷下运行的机床、风机、水泵等设备的轴承润滑",
       "features": "良好的热稳定性与抗氧化性\n良好的极压抗磨性\n良好的雾化性与流动性",
       "notes": "矿物型油气润滑",
-      "kv40": "232",
-      "vi": "95",
-      "pour_point": "-24",
-      "flash_point": "240",
-      "copper_corrosion": "1b"
+      "kv100": "232",
+      "pour_point": "95",
+      "flash_point": "-24",
+      "copper_corrosion": "240",
+      "rust_a": "1b"
     },
     {
       "series": "矿物型油气润滑剂 OAM",
@@ -4817,11 +4794,11 @@
       "application_site": "常规温度和负荷下运行的机床、风机、水泵等设备的轴承润滑",
       "features": "良好的热稳定性与抗氧化性\n良好的极压抗磨性\n良好的雾化性与流动性",
       "notes": "矿物型油气润滑",
-      "kv40": "318",
-      "vi": "100",
-      "pour_point": "-24",
-      "flash_point": "245",
-      "copper_corrosion": "1b"
+      "kv100": "318",
+      "pour_point": "100",
+      "flash_point": "-24",
+      "copper_corrosion": "245",
+      "rust_a": "1b"
     },
     {
       "series": "合成型开式齿轮剂",
@@ -4831,11 +4808,10 @@
       "application_site": "球磨机、回转窑、滚筒混料机等中大型开式齿轮装置，尤其适用于苛刻条件",
       "features": "高粘附性\n极压抗磨性\n防锈防腐性\n良好的渗透性\n抗氧化性与结焦抵抗性，适应高低温变化",
       "notes": "基础型开式齿轮剂",
-      "kv40": "2456",
-      "kv100": "153.1",
-      "vi": "120",
-      "wear_scar": "0.45",
-      "weld_load": "≥7848"
+      "kv100": "2456",
+      "vi": "153.1",
+      "pour_point": "120",
+      "weld_load": "0.45"
     },
     {
       "series": "合成型开式齿轮剂",
@@ -4845,12 +4821,11 @@
       "application_site": "球磨机、回转窑、滚筒混料机等中大型开式齿轮装置，尤其适用于苛刻条件",
       "features": "高粘附性\n极压抗磨性\n防锈防腐性\n良好的渗透性\n抗氧化性与结焦抵抗性，适应高低温变化",
       "notes": "基础型开式齿轮剂",
-      "kv40": "3709",
-      "kv100": "276.6",
-      "vi": "215",
-      "copper_corrosion": "1b",
-      "wear_scar": "0.4",
-      "weld_load": "≥7848"
+      "kv100": "3709",
+      "vi": "276.6",
+      "pour_point": "215",
+      "rust_a": "1b",
+      "weld_load": "0.4"
     },
     {
       "series": "合成型开式齿轮剂",
@@ -4860,12 +4835,11 @@
       "application_site": "球磨机、回转窑、滚筒混料机等中大型开式齿轮装置，尤其适用于苛刻条件",
       "features": "高粘附性\n极压抗磨性\n防锈防腐性\n良好的渗透性\n抗氧化性与结焦抵抗性，适应高低温变化",
       "notes": "基础型开式齿轮剂",
-      "kv40": "5449",
-      "kv100": "421.9",
-      "vi": "244",
-      "copper_corrosion": "1b",
-      "wear_scar": "0.42",
-      "weld_load": "≥7848"
+      "kv100": "5449",
+      "vi": "421.9",
+      "pour_point": "244",
+      "rust_a": "1b",
+      "weld_load": "0.42"
     },
     {
       "series": "合成型开式齿轮剂",
@@ -4875,12 +4849,11 @@
       "application_site": "球磨机、回转窑、滚筒混料机等中大型开式齿轮装置，尤其适用于苛刻条件",
       "features": "高粘附性\n极压抗磨性\n防锈防腐性\n良好的渗透性\n抗氧化性与结焦抵抗性，适应高低温变化",
       "notes": "基础型开式齿轮剂",
-      "kv40": "11300",
-      "kv100": "690.4",
-      "vi": "248",
-      "copper_corrosion": "1b",
-      "wear_scar": "0.41",
-      "weld_load": "9810"
+      "kv100": "11300",
+      "vi": "690.4",
+      "pour_point": "248",
+      "rust_a": "1b",
+      "weld_load": "0.41"
     },
     {
       "series": "合成型开式齿轮剂",
@@ -4890,12 +4863,11 @@
       "application_site": "球磨机、回转窑、滚筒混料机等中大型开式齿轮装置，尤其适用于苛刻条件",
       "features": "高粘附性\n极压抗磨性\n防锈防腐性\n良好的渗透性\n抗氧化性与结焦抵抗性，适应高低温变化",
       "notes": "合成型开式齿轮剂",
-      "kv40": "15261",
-      "kv100": "659.9",
-      "vi": "206",
-      "copper_corrosion": "1b",
-      "wear_scar": "0.4",
-      "weld_load": "≥7848"
+      "kv100": "15261",
+      "vi": "659.9",
+      "pour_point": "206",
+      "rust_a": "1b",
+      "weld_load": "0.4"
     },
     {
       "series": "合成型开式齿轮剂",
@@ -4905,12 +4877,11 @@
       "application_site": "球磨机、回转窑、滚筒混料机等中大型开式齿轮装置，尤其适用于苛刻条件",
       "features": "高粘附性\n极压抗磨性\n防锈防腐性\n良好的渗透性\n抗氧化性与结焦抵抗性，适应高低温变化",
       "notes": "合成型开式齿轮剂",
-      "kv40": "31756",
-      "kv100": "1553",
-      "vi": "275",
-      "copper_corrosion": "1b",
-      "wear_scar": "0.40",
-      "weld_load": "≥7848"
+      "kv100": "31756",
+      "vi": "1553",
+      "pour_point": "275",
+      "rust_a": "1b",
+      "weld_load": "0.40"
     },
     {
       "series": "合成型开式齿轮剂",
@@ -4920,12 +4891,11 @@
       "application_site": "球磨机、回转窑、滚筒混料机等中大型开式齿轮装置，尤其适用于苛刻条件",
       "features": "高粘附性\n极压抗磨性\n防锈防腐性\n良好的渗透性\n抗氧化性与结焦抵抗性，适应高低温变化",
       "notes": "合成型开式齿轮剂",
-      "kv40": "37000",
-      "kv100": "1353",
-      "vi": "241",
-      "copper_corrosion": "1b",
-      "wear_scar": "0.43",
-      "weld_load": "9810"
+      "kv100": "37000",
+      "vi": "1353",
+      "pour_point": "241",
+      "rust_a": "1b",
+      "weld_load": "0.43"
     },
     {
       "series": "合成型开式齿轮剂（聚醚）",
@@ -4935,11 +4905,10 @@
       "application_site": "球磨机、回转窑、滚筒混料机等中大型开式齿轮装置",
       "features": "高粘附性\n极压抗磨性",
       "notes": "聚醚型开齿，更高粘附性，极致性能",
-      "kv40": "10000",
-      "vi": "＞400",
-      "flash_point": "≥190",
-      "copper_corrosion": "1b",
-      "weld_load": "≥7848"
+      "kv100": "10000",
+      "pour_point": "＞400",
+      "copper_corrosion": "≥190",
+      "rust_a": "1b"
     },
     {
       "series": "合成型开式齿轮剂（聚醚）",
@@ -4949,11 +4918,10 @@
       "application_site": "球磨机、回转窑、滚筒混料机等中大型开式齿轮装置",
       "features": "高粘附性\n极压抗磨性",
       "notes": "聚醚型开齿，更高粘附性，极致性能",
-      "kv40": "17000",
-      "vi": "＞400",
-      "flash_point": "≥190",
-      "copper_corrosion": "1b",
-      "weld_load": "≥7848"
+      "kv100": "17000",
+      "pour_point": "＞400",
+      "copper_corrosion": "≥190",
+      "rust_a": "1b"
     },
     {
       "series": "矿物型螺杆式空气压缩机油",
@@ -4963,10 +4931,10 @@
       "application_site": "螺杆空压机",
       "features": "优良的抗氧化\n优良的抗结焦、油泥性能",
       "notes": "标准服役周期2000-3000h",
-      "kv40": "46.8",
-      "vi": "110",
-      "pour_point": "-33",
-      "flash_point": "235"
+      "kv100": "46.8",
+      "pour_point": "110",
+      "flash_point": "-33",
+      "copper_corrosion": "235"
     },
     {
       "series": "矿物型螺杆式空气压缩机油",
@@ -4976,10 +4944,10 @@
       "application_site": "螺杆空压机",
       "features": "优良的抗氧化\n优良的抗结焦、油泥性能",
       "notes": "标准服役周期3000-4000h",
-      "kv40": "32.6",
-      "vi": "110",
-      "pour_point": "-33",
-      "flash_point": "234"
+      "kv100": "32.6",
+      "pour_point": "110",
+      "flash_point": "-33",
+      "copper_corrosion": "234"
     },
     {
       "series": "矿物型螺杆式空气压缩机油",
@@ -4989,10 +4957,10 @@
       "application_site": "螺杆空压机",
       "features": "优良的抗氧化\n优良的抗结焦、油泥性能",
       "notes": "标准服役周期3000-4000h",
-      "kv40": "46.3",
-      "vi": "115",
-      "pour_point": "-36",
-      "flash_point": "236"
+      "kv100": "46.3",
+      "pour_point": "115",
+      "flash_point": "-36",
+      "copper_corrosion": "236"
     },
     {
       "series": "矿物型螺杆式空气压缩机油",
@@ -5002,10 +4970,10 @@
       "application_site": "螺杆空压机",
       "features": "优良的抗氧化\n优良的抗结焦、油泥性能",
       "notes": "标准服役周期4000-6000h",
-      "kv40": "32.7",
-      "vi": "115",
-      "pour_point": "-36",
-      "flash_point": "240"
+      "kv100": "32.7",
+      "pour_point": "115",
+      "flash_point": "-36",
+      "copper_corrosion": "240"
     },
     {
       "series": "矿物型螺杆式空气压缩机油",
@@ -5015,10 +4983,10 @@
       "application_site": "螺杆空压机",
       "features": "优良的抗氧化\n优良的抗结焦、油泥性能",
       "notes": "标准服役周期4000-6000h",
-      "kv40": "46.8",
-      "vi": "115",
-      "pour_point": "-36",
-      "flash_point": "242"
+      "kv100": "46.8",
+      "pour_point": "115",
+      "flash_point": "-36",
+      "copper_corrosion": "242"
     },
     {
       "series": "合成型螺杆式空气压缩机油 PAG",
@@ -5028,12 +4996,12 @@
       "application_site": "螺杆空压机",
       "features": "极佳的抗结焦、油泥性能",
       "notes": "聚醚型；标准服役周期6000-8000h",
-      "kv40": "32.5",
-      "vi": "170",
-      "pour_point": "-45",
-      "flash_point": "255",
-      "copper_corrosion": "1b",
-      "rust_b": "无锈"
+      "kv100": "32.5",
+      "pour_point": "170",
+      "flash_point": "-45",
+      "copper_corrosion": "255",
+      "rust_a": "1b",
+      "cleanliness_nas": "无锈"
     },
     {
       "series": "合成型螺杆式空气压缩机油 PAG",
@@ -5043,12 +5011,12 @@
       "application_site": "螺杆空压机",
       "features": "极佳的抗结焦、油泥性能；墨绿色透明液体",
       "notes": "聚醚型；标准服役周期6000-8000h",
-      "kv40": "39.5",
-      "vi": "170",
-      "pour_point": "-54",
-      "flash_point": "262",
-      "copper_corrosion": "1b",
-      "rust_b": "无锈"
+      "kv100": "39.5",
+      "pour_point": "170",
+      "flash_point": "-54",
+      "copper_corrosion": "262",
+      "rust_a": "1b",
+      "cleanliness_nas": "无锈"
     },
     {
       "series": "合成型螺杆式空气压缩机油 PAG",
@@ -5058,12 +5026,12 @@
       "application_site": "螺杆空压机",
       "features": "超级冷却剂；极佳的抗结焦、油泥性能",
       "notes": "聚醚型；标准服役周期6000-8000h；超级冷却剂；极佳的抗结焦、油泥性能",
-      "kv40": "46.2",
-      "vi": "174",
-      "pour_point": "-51",
-      "flash_point": "266",
-      "copper_corrosion": "1b",
-      "rust_b": "无锈"
+      "kv100": "46.2",
+      "pour_point": "174",
+      "flash_point": "-51",
+      "copper_corrosion": "266",
+      "rust_a": "1b",
+      "cleanliness_nas": "无锈"
     },
     {
       "series": "合成型螺杆式空气压缩机油 PAG",
@@ -5073,12 +5041,12 @@
       "application_site": "螺杆空压机",
       "features": "极佳的抗结焦、油泥性能；墨绿色透明液体",
       "notes": "聚醚型；标准服役周期6000-8000h；极佳的抗结焦、油泥性能；墨绿色透明液体",
-      "kv40": "39.8",
-      "vi": "170",
-      "pour_point": "-54",
-      "flash_point": "260",
-      "copper_corrosion": "1b",
-      "rust_b": "无锈"
+      "kv100": "39.8",
+      "pour_point": "170",
+      "flash_point": "-54",
+      "copper_corrosion": "260",
+      "rust_a": "1b",
+      "cleanliness_nas": "无锈"
     },
     {
       "series": "合成型螺杆式空气压缩机油 PAG",
@@ -5088,12 +5056,12 @@
       "application_site": "螺杆空压机",
       "features": "极佳的抗结焦、油泥性能",
       "notes": "聚醚型；标准服役周期6000-8000h",
-      "kv40": "46.2",
-      "vi": "172",
-      "pour_point": "-45",
-      "flash_point": "260",
-      "copper_corrosion": "1b",
-      "rust_b": "无锈"
+      "kv100": "46.2",
+      "pour_point": "172",
+      "flash_point": "-45",
+      "copper_corrosion": "260",
+      "rust_a": "1b",
+      "cleanliness_nas": "无锈"
     },
     {
       "series": "合成型螺杆式空气压缩机油 PAO",
@@ -5103,11 +5071,11 @@
       "application_site": "螺杆空压机",
       "features": "极佳的抗氧化、抗乳化性能\n长寿命",
       "notes": "GTL-PAO型；标准服役周期6000-8000h",
-      "kv40": "45.8",
-      "vi": "143",
-      "pour_point": "-48",
-      "flash_point": "246",
-      "copper_corrosion": "1b"
+      "kv100": "45.8",
+      "pour_point": "143",
+      "flash_point": "-48",
+      "copper_corrosion": "246",
+      "rust_a": "1b"
     },
     {
       "series": "合成型螺杆式空气压缩机油 PAO",
@@ -5117,11 +5085,11 @@
       "application_site": "螺杆空压机",
       "features": "极佳的抗氧化、抗乳化性能\n长寿命",
       "notes": "PAO型；标准服役周期6000-8000h",
-      "kv40": "46.6",
-      "vi": "136",
-      "pour_point": "-48",
-      "flash_point": "260",
-      "copper_corrosion": "1b"
+      "kv100": "46.6",
+      "pour_point": "136",
+      "flash_point": "-48",
+      "copper_corrosion": "260",
+      "rust_a": "1b"
     },
     {
       "series": "工艺气体压缩机油 WS PAG",
@@ -5131,11 +5099,11 @@
       "application_site": "工艺压缩机",
       "features": "抗碳氢化合物稀释性\n优异润滑性\n低倾点\n耐腐蚀特性\n长使用寿命",
       "notes": "烃类气体压缩机油 与CPI-1519同类型产品",
-      "kv40": "100.2",
-      "vi": "220",
-      "pour_point": "-45",
-      "flash_point": "250",
-      "copper_corrosion": "1b"
+      "kv100": "100.2",
+      "pour_point": "220",
+      "flash_point": "-45",
+      "copper_corrosion": "250",
+      "rust_a": "1b"
     },
     {
       "series": "工艺气体压缩机油 WS PAG",
@@ -5145,11 +5113,11 @@
       "application_site": "工艺压缩机",
       "features": "抗碳氢化合物稀释性\n优异润滑性\n低倾点\n耐腐蚀特性\n长使用寿命",
       "notes": "烃类气体压缩机油 与CPI-1519同类型产品",
-      "kv40": "151",
-      "vi": "220",
-      "pour_point": "-45",
-      "flash_point": "255",
-      "copper_corrosion": "1b"
+      "kv100": "151",
+      "pour_point": "220",
+      "flash_point": "-45",
+      "copper_corrosion": "255",
+      "rust_a": "1b"
     },
     {
       "series": "工艺气体压缩机油",
@@ -5159,11 +5127,11 @@
       "application_site": "酸性气体工艺压缩",
       "features": "优异的防腐蚀性能\n良好的抗磨性",
       "notes": "矿物型抗酸性气体压缩机油",
-      "kv40": "97.5",
-      "kv100": "11.32",
-      "vi": "100",
-      "pour_point": "-15",
-      "flash_point": "156"
+      "kv100": "97.5",
+      "vi": "11.32",
+      "pour_point": "100",
+      "flash_point": "-15",
+      "copper_corrosion": "156"
     },
     {
       "series": "防锈汽轮机油",
@@ -5173,13 +5141,13 @@
       "application_site": "蒸汽轮机、燃气轮机、水轮发电机组（滑动轴承、减速齿轮、调速系统）",
       "features": "具备优异的氧化安定性和抗乳化性",
       "notes": "三类基础油产品",
-      "kv40": "46.6",
-      "vi": "117",
-      "pour_point": "-39",
-      "flash_point": "222",
-      "copper_corrosion": "1a",
-      "rust_b": "无锈",
-      "cleanliness_nas": "≤8"
+      "kv100": "46.6",
+      "pour_point": "117",
+      "flash_point": "-39",
+      "copper_corrosion": "222",
+      "rust_a": "1a",
+      "cleanliness_nas": "无锈",
+      "cleanliness_iso": "≤8"
     },
     {
       "series": "防锈汽轮机油",
@@ -5189,13 +5157,13 @@
       "application_site": "蒸汽轮机、燃气轮机、水轮发电机组（滑动轴承、减速齿轮、调速系统）",
       "features": "具备优异的氧化安定性和抗乳化性",
       "notes": "标准L-TSA产品",
-      "kv40": "31.5",
-      "vi": "105",
-      "pour_point": "-39",
-      "flash_point": "230",
-      "copper_corrosion": "1a",
-      "rust_b": "无锈",
-      "cleanliness_nas": "≤8"
+      "kv100": "31.5",
+      "pour_point": "105",
+      "flash_point": "-39",
+      "copper_corrosion": "230",
+      "rust_a": "1a",
+      "cleanliness_nas": "无锈",
+      "cleanliness_iso": "≤8"
     },
     {
       "series": "防锈汽轮机油",
@@ -5205,13 +5173,13 @@
       "application_site": "蒸汽轮机、燃气轮机、水轮发电机组（滑动轴承、减速齿轮、调速系统）",
       "features": "具备优异的氧化安定性和抗乳化性",
       "notes": "标准L-TSA产品",
-      "kv40": "46.6",
-      "vi": "108",
-      "pour_point": "-36",
-      "flash_point": "232",
-      "copper_corrosion": "1a",
-      "rust_b": "无锈",
-      "cleanliness_nas": "≤8"
+      "kv100": "46.6",
+      "pour_point": "108",
+      "flash_point": "-36",
+      "copper_corrosion": "232",
+      "rust_a": "1a",
+      "cleanliness_nas": "无锈",
+      "cleanliness_iso": "≤8"
     },
     {
       "series": "防锈汽轮机油",
@@ -5221,26 +5189,39 @@
       "application_site": "蒸汽轮机、燃气轮机、水轮发电机组（滑动轴承、减速齿轮、调速系统）",
       "features": "具备优异的氧化安定性和抗乳化性",
       "notes": "标准L-TSA产品",
-      "kv40": "68.2",
-      "vi": "112",
-      "pour_point": "-27",
-      "flash_point": "235",
-      "copper_corrosion": "1a",
-      "rust_b": "无锈",
-      "cleanliness_nas": "≤8"
+      "kv100": "68.2",
+      "pour_point": "112",
+      "flash_point": "-27",
+      "copper_corrosion": "235",
+      "rust_a": "1a",
+      "cleanliness_nas": "无锈",
+      "cleanliness_iso": "≤8"
     },
     {
       "series": "气柜密封油",
-      "product_cn": "Lubemater AIP-10 气柜密封油",
+      "product_cn": "Lubemater AIP 10 气柜密封油",
       "packaging": "170kg",
       "industry": "冶金、城市煤气、石油化工、焦化等涉及气体储存与输配的行业",
       "application_site": "活塞油沟、侧板与滑板之间的间隙、底部油槽及循环系统",
       "features": "卓越的抗乳化性与分水性能\n良好的粘温特性\n优异的氧化安定性\n良好的防锈防腐性能\n适宜的粘度与较低的凝点",
       "notes": "",
-      "kv40": "90.12",
-      "vi": "126",
-      "pour_point": "-39",
-      "flash_point": "238"
+      "kv100": "78.96",
+      "pour_point": "130",
+      "flash_point": "-39",
+      "copper_corrosion": "226"
+    },
+    {
+      "series": "导轨油",
+      "product_cn": "L-HG 68 导轨油",
+      "packaging": "170kg",
+      "industry": "CNC精密加工",
+      "application_site": "适于高精度、高速机床的高性能导轨专用油。",
+      "features": "卓越的防粘连、防滑特性，确保滑道顺畅运行及精密加工",
+      "notes": "",
+      "kv40": "黄色液体",
+      "kv100": "68.64",
+      "pour_point": "108",
+      "flash_point": "-21"
     }
   ],
   "versionHistory": [
