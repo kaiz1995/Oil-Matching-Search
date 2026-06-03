@@ -1,8 +1,8 @@
 {
-  "version": "2026-06-02-v1",
-  "updatedAt": "2026-06-02",
+  "version": "2026-06-03-v1",
+  "updatedAt": "2026-06-03",
   "versionNote": "数据更新时间2026.06.02 19:17 更新部分产品指标",
-  "totalProducts": 322,
+  "totalProducts": 320,
   "products": [
     {
       "brand": "壳牌/Shell",
@@ -163,20 +163,20 @@
     {
       "brand": "壳牌/Shell",
       "category": "液压油",
-      "product_cn": "壳牌得力士 S4 ME (Shell Tellus S4 ME) 32 / 46",
-      "product_en": "Shell Tellus S4 ME",
+      "product_cn": "壳牌得力士 S4 ME 32 / 46",
+      "product_en": "Shell Tellus S4 ME 32 / 46",
       "viscosity": "VG 32 / VG 46",
       "source": "全合成；粘度32/46cSt@40°C；VI~135；密度0.825-0.832kg/L；倾点-54~-51°C；节能型高压液压油，寿命>10000h",
       "runmei": "Lubemater XV 32/46 低温液压油",
-      "application": "专用于极低环境温度下，粘度指数300",
+      "application": "高级合成工业液压油，PAO，无灰",
       "compSpecs": {},
       "runmeiSpecs": {}
     },
     {
       "brand": "壳牌/Shell",
       "category": "液压油",
-      "product_cn": "壳牌得力士 S4 VX (Shell Tellus S4 VX) 32",
-      "product_en": "Shell Tellus S4 VX",
+      "product_cn": "壳牌得力士 S4 VX 32",
+      "product_en": "Shell Tellus S4 VX 32",
       "viscosity": "VG 32",
       "source": "粘度32cSt@40°C；高VI；倾点极低)；用于低温环境移动液压系统,专用于极低环境温度下，粘度指数300",
       "runmei": "Hydro Extreme DW 32",
@@ -199,8 +199,8 @@
     {
       "brand": "壳牌/Shell",
       "category": "液压油",
-      "product_cn": "壳牌得力士S2 VX 68 / 100",
-      "product_en": "Shell Tellus S2 MX",
+      "product_cn": "壳牌得力士 S2 VX 15/32/46/ 68 / 100",
+      "product_en": "Shell Tellus S2 VX",
       "viscosity": "VG 15 / VG 32 / VG 46 / VG 68 / VG 100",
       "source": "II 类基础油，多工况适用,高粘指140；粘度15/32/46/68/100cSt@40°C；宽温范围液压油",
       "runmei": "L-HV 32/46/68 抗磨液压油",
@@ -3193,30 +3193,6 @@
       "source": "在高温燃气轮机可以达到；长换油周期；简化设备维修和储存；高抗磨损保护；该产品由非常规基础油调和而成，具有异常出众的热稳定性和抗氧化性能；独特的添加剂可满足蒸汽及燃气涡轮机的规格要求，是单柱联合循环器械的理想；润滑油；优异的抗磨性能，适用于带有超高载荷齿轮箱的涡轮机的润滑",
       "runmei": "",
       "application": "",
-      "compSpecs": {},
-      "runmeiSpecs": {}
-    },
-    {
-      "brand": "壳牌",
-      "category": "液压油",
-      "product_cn": "壳牌得力士 S4 VX 32",
-      "product_en": "Shell Tellus S4 VX 32",
-      "viscosity": "",
-      "source": "产品对标-壳牌液压油",
-      "runmei": "Hydro Extreme DW 32",
-      "application": "专用于极低环境温度下，粘度指数300",
-      "compSpecs": {},
-      "runmeiSpecs": {}
-    },
-    {
-      "brand": "壳牌",
-      "category": "液压油",
-      "product_cn": "壳牌得力士 S4 ME 32 / 46",
-      "product_en": "Shell Tellus S4 ME 32/46",
-      "viscosity": "",
-      "source": "产品对标-壳牌液压油",
-      "runmei": "Lubemater XV 32/46 低温液压油",
-      "application": "高级合成工业液压油，PAO，无灰",
       "compSpecs": {},
       "runmeiSpecs": {}
     },
