@@ -1,8 +1,8 @@
 {
-  "version": "2026-06-04-v1",
-  "updatedAt": "2026-06-04",
+  "version": "2026-06-09-v1",
+  "updatedAt": "2026-06-09",
   "versionNote": "数据更新时间2026.06.04 14:45 更新部分竞品型号",
-  "totalProducts": 324,
+  "totalProducts": 326,
   "products": [
     {
       "brand": "壳牌/Shell",
@@ -3245,6 +3245,30 @@
       "runmeiSpecs": {}
     },
     {
+      "brand": "美孚/Mobil",
+      "category": "油膜轴承油",
+      "product_cn": "威格力 525",
+      "product_en": "Mobil Vacuoline 525",
+      "viscosity": "150",
+      "source": "具有抗磨性能的高速线材轧机循环油",
+      "runmei": "FB 150 油膜轴承油",
+      "application": "",
+      "compSpecs": {},
+      "runmeiSpecs": {}
+    },
+    {
+      "brand": "美孚/Mobil",
+      "category": "油膜轴承油",
+      "product_cn": "威格力 533",
+      "product_en": "Mobil Vacuoline 533",
+      "viscosity": "220",
+      "source": "具有抗磨性能的高速线材轧机循环油",
+      "runmei": "FB 220 油膜轴承油",
+      "application": "",
+      "compSpecs": {},
+      "runmeiSpecs": {}
+    },
+    {
       "brand": "壳牌",
       "category": "液压油",
       "product_cn": "壳牌得力士 S3 M 32/46/68/100",
@@ -4620,6 +4644,7 @@
       "features": "全面提升的、卓越的综合性能",
       "notes": "PAO全合成工业齿轮油",
       "kv40": "153.0",
+      "kv100": "21.9",
       "vi": "170",
       "pour_point": "-45",
       "flash_point": "230",
@@ -4637,6 +4662,7 @@
       "features": "全面提升的、卓越的综合性能",
       "notes": "PAO全合成工业齿轮油",
       "kv40": "218.9",
+      "kv100": "28.75",
       "vi": "170",
       "pour_point": "-42",
       "flash_point": "240",
@@ -4654,6 +4680,7 @@
       "features": "全面提升的、卓越的综合性能",
       "notes": "PAO全合成工业齿轮油",
       "kv40": "326.4",
+      "kv100": "39.89",
       "vi": "175",
       "pour_point": "-42",
       "flash_point": "245",
@@ -4671,6 +4698,7 @@
       "features": "全面提升的、卓越的综合性能",
       "notes": "PAO全合成工业齿轮油",
       "kv40": "468.7",
+      "kv100": "53.1",
       "vi": "178",
       "pour_point": "-39",
       "flash_point": "250",
@@ -4688,6 +4716,7 @@
       "features": "全面提升的、卓越的综合性能",
       "notes": "PAO全合成工业齿轮油",
       "kv40": "687.4",
+      "kv100": "69",
       "vi": "176",
       "pour_point": "-36",
       "flash_point": "250",
@@ -4705,6 +4734,7 @@
       "features": "全面提升的、卓越的综合性能",
       "notes": "PAO全合成工业齿轮油",
       "kv40": "947.1",
+      "kv100": "90.5",
       "vi": "183",
       "pour_point": "-36",
       "flash_point": "250",
@@ -5277,6 +5307,20 @@
       "kv40": "68.64",
       "vi": "108",
       "pour_point": "-21"
+    },
+    {
+      "series": "",
+      "product_cn": "FB 150 油膜轴承油",
+      "packaging": "170",
+      "industry": "钢铁轧钢 油膜轴承",
+      "application_site": "高速线材轧机循环油",
+      "features": "优异的分水性能与抗磨性能",
+      "notes": "",
+      "kv40": "15.2",
+      "vi": "98",
+      "pour_point": "-24",
+      "flash_point": "240",
+      "copper_corrosion": "1b"
     }
   ],
   "versionHistory": [
