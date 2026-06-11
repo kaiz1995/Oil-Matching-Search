@@ -980,6 +980,7 @@ var paramLabels = {
   cleanliness_iso: '清洁度(ISO 4406)',
   wear_scar: '磨斑直径(mm)',
   weld_load: '烧结负荷(N)',
+  fzg: 'FZG失效负荷等级',
 };
 
 function initRunmeiBrowser() {
@@ -1015,7 +1016,7 @@ function renderRunmeiGrid(products) {
   var html = '<div class="result-summary">润美产品 <strong>' + products.length + '</strong> 款</div>';
   html += '<div class="runmei-grid">';
   products.forEach(function(p) {
-    var hasParams = ['kv40','kv100','vi','pour_point','flash_point','copper_corrosion','rust_a','rust_b','cleanliness_nas','cleanliness_iso','wear_scar','weld_load'].some(function(k) { return p[k]; });
+    var hasParams = ["kv40", "kv100", "vi", "pour_point", "flash_point", "copper_corrosion", "rust_a", "rust_b", "cleanliness_nas", "cleanliness_iso", "wear_scar", "weld_load", "fzg"].some(function(k) { return p[k]; });
     html += '<div class="runmei-card" onclick="showRunmeiDetail(\'' + escAttr(p.product_cn) + '\')">';
     html += '<div class="runmei-card-name">' + esc(p.product_cn) + '</div>';
     if (p.series) html += '<div class="runmei-card-tags"><span class="tag">' + esc(p.series) + '</span></div>';

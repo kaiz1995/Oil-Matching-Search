@@ -230,6 +230,23 @@ CAT_MAP = {
     '轴承油/循环油': '轴承油',
 }
 
+# Tech param display labels (keep in sync with param_map in parse_runmei_sheet)
+PARAM_LABELS = {
+    'kv40': '运动粘度40℃(mm²/s)',
+    'kv100': '运动粘度100℃(mm²/s)',
+    'vi': '粘度指数',
+    'pour_point': '倾点(℃)',
+    'flash_point': '闪点(℃)',
+    'copper_corrosion': '铜片腐蚀(100℃,3h)',
+    'rust_a': '液相锈蚀A法',
+    'rust_b': '液相锈蚀B法',
+    'cleanliness_nas': '清洁度(NAS1638)',
+    'cleanliness_iso': '清洁度(ISO 4406)',
+    'wear_scar': '磨斑直径(mm)',
+    'weld_load': '烧结负荷(N)',
+    'fzg': 'FZG失效负荷等级',
+}
+
 def cat_match(c1, c2):
     c1 = CAT_MAP.get(c1, c1)
     c2 = CAT_MAP.get(c2, c2)
@@ -665,8 +682,25 @@ if emb_start_idx >= 0:
     html = html[:emb_start_idx] + f'var EMBEDDED_DATA = {embedded_data_json};' + html[skip_end:]
 else:
     print('  [WARN] Could not find var EMBEDDED_DATA in HTML')
+# 5. Update paramLabels (JS object) — auto-derived from PARAM_LABELS
+param_labels_str = '{\n' + '\n'.join(
+    f"  {k}: '{v}'," for k, v in PARAM_LABELS.items()
+) + '\n};'
+html = re.sub(
+    r'var paramLabels\s*=\s*\{[^}]*\};',
+    f'var paramLabels = {param_labels_str}',
+    html, count=1, flags=re.DOTALL
+)
 
-# 5. Update logo
+# 6. Update hasParams array in renderRunmeiGrid
+param_keys_json = json.dumps(list(PARAM_LABELS.keys()), ensure_ascii=False)
+html = re.sub(
+    r"(var hasParams\s*=\s*)\[.*?\](\s*\.some)",
+    rf'\g<1>{param_keys_json}\g<2>',
+    html, count=1
+)
+
+# 7. Update logo
 if logo_b64:
     html = re.sub(
         r'src="data:image/png;base64,[^"]*"',

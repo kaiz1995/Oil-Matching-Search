@@ -1,5 +1,11 @@
 # 润美工具 — 开发仓库
 
+## ⚠️ 核心工作原则
+
+> **除非特别要求改进或增加新功能，否则不对 HTML 及软件代码做任何修改。**
+> **日常工作仅为：更新 Excel 数据 → 运行 `build_all.py` → 推送到 GitHub。**
+> **若数据显示不准确，优先修改 `build_all.py`，不修改 HTML 或 App 代码。**
+
 ## 项目概览
 
 竞品润滑油与润美（Runmei）产品智能匹配查询工具。数据维护在 Excel，通过 Python 管线自动构建 JSON + 离线 HTML，推送到 GitHub Pages 供手机 App 更新。
