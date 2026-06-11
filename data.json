@@ -1,7 +1,7 @@
 {
   "version": "2026-06-11-v1",
   "updatedAt": "2026-06-11",
-  "versionNote": "数据更新时间2026.06.10 14:45 完善齿轮油数据",
+  "versionNote": "数据更新时间2026.06.10 17:45 更新build_all.py映射函数",
   "totalProducts": 326,
   "products": [
     {
