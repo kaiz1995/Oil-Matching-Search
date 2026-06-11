@@ -16,8 +16,7 @@ parser.add_argument('--skip-git', action='store_true', help='跳过 git 提交�
 parser.add_argument('--skip-apk', action='store_true', help='跳过 APK 构建（仅测试 --release 其他步骤）')
 args = parser.parse_args()
 
-BASE_DIR = r'D:\HuaweiMoveData\Users\张大脸小太阳\Documents\cc workspace\oil-pm'
-MAPPED = r'D:\HuaweiMoveData\Users\张大脸小太阳\Documents\cc workspace\Lubricant Product Matching Inquiry\product_data.json'
+BASE_DIR = r'D:\HuaweiMoveData\Users\张大脸小太阳\Documents\cc workspace\润滑产品查询工具'
 CATALOG = f'{BASE_DIR}/competitor_final.json'
 EXCEL_PRIMARY = f'{BASE_DIR}/竞品产品对照表.xlsx'
 EXCEL_FILLED = f'{BASE_DIR}/竞品产品对照表_已填充.xlsx'
@@ -26,9 +25,21 @@ EXCEL_FILLED = f'{BASE_DIR}/竞品产品对照表_已填充.xlsx'
 # STEP 1: Load data sources
 # ============================================================
 
-with open(MAPPED, 'r', encoding='utf-8') as f:
-    mapped_data = json.load(f)
-mappings = [m for m in mapped_data['products'] if m.get('competitorProduct')]
+# Load mapped data from data.json (remap field names to match script expectations)
+with open(f'{BASE_DIR}/data.json', 'r', encoding='utf-8') as f:
+    mapped_json = json.load(f)
+mapped_products = mapped_json.get('products', mapped_json if isinstance(mapped_json, list) else [])
+mappings = []
+for m in mapped_products:
+    if not isinstance(m, dict):
+        continue
+    m['competitorProduct'] = m.get('product_cn', m.get('competitorProduct', ''))
+    m['competitorBrand'] = m.get('brand', m.get('competitorBrand', ''))
+    m['runmeiProduct'] = m.get('runmei', m.get('runmeiProduct', ''))
+    m['competitorProductEN'] = m.get('product_en', m.get('competitorProductEN', ''))
+    m['sourceSheet'] = m.get('source', m.get('sourceSheet', ''))
+    if m.get('competitorProduct'):
+        mappings.append(m)
 print(f"Mapped products: {len(mappings)}")
 
 # Try reading from Excel first (user's primary editing surface)
@@ -119,12 +130,27 @@ def parse_runmei_sheet(excel_path):
                 'features': c(5),      # F: 产品特性
                 'notes': c(6),         # G: 备注
             }
-            # Technical parameters H-S (indices 7-18)
-            param_keys = ['kv40', 'kv100', 'vi', 'pour_point', 'flash_point',
-                         'copper_corrosion', 'rust_a', 'rust_b', 'cleanliness_nas',
-                         'cleanliness_iso', 'wear_scar', 'weld_load']
-            for i, key in enumerate(param_keys):
-                val = c(i + 8)
+            # Technical parameters with explicit column mapping (0-based index for c())
+            # Column mapping: I(9)=kv40, J(10)=kv100, K(11)=vi, L(12)=pour_point, M(13)=flash_point,
+            # N(14)=copper_corrosion, O(15)=rust_a, P(16)=rust_b, Q(17)=cleanliness_nas,
+            # R(18)=cleanliness_iso, S(19)=wear_scar, T(20)=weld_load, AE(31)=fzg
+            param_map = {
+                'kv40': 8,              # I: 运动粘度40℃
+                'kv100': 9,             # J: 运动粘度100℃
+                'vi': 10,               # K: 粘度指数
+                'pour_point': 11,       # L: 倾点
+                'flash_point': 12,      # M: 闪点
+                'copper_corrosion': 13,  # N: 铜片腐蚀
+                'rust_a': 14,           # O: 液相锈蚀A法
+                'rust_b': 15,           # P: 液相锈蚀B法
+                'cleanliness_nas': 16,  # Q: 清洁度NAS1638
+                'cleanliness_iso': 17,  # R: 清洁度ISO 4406
+                'wear_scar': 18,        # S: 磨斑直径
+                'weld_load': 19,        # T: 烧结负荷(PD)
+                'fzg': 30,              # AE: FZG失效负荷等级
+            }
+            for key, col_idx in param_map.items():
+                val = c(col_idx)
                 if val:
                     p[key] = val
             products.append(p)

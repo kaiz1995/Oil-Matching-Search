@@ -1,8 +1,8 @@
 {
-  "version": "2026-06-03-v1",
-  "updatedAt": "2026-06-03",
-  "versionNote": "数据更新时间2026.06.02 19:17 更新部分产品指标",
-  "totalProducts": 320,
+  "version": "2026-06-11-v1",
+  "updatedAt": "2026-06-11",
+  "versionNote": "数据更新时间2026.06.10 14:45 完善齿轮油数据",
+  "totalProducts": 326,
   "products": [
     {
       "brand": "壳牌/Shell",
@@ -143,7 +143,7 @@
       "product_en": "Shell Tellus S2 ZX",
       "viscosity": "VG 32 / VG 46 / VG 68",
       "source": "GTL合成技术；粘度32/46/68cSt@40°C；高VI，宽温范围；倾点低；用于宽温范围工业及移动液压系统",
-      "runmei": "HS-M 32/46/68 抗磨液压油",
+      "runmei": "Ultra HM 32/46/68高级抗磨液压油（原 HS-M）",
       "application": "GTL合成技术工业液压油(可能是部分GTL)粘度指数112",
       "compSpecs": {},
       "runmeiSpecs": {}
@@ -215,7 +215,7 @@
       "product_en": "Shell Tellus S3 M",
       "viscosity": "VG 32 / VG 46 / VG 68 / VG 100",
       "source": "II 类无锌液压油；粘度32/46/68/100cSt@40°C；VI~97-99",
-      "runmei": "L-HMS 32/46/68/100无灰抗磨液压油",
+      "runmei": "Clean 32/46/68 无灰抗磨液压油（原HMS）",
       "application": "专用于极低环境温度下，粘度指数300",
       "compSpecs": {},
       "runmeiSpecs": {}
@@ -1687,7 +1687,7 @@
     {
       "brand": "美孚/Mobil",
       "category": "轴承油",
-      "product_cn": "美孚威格力™ 500系列",
+      "product_cn": "美孚威格力 500系列",
       "product_en": "Mobil Vacuoline 500 Series",
       "viscosity": "100，150, 220, 320, 460, 680,",
       "source": "矿物油，油膜轴承油，极高抗乳化要求",
@@ -1699,11 +1699,11 @@
     {
       "brand": "美孚/Mobil",
       "category": "轴承油",
-      "product_cn": "美孚威格力™ 525",
-      "product_en": "",
+      "product_cn": "美孚威格力 525",
+      "product_en": "Mobil Vacuoline 525",
       "viscosity": "100",
-      "source": "矿物油，油膜轴承油，极高抗乳化要求",
-      "runmei": "Lubemater AW 100 油膜轴承油",
+      "source": "具有抗磨性能的及极高抗乳化要求的循环油",
+      "runmei": "Lubemater FB 100 油膜轴承油",
       "application": "",
       "compSpecs": {},
       "runmeiSpecs": {}
@@ -1711,11 +1711,11 @@
     {
       "brand": "美孚/Mobil",
       "category": "轴承油",
-      "product_cn": "美孚威格力™ 533",
-      "product_en": "",
+      "product_cn": "美孚威格力 533",
+      "product_en": "Mobil Vacuoline 533",
       "viscosity": "220",
-      "source": "矿物油，油膜轴承油，极高抗乳化要求",
-      "runmei": "Lubemater AW 220油膜轴承油",
+      "source": "具有抗磨性能的及极高抗乳化要求的循环油",
+      "runmei": "Lubemater FB 220油膜轴承油",
       "application": "",
       "compSpecs": {},
       "runmeiSpecs": {}
@@ -3197,6 +3197,78 @@
       "runmeiSpecs": {}
     },
     {
+      "brand": "奎克好富顿",
+      "category": "液压油",
+      "product_cn": "阻燃液压油888-46",
+      "product_en": "QUINTOLUBRIC 888",
+      "viscosity": "46",
+      "source": "合成酯型难燃液压油，有效防火，超强保护，高效节能",
+      "runmei": "HFDU 46 全合成型抗燃液压液",
+      "application": "",
+      "compSpecs": {},
+      "runmeiSpecs": {}
+    },
+    {
+      "brand": "奎克好富顿",
+      "category": "液压油",
+      "product_cn": "聚酯难燃液压油853 68",
+      "product_en": "QUINTOLUBRIC 853",
+      "viscosity": "68",
+      "source": "合成酯型难燃液压油，有效防火，超强保护，高效节能",
+      "runmei": "HFDU 68 全合成型抗燃液压液",
+      "application": "",
+      "compSpecs": {},
+      "runmeiSpecs": {}
+    },
+    {
+      "brand": "嘉实多",
+      "category": "齿轮油",
+      "product_cn": "BP 高性能极压齿轮油",
+      "product_en": "Castrol Alpha SP 220",
+      "viscosity": "220",
+      "source": "采用高度溶剂精制的优质矿物油，具备出色的热稳定性、抗氧化性、抗乳化性（耐水性）以及良好的低起泡和金属表面防锈防腐保护能力。",
+      "runmei": "朗麦EP 220 工业齿轮油",
+      "application": "",
+      "compSpecs": {},
+      "runmeiSpecs": {}
+    },
+    {
+      "brand": "嘉实多",
+      "category": "液压油",
+      "product_cn": "无锌抗磨液压油HLP-46",
+      "product_en": "",
+      "viscosity": "46",
+      "source": "无灰型添加剂配方",
+      "runmei": "Clean 46 无灰抗磨液压油",
+      "application": "",
+      "compSpecs": {},
+      "runmeiSpecs": {}
+    },
+    {
+      "brand": "美孚/Mobil",
+      "category": "油膜轴承油",
+      "product_cn": "威格力 525",
+      "product_en": "Mobil Vacuoline 525",
+      "viscosity": "",
+      "source": "具有抗磨性能的高速线材轧机循环油",
+      "runmei": "",
+      "application": "",
+      "compSpecs": {},
+      "runmeiSpecs": {}
+    },
+    {
+      "brand": "美孚/Mobil",
+      "category": "油膜轴承油",
+      "product_cn": "威格力 533",
+      "product_en": "Mobil Vacuoline 533",
+      "viscosity": "",
+      "source": "具有抗磨性能的高速线材轧机循环油",
+      "runmei": "",
+      "application": "",
+      "compSpecs": {},
+      "runmeiSpecs": {}
+    },
+    {
       "brand": "壳牌",
       "category": "液压油",
       "product_cn": "壳牌得力士 S3 M 32/46/68/100",
@@ -4047,8 +4119,8 @@
       "rust_b": "无锈"
     },
     {
-      "series": "抗磨液压油 HS-M",
-      "product_cn": "HS-M 32 抗磨液压油",
+      "series": "抗磨液压油 Ultra HM",
+      "product_cn": "Ultra HM 32 高级抗磨液压油（原HS-M 32）",
       "packaging": "170kg",
       "industry": "冶金、钢铁、火电等通用领域",
       "application_site": "工程机械、数控机床等设备的液压系统",
@@ -4060,8 +4132,8 @@
       "flash_point": "218"
     },
     {
-      "series": "抗磨液压油 HS-M",
-      "product_cn": "HS-M 46 抗磨液压油",
+      "series": "抗磨液压油 Ultra HM",
+      "product_cn": "Ultra HM 46 高级抗磨液压油（原HS-M 46）",
       "packaging": "170kg",
       "industry": "冶金、钢铁、火电等通用领域",
       "application_site": "工程机械、数控机床等设备的液压系统",
@@ -4073,8 +4145,8 @@
       "flash_point": "228"
     },
     {
-      "series": "抗磨液压油 HS-M",
-      "product_cn": "HS-M 68 抗磨液压油",
+      "series": "抗磨液压油 Ultra HM",
+      "product_cn": "Ultra HM 68 高级抗磨液压油（原HS-M 68）",
       "packaging": "170kg",
       "industry": "冶金、钢铁、火电等通用领域",
       "application_site": "工程机械、数控机床等设备的液压系统",
@@ -4094,7 +4166,7 @@
       "features": "具备抗磨性的同时，更强化了卓越的低温流动性和粘温特性，专为低温或温差大的环境设计",
       "notes": "标准通用低温抗磨液压油L-HV",
       "kv40": "32.6",
-      "kv100": "10",
+      "kv100": "11.74",
       "vi": "165",
       "pour_point": "-51",
       "flash_point": "228",
@@ -4109,7 +4181,7 @@
       "features": "具备抗磨性的同时，更强化了卓越的低温流动性和粘温特性，专为低温或温差大的环境设计",
       "notes": "标准通用低温抗磨液压油L-HV",
       "kv40": "45.5",
-      "kv100": "10",
+      "kv100": "12.24",
       "vi": "164",
       "pour_point": "-48",
       "flash_point": "232",
@@ -4124,7 +4196,7 @@
       "features": "具备抗磨性的同时，更强化了卓越的低温流动性和粘温特性，专为低温或温差大的环境设计",
       "notes": "标准通用低温抗磨液压油L-HV",
       "kv40": "68.8",
-      "kv100": "10",
+      "kv100": "13.42",
       "vi": "158",
       "pour_point": "-45",
       "flash_point": "238",
@@ -4153,7 +4225,7 @@
     },
     {
       "series": "无灰液压油",
-      "product_cn": "L-HMS 46 无灰抗磨液压油",
+      "product_cn": "Clean 46 无灰抗磨液压油（原HMS）",
       "packaging": "170kg",
       "industry": "冶金、钢铁、火电等通用领域",
       "application_site": "高精度、敏感元件、特殊环境设等对油品清洁度和部件敏感性有严苛要求的液压系统",
@@ -4561,7 +4633,8 @@
       "copper_corrosion": "1b",
       "rust_b": "无锈",
       "wear_scar": "0.28",
-      "weld_load": "2453"
+      "weld_load": "2453",
+      "fzg": "12"
     },
     {
       "series": "全合成工业齿轮油 SHC",
@@ -4572,13 +4645,15 @@
       "features": "全面提升的、卓越的综合性能",
       "notes": "PAO全合成工业齿轮油",
       "kv40": "153.0",
+      "kv100": "21.9",
       "vi": "170",
       "pour_point": "-45",
       "flash_point": "230",
       "copper_corrosion": "1b",
       "rust_b": "无锈",
       "wear_scar": "0.28",
-      "weld_load": "2453"
+      "weld_load": "2453",
+      "fzg": "＞12"
     },
     {
       "series": "全合成工业齿轮油 SHC",
@@ -4589,13 +4664,15 @@
       "features": "全面提升的、卓越的综合性能",
       "notes": "PAO全合成工业齿轮油",
       "kv40": "218.9",
+      "kv100": "28.75",
       "vi": "170",
       "pour_point": "-42",
       "flash_point": "240",
       "copper_corrosion": "1b",
       "rust_b": "无锈",
       "wear_scar": "0.28",
-      "weld_load": "2453"
+      "weld_load": "2453",
+      "fzg": "＞12"
     },
     {
       "series": "全合成工业齿轮油 SHC",
@@ -4606,13 +4683,15 @@
       "features": "全面提升的、卓越的综合性能",
       "notes": "PAO全合成工业齿轮油",
       "kv40": "326.4",
+      "kv100": "39.89",
       "vi": "175",
       "pour_point": "-42",
       "flash_point": "245",
       "copper_corrosion": "1b",
       "rust_b": "无锈",
       "wear_scar": "0.28",
-      "weld_load": "2453"
+      "weld_load": "2453",
+      "fzg": "＞12"
     },
     {
       "series": "全合成工业齿轮油 SHC",
@@ -4623,13 +4702,15 @@
       "features": "全面提升的、卓越的综合性能",
       "notes": "PAO全合成工业齿轮油",
       "kv40": "468.7",
+      "kv100": "53.1",
       "vi": "178",
       "pour_point": "-39",
       "flash_point": "250",
       "copper_corrosion": "1b",
       "rust_b": "无锈",
       "wear_scar": "0.28",
-      "weld_load": "2453"
+      "weld_load": "2453",
+      "fzg": "＞12"
     },
     {
       "series": "全合成工业齿轮油 SHC",
@@ -4640,13 +4721,15 @@
       "features": "全面提升的、卓越的综合性能",
       "notes": "PAO全合成工业齿轮油",
       "kv40": "687.4",
+      "kv100": "69",
       "vi": "176",
       "pour_point": "-36",
       "flash_point": "250",
       "copper_corrosion": "1b",
       "rust_b": "无锈",
       "wear_scar": "0.28",
-      "weld_load": "2453"
+      "weld_load": "2453",
+      "fzg": "＞12"
     },
     {
       "series": "全合成工业齿轮油 SHC",
@@ -4657,13 +4740,15 @@
       "features": "全面提升的、卓越的综合性能",
       "notes": "PAO全合成工业齿轮油",
       "kv40": "947.1",
+      "kv100": "90.5",
       "vi": "183",
       "pour_point": "-36",
       "flash_point": "250",
       "copper_corrosion": "1b",
       "rust_b": "无锈",
       "wear_scar": "0.27",
-      "weld_load": "2453"
+      "weld_load": "2453",
+      "fzg": "＞12"
     },
     {
       "series": "蜗轮蜗杆油 CKE/P",
@@ -5229,6 +5314,34 @@
       "kv40": "68.64",
       "vi": "108",
       "pour_point": "-21"
+    },
+    {
+      "series": "",
+      "product_cn": "Lubemater FB 100 油膜轴承油",
+      "packaging": "170",
+      "industry": "钢铁轧钢 油膜轴承",
+      "application_site": "高速线材轧机循环油",
+      "features": "优异的分水性能与抗磨性能",
+      "notes": "",
+      "kv40": "98.5",
+      "vi": "98",
+      "pour_point": "-24",
+      "flash_point": "240",
+      "copper_corrosion": "1b"
+    },
+    {
+      "series": "",
+      "product_cn": "Lubemater FB 220 油膜轴承油",
+      "packaging": "170",
+      "industry": "钢铁轧钢 油膜轴承",
+      "application_site": "高速线材轧机循环油",
+      "features": "优异的分水性能与抗磨性能",
+      "notes": "",
+      "kv40": "218",
+      "vi": "99",
+      "pour_point": "-15",
+      "flash_point": "255",
+      "copper_corrosion": "1b"
     }
   ],
   "versionHistory": [
