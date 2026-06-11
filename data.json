@@ -4633,7 +4633,8 @@
       "copper_corrosion": "1b",
       "rust_b": "无锈",
       "wear_scar": "0.28",
-      "weld_load": "2453"
+      "weld_load": "2453",
+      "fzg": "12"
     },
     {
       "series": "全合成工业齿轮油 SHC",
@@ -4651,7 +4652,8 @@
       "copper_corrosion": "1b",
       "rust_b": "无锈",
       "wear_scar": "0.28",
-      "weld_load": "2453"
+      "weld_load": "2453",
+      "fzg": "＞12"
     },
     {
       "series": "全合成工业齿轮油 SHC",
@@ -4669,7 +4671,8 @@
       "copper_corrosion": "1b",
       "rust_b": "无锈",
       "wear_scar": "0.28",
-      "weld_load": "2453"
+      "weld_load": "2453",
+      "fzg": "＞12"
     },
     {
       "series": "全合成工业齿轮油 SHC",
@@ -4687,7 +4690,8 @@
       "copper_corrosion": "1b",
       "rust_b": "无锈",
       "wear_scar": "0.28",
-      "weld_load": "2453"
+      "weld_load": "2453",
+      "fzg": "＞12"
     },
     {
       "series": "全合成工业齿轮油 SHC",
@@ -4705,7 +4709,8 @@
       "copper_corrosion": "1b",
       "rust_b": "无锈",
       "wear_scar": "0.28",
-      "weld_load": "2453"
+      "weld_load": "2453",
+      "fzg": "＞12"
     },
     {
       "series": "全合成工业齿轮油 SHC",
@@ -4723,7 +4728,8 @@
       "copper_corrosion": "1b",
       "rust_b": "无锈",
       "wear_scar": "0.28",
-      "weld_load": "2453"
+      "weld_load": "2453",
+      "fzg": "＞12"
     },
     {
       "series": "全合成工业齿轮油 SHC",
@@ -4741,7 +4747,8 @@
       "copper_corrosion": "1b",
       "rust_b": "无锈",
       "wear_scar": "0.27",
-      "weld_load": "2453"
+      "weld_load": "2453",
+      "fzg": "＞12"
     },
     {
       "series": "蜗轮蜗杆油 CKE/P",
