@@ -2,9 +2,14 @@
 
 ## ⚠️ 核心工作原则
 
-> **除非特别要求改进或增加新功能，否则不对 HTML 及软件代码做任何修改。**
+> **只更新数据，不修改软件及 HTML 代码。**
 > **日常工作仅为：更新 Excel 数据 → 运行 `build_all.py` → 推送到 GitHub。**
-> **若数据显示不准确，优先修改 `build_all.py`，不修改 HTML 或 App 代码。**
+>
+> **具体规则：**
+> - `build_all.py` 负责数据读取和转换，可随数据需求修改
+> - **禁止修改：** `RunmeiMatching-1.1.2.html`、`lubricant_product_matching_tool.html`、Android 项目代码
+> - 新字段（如 FZG）读到 `data.json` 后，旧版 App/HTML 不会自动显示，需等软件更新才能渲染
+> - 若数据不准确，优先改 `build_all.py` 的数据读取和映射逻辑，不改前端显示代码
 
 ## 项目概览
 
