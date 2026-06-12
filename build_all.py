@@ -824,6 +824,20 @@ if args.release and app_update:
     ANDROID_PROJECT = r'C:\Users\张大脸小太阳\AndroidStudioProjects\RunmeiMatching'
 
     if not args.skip_apk:
+        ANDROID_ASSETS = r'C:\Users\张大脸小太阳\AndroidStudioProjects\RunmeiMatching\app\src\main\assets'
+
+        # First copy updated HTML + data to Android assets (so APK includes them)
+        try:
+            shutil.copy(OUTPUT_DATA_JSON, f'{ANDROID_ASSETS}/fallback.json')
+            print(f'  Android fallback.json copied')
+        except Exception as e:
+            print(f'  [WARN] Android fallback copy: {e}')
+        try:
+            shutil.copy(OUTPUT_HTML, f'{ANDROID_ASSETS}/index.html')
+            print(f'  Android index.html copied')
+        except Exception as e:
+            print(f'  [WARN] Android index copy: {e}')
+
         # Update versionName in build.gradle.kts
         gradle_file = f'{ANDROID_PROJECT}/app/build.gradle.kts'
         try:
