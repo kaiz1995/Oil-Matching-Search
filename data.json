@@ -5669,8 +5669,8 @@
     }
   ],
   "appUpdate": {
-    "latestVersion": "1.1.5",
-    "updateNotes": "1.修复产品数据卡功能：Android端直接保存到下载目录\n2.优化匹配后技术规格展示",
+    "latestVersion": "1.1.6",
+    "updateNotes": "1.修复产品数据卡功能：Android端直接保存到下载目录\n3.优化匹配后技术规格展示",
     "apkUrl": "https://kaiz1995.github.io/Oil-Matching-Search/RunmeiMatching.apk",
     "forceUpdate": true
   },
@@ -5738,6 +5738,10 @@
     {
       "version": "1.1.5",
       "notes": "1.修复产品数据卡功能：Android端直接保存到下载目录\n2.优化匹配后技术规格展示"
+    },
+    {
+      "version": "1.1.6",
+      "notes": "1.修复产品数据卡功能：Android端直接保存到下载目录\n3.优化匹配后技术规格展示"
     }
   ],
   "releasePages": {
