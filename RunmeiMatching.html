@@ -332,11 +332,12 @@ body {
 .toast {
   position: fixed; top: 80px; left: 50%; transform: translateX(-50%);
   background: var(--primary); color: #fff; padding: 10px 24px;
-  border-radius: 24px; font-size: 13px; z-index: 999;
+  border-radius: 24px; font-size: 13px; z-index: 9999;
   opacity: 0; transition: opacity .3s, transform .3s; pointer-events: none;
   font-family: var(--font-ui); font-weight: 500; box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+  display: none;
 }
-.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); display: block; }
 
 /* ============ LOADING SHIMMER ============ */
 @keyframes shimmer { 0% { background-position:-200px 0; } 100% { background-position:calc(200px + 100%) 0; } }
@@ -1905,8 +1906,15 @@ function showToast(msg, duration) {
   var el = document.getElementById('toast');
   if (!el) return;
   el.textContent = msg;
+  // Use both class and inline style for maximum compatibility
   el.classList.add('show');
-  setTimeout(function(){ el.classList.remove('show'); }, duration || 3000);
+  el.style.opacity = '1';
+  el.style.display = 'block';
+  setTimeout(function(){
+    el.classList.remove('show');
+    el.style.opacity = '0';
+    el.style.display = 'none';
+  }, duration || 3000);
 }
 
 function doUpdate() {
