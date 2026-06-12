@@ -7,7 +7,7 @@ Unified build pipeline: Excel → JSON → HTML
 4. Smart matching to fill Runmei where possible
 5. Outputs: product_data_merged.json + lubricant_product_matching_tool.html
 """
-import json, re, sys, os, base64, argparse, shutil, subprocess
+import json, re, sys, os, base64, argparse, shutil, subprocess, urllib.parse
 sys.stdout.reconfigure(encoding='utf-8')
 
 parser = argparse.ArgumentParser(description='润滑油数据构建管线')
@@ -67,7 +67,7 @@ def read_catalog_from_excel(excel_path):
                 col_map['viscosity'] = i
             elif '润美' in h:
                 col_map['runmei'] = i
-            elif '来源' in h or '数据来源' in h or '特性' in h:
+            elif '来源' in h or '数据来源' in h:
                 col_map['source'] = i
 
         products = []
@@ -103,16 +103,158 @@ def read_catalog_from_excel(excel_path):
         print(f"  [WARN] Cannot read Excel: {e}")
         return None
 
+def auto_field_key(header):
+    """Auto-generate a field key from header text for unknown columns."""
+    import re
+    key = re.sub(r'[^\w一-鿿]+', '_', header).strip('_')
+    if not key:
+        key = 'extra'
+    return key
+
 def parse_runmei_sheet(excel_path):
-    """Parse '润美产品目录' sheet into a structured list of Runmei products."""
+    """Parse '润美产品目录' sheet into structured products + param config.
+
+    Dynamically detects ALL columns from row 1 headers.
+    Returns (products_list, param_config_list).
+    """
     try:
         import openpyxl
         wb = openpyxl.load_workbook(excel_path, data_only=True)
         sheet_name = next((s for s in ['润美产品目录', '润美产品查询'] if s in wb.sheetnames), None)
         if not sheet_name:
             wb.close()
-            return None
+            return None, []
         ws = wb[sheet_name]
+
+        # Read all column headers from row 1
+        headers = []
+        for c in range(1, ws.max_column + 1):
+            val = ws.cell(1, c).value
+            headers.append(str(val).strip() if val else '')
+
+        # Keyword -> field_key mapping for known columns
+        HEADER_MAP = {
+            '技术系列': 'series',
+            '产品牌号': 'product_cn',
+            '包装规格': 'packaging',
+            '应用行业': 'industry',
+            '主要应用部位': 'application_site',
+            '产品特性': 'features',      # matches "对润滑的要求或产品特性"
+            '备注': 'notes',
+            '外观': 'appearance',
+            '运动粘度40': 'kv40',
+            '运动粘度100': 'kv100',
+            '粘度指数': 'vi',
+            '倾点': 'pour_point',
+            '闪点': 'flash_point',
+            '铜片腐蚀': 'copper_corrosion',
+            '锈蚀 A': 'rust_a',
+            '锈蚀 B': 'rust_b',
+            'NAS1638': 'cleanliness_nas',
+            '清洁度ISO': 'cleanliness_iso',
+            '磨斑直径': 'wear_scar',
+            '烧结负荷': 'weld_load',
+            '最大无卡咬': 'pb_load',
+            '空气释放': 'air_release',
+            '抗乳化性(54℃)': 'demulsibility_54',
+            '抗乳化性，82': 'demulsibility_82',
+            '抗乳化性(82℃)': 'demulsibility_82_detail',
+            '泡沫特性': 'foam',
+            'PH值': 'ph_value',
+            '凝点': 'solidification_point',
+            '密度': 'density',
+            '酸值': 'acid_value',
+            'FZG': 'fzg',
+            'TDS文件': 'tds_file',
+            'MSDS文件': 'msds_file',
+        }
+
+        # Fields that are NOT technical parameters (excluded from paramConfig)
+        CORE_FIELDS = {'series', 'product_cn', 'packaging', 'industry',
+                       'application_site', 'features', 'notes', 'appearance',
+                       'tds_file', 'msds_file'}
+
+        # Known parameter labels and test standards
+        PARAM_LABELS = {
+            'kv40': '运动粘度40℃(mm²/s)', 'kv100': '运动粘度100℃(mm²/s)',
+            'vi': '粘度指数', 'pour_point': '倾点(℃)', 'flash_point': '闪点(℃)',
+            'copper_corrosion': '铜片腐蚀(100℃,3h)',
+            'rust_a': '液相锈蚀A法', 'rust_b': '液相锈蚀B法',
+            'cleanliness_nas': '清洁度(NAS1638)', 'cleanliness_iso': '清洁度(ISO 4406)',
+            'wear_scar': '磨斑直径(mm)', 'weld_load': '烧结负荷(N)',
+            'pb_load': '最大无卡咬负荷(N)',
+            'air_release': '空气释放值(50℃)(min)',
+            'demulsibility_54': '抗乳化性(54℃)(min)',
+            'demulsibility_82': '抗乳化性(82℃)(min)',
+            'demulsibility_82_detail': '抗乳化性(82℃) 乳化液/分离水/油中水',
+            'foam': '泡沫特性(mL/mL)',
+            'ph_value': 'pH值',
+            'solidification_point': '凝点(℃)',
+            'density': '密度（15°C）(g/cm³)',
+            'acid_value': '酸值(mgKOH/g)',
+            'fzg': 'FZG A20/8.3/90',
+        }
+        PARAM_STANDARDS = {
+            'kv40': 'GB/T 265', 'kv100': 'GB/T 265', 'vi': 'GB/T 1995',
+            'pour_point': 'GB/T 3535', 'flash_point': 'GB/T 3536',
+            'copper_corrosion': 'GB/T 5096',
+            'rust_a': 'GB/T 11143', 'rust_b': 'GB/T 11143',
+            'cleanliness_nas': 'NAS 1638', 'cleanliness_iso': 'ISO 4406',
+            'wear_scar': 'SH/T 0189', 'weld_load': 'GB/T 3142',
+            'pb_load': 'GB/T 3142',
+            'air_release': 'SH/T 0308',
+            'demulsibility_54': 'GB/T 7305',
+            'demulsibility_82': 'GB/T 7305',
+            'demulsibility_82_detail': 'GB/T 7305',
+            'foam': 'GB/T 12579',
+            'ph_value': 'GB/T 7304',
+            'solidification_point': 'GB/T 3535',
+            'density': 'GB/T 1884',
+            'acid_value': 'GB/T 4945',
+            'fzg': 'NB/SH/T 0306-2013',
+        }
+
+        # Build column index -> field_key mapping
+        col_map = {}     # 0-based index -> field_key
+        col_params = []  # ordered list of {key, label, standard} tuples
+
+        for idx, header in enumerate(headers):
+            if not header:
+                continue
+            # Match against known keywords
+            matched_key = None
+            for keyword, field_key in HEADER_MAP.items():
+                if keyword in header:
+                    matched_key = field_key
+                    break
+            if matched_key:
+                col_map[idx] = matched_key
+                if matched_key not in CORE_FIELDS:
+                    col_params.append({
+                        'key': matched_key,
+                        'label': PARAM_LABELS.get(matched_key, header),
+                        'standard': PARAM_STANDARDS.get(matched_key, '')
+                    })
+            else:
+                # Unknown column — auto-generate field key
+                fk = auto_field_key(header)
+                col_map[idx] = fk
+                col_params.append({
+                    'key': fk,
+                    'label': header,
+                    'standard': ''
+                })
+
+        # Deduplicate col_params by key (safety net for overlapping keyword matches)
+        seen_keys = set()
+        unique_params = []
+        for param in col_params:
+            if param['key'] not in seen_keys:
+                seen_keys.add(param['key'])
+                unique_params.append(param)
+        col_params = unique_params
+
+        # Read data rows
         products = []
         for row in range(2, ws.max_row + 1):
             def c(idx):
@@ -121,44 +263,25 @@ def parse_runmei_sheet(excel_path):
             name = c(1)  # B: 产品牌号
             if not name:
                 continue
-            p = {
-                'series': c(0),       # A: 技术系列
-                'product_cn': name,    # B: 产品牌号
-                'packaging': c(2),     # C: 包装规格
-                'industry': c(3),      # D: 应用行业
-                'application_site': c(4), # E: 主要应用部位
-                'features': c(5),      # F: 产品特性
-                'notes': c(6),         # G: 备注
-            }
-            # Technical parameters with explicit column mapping (0-based index for c())
-            # Column mapping: I(9)=kv40, J(10)=kv100, K(11)=vi, L(12)=pour_point, M(13)=flash_point,
-            # N(14)=copper_corrosion, O(15)=rust_a, P(16)=rust_b, Q(17)=cleanliness_nas,
-            # R(18)=cleanliness_iso, S(19)=wear_scar, T(20)=weld_load, AE(31)=fzg
-            param_map = {
-                'kv40': 8,              # I: 运动粘度40℃
-                'kv100': 9,             # J: 运动粘度100℃
-                'vi': 10,               # K: 粘度指数
-                'pour_point': 11,       # L: 倾点
-                'flash_point': 12,      # M: 闪点
-                'copper_corrosion': 13,  # N: 铜片腐蚀
-                'rust_a': 14,           # O: 液相锈蚀A法
-                'rust_b': 15,           # P: 液相锈蚀B法
-                'cleanliness_nas': 16,  # Q: 清洁度NAS1638
-                'cleanliness_iso': 17,  # R: 清洁度ISO 4406
-                'wear_scar': 18,        # S: 磨斑直径
-                'weld_load': 19,        # T: 烧结负荷(PD)
-                'fzg': 30,              # AE: FZG失效负荷等级
-            }
-            for key, col_idx in param_map.items():
-                val = c(col_idx)
-                if val:
-                    p[key] = val
+            p = {}
+            for idx, field_key in col_map.items():
+                val = c(idx)
+                # Always set core fields even if empty; param fields only if non-empty
+                if val or field_key in CORE_FIELDS:
+                    if field_key in ('tds_file', 'msds_file'):
+                        if val:
+                            encoded_val = urllib.parse.quote(val)
+                            p[field_key] = f"https://kaiz1995.github.io/Oil-Matching-Search/pdfs/{encoded_val}"
+                    else:
+                        p[field_key] = val
             products.append(p)
+
         wb.close()
-        return products if products else None
+        return products if products else None, col_params
+
     except Exception as e:
         print(f"  [WARN] Cannot read runmei catalog: {e}")
-        return None
+        return None, []
 
 # Try filled Excel first (user's primary editing surface), then original, then JSON
 catalog = None
@@ -185,11 +308,12 @@ if not catalog:
 
 # Load Runmei product catalog from Excel
 runmei_catalog = None
+runmei_param_config = []
 for excel_path in [EXCEL_FILLED, EXCEL_PRIMARY]:
     if os.path.exists(excel_path):
-        runmei_catalog = parse_runmei_sheet(excel_path)
+        runmei_catalog, runmei_param_config = parse_runmei_sheet(excel_path)
         if runmei_catalog:
-            print(f"Runmei catalog: {len(runmei_catalog)} products")
+            print(f"Runmei catalog: {len(runmei_catalog)} products, {len(runmei_param_config)} params detected")
             break
 
 # ============================================================
@@ -500,6 +624,8 @@ data_export = {
 }
 if runmei_catalog:
     data_export['runmeiCatalog'] = runmei_catalog
+if runmei_param_config:
+    data_export['paramConfig'] = runmei_param_config
 if getattr(args, 'release', False) and app_update:
     data_export['appUpdate'] = app_update
 if version_history:
@@ -511,7 +637,6 @@ with open(OUTPUT_DATA_JSON, 'w', encoding='utf-8') as f:
     json.dump(data_export, f, ensure_ascii=False, indent=2)
 print(f"Data JSON saved: {OUTPUT_DATA_JSON} ({len(merged)} products)")
 
-# Prepare embedded data for offline HTML usage
 embedded_data_json = json.dumps(data_export, ensure_ascii=False, separators=(',', ':')).replace('</script>', '<\\/script>')
 
 # ============================================================
@@ -557,7 +682,7 @@ except Exception as e:
     logo_b64 = ''
 
 # Read existing HTML, update data sections in-place
-OUTPUT_HTML = f'{BASE_DIR}/RunmeiMatching-1.1.2.html'
+OUTPUT_HTML = f'{BASE_DIR}/RunmeiMatching-1.1.5.html'
 if os.path.exists(OUTPUT_HTML):
     with open(OUTPUT_HTML, 'r', encoding='utf-8') as f:
         html = f.read()
@@ -676,7 +801,13 @@ if logo_b64:
 with open(OUTPUT_HTML, 'w', encoding='utf-8') as f:
     f.write(html)
 
+# Also update RunmeiMatching.html (latest-working copy)
+LATEST_HTML = f'{BASE_DIR}/RunmeiMatching.html'
+with open(LATEST_HTML, 'w', encoding='utf-8') as f:
+    f.write(html)
+
 print(f"HTML tool saved: {OUTPUT_HTML}")
+print(f"Latest HTML:    {LATEST_HTML}")
 print(f"Size: {len(html.encode('utf-8')) / 1024:.1f} KB")
 print(f"Products: {len(products)}")
 print(f"With Runmei: {runmei_count}")
@@ -767,11 +898,28 @@ try:
 except Exception as e:
     print(f'  [SKIP] GitHub 仓库: {e}')
 
+# 1b. Copy pdfs/ to GitHub repo (for TDS/MSDS download)
+try:
+    PDFS_SRC = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'pdfs')
+    PDFS_DST = os.path.join(GITHUB_REPO, 'pdfs')
+    os.makedirs(PDFS_DST, exist_ok=True)
+    for fname in os.listdir(PDFS_SRC):
+        if fname.endswith('.pdf'):
+            src = os.path.join(PDFS_SRC, fname)
+            dst = os.path.join(PDFS_DST, fname)
+            if os.path.exists(dst):
+                os.chmod(dst, 0o644)  # Remove read-only before overwrite
+            shutil.copy2(src, dst)
+            os.chmod(dst, 0o644)      # Ensure writable for git
+    deployed.append('GitHub 仓库 pdfs/')
+except Exception as e:
+    print(f'  [SKIP] GitHub pdfs: {e}')
+
 # 2. Git commit & push
 if not args.skip_git:
     try:
         os.chdir(GITHUB_REPO)
-        git_files = ['data.json']
+        git_files = ['data.json', 'pdfs/']
         if os.path.exists(f'{GITHUB_REPO}/RunmeiMatching.apk'):
             git_files.append('RunmeiMatching.apk')
         import glob as _glob

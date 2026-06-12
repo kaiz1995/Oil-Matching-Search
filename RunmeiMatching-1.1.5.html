@@ -1,0 +1,2089 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>润美润滑油产品匹配工具</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ============ DESIGN SYSTEM ============ */
+:root {
+  --primary: #0068B7;
+  --primary-light: #1A7EC9;
+  --primary-surface: #E6F0F9;
+  --accent: #AACD06;
+  --accent-surface: #F4FAE0;
+  --bg: #F2F4F7;
+  --card: #FFFFFF;
+  --text: #1A1A1A;
+  --text-secondary: #6B7280;
+  --text-muted: #9CA3AF;
+  --border: #E5E2DC;
+  --border-light: #F0EDE8;
+  --success: #2D7D46;
+  --success-bg: #EDF5EE;
+  --success-border: #C6E0C8;
+  --info: #2B6B9B;
+  --info-bg: #EDF2F8;
+  --warning: #C9891E;
+  --warning-bg: #FDF6EC;
+  --danger: #B34141;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md: 0 2px 8px rgba(0,0,0,0.06);
+  --shadow-lg: 0 4px 16px rgba(0,0,0,0.08);
+  --font-ui: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+  --font-body: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ============ HEADER ============ */
+.header {
+  background: linear-gradient(135deg, #0068B7 0%, #1A7EC9 100%);
+  color: #fff;
+  padding: 12px 24px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  border-bottom: 2px solid var(--accent);
+}
+.header-left { display: flex; align-items: center; gap: 14px; }
+.header-logo { height: 34px; width: auto; flex-shrink: 0; }
+.header h1 { font-size: 17px; font-weight: 700; font-family: var(--font-ui); letter-spacing: 0.3px; }
+.header-stats { font-size: 11px; opacity: .85; display: flex; gap: 16px; flex-wrap: wrap; font-family: var(--font-ui); font-weight: 500; }
+.header-stats span { white-space: nowrap; }
+
+/* ============ LAYOUT ============ */
+.container { max-width: 960px; margin: 0 auto; padding: 20px 16px 32px; }
+
+/* ============ TABS ============ */
+.tabs {
+  display: flex; gap: 4px; margin-bottom: 20px; background: var(--card);
+  border-radius: var(--radius-lg); padding: 4px;
+  box-shadow: var(--shadow-sm); border: 1px solid var(--border-light);
+}
+.tab {
+  flex: 1; padding: 10px 8px; text-align: center; font-size: 13px; cursor: pointer;
+  border: none; background: none; color: var(--text-secondary); border-radius: var(--radius-md);
+  transition: all .2s; font-family: var(--font-ui); font-weight: 600; letter-spacing: 0.2px;
+}
+.tab.active { background: var(--primary); color: #fff; box-shadow: 0 2px 4px rgba(0,104,183,0.2); }
+.tab:hover:not(.active) { background: var(--primary-surface); color: var(--primary); }
+
+/* ============ PANELS ============ */
+.panel { display: none; }
+.panel.active { display: block; animation: fadeIn .25s ease; }
+@keyframes fadeIn { from { opacity:0; transform:translateY(4px); } to { opacity:1; transform:translateY(0); } }
+
+/* ============ CARDS ============ */
+.card {
+  background: var(--card); border-radius: var(--radius-lg); padding: 20px;
+  margin-bottom: 16px; box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border-light); transition: box-shadow .2s;
+}
+.card-title {
+  font-size: 14px; font-weight: 700; margin-bottom: 16px; color: var(--primary);
+  font-family: var(--font-ui); letter-spacing: 0.2px;
+}
+.card-title::before { content: ''; display: inline-block; width: 3px; height: 14px; background: var(--accent); border-radius: 2px; margin-right: 8px; vertical-align: -2px; }
+
+/* ============ FORMS ============ */
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+@media (max-width: 600px) { .form-row { grid-template-columns: 1fr; } }
+
+/* ============ VISCOSITY CALCULATOR ============ */
+.calc-desc { font-size: 13px; color: var(--text-secondary); margin: 4px 0 16px; line-height: 1.5; }
+.calc-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+@media (max-width: 600px) { .calc-row { grid-template-columns: 1fr; } }
+.calc-field label { display: block; font-size: 12px; font-weight: 600; color: var(--text-secondary); margin-bottom: 6px; font-family: var(--font-ui); }
+.calc-field input {
+  width: 100%; padding: 12px 14px; border: 1.5px solid var(--border); border-radius: var(--radius-md);
+  font-size: 15px; font-family: var(--font-body); background: var(--card); color: var(--text);
+  transition: all .2s; outline: none;
+}
+.calc-field input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(0,104,183,0.1); }
+.calc-field input.calc-highlight { background: #E6F0F9; border-color: var(--primary-light); }
+.calc-error { margin-top: 12px; font-size: 12px; color: var(--danger); min-height: 18px; }
+.form-group { display: flex; flex-direction: column; gap: 4px; }
+.form-group label { font-size: 12px; color: var(--text-secondary); font-weight: 600; font-family: var(--font-ui); letter-spacing: 0.2px; }
+.form-group input, .form-group select, .form-group textarea {
+  font-size: 14px; border-radius: var(--radius-md); border: 1.5px solid var(--border); padding: 10px 14px;
+  background: var(--card); color: var(--text); width: 100%; font-family: var(--font-body);
+  transition: all .2s;
+}
+.form-group input:hover, .form-group select:hover, .form-group textarea:hover { border-color: #d0ccc5; }
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+  border-color: var(--primary); outline: none;
+  box-shadow: 0 0 0 3px rgba(0,104,183,0.1);
+}
+.form-group textarea { resize: vertical; min-height: 56px; }
+.form-group select {
+  -webkit-appearance: none; appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236B7280' d='M2 4l4 4 4-4'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 12px center; background-size: 12px;
+  padding-right: 36px; cursor: pointer;
+}
+.form-group select option { color: var(--text); background: var(--card); padding: 8px; }
+.hint { font-size: 11px; color: var(--text-muted); margin-top: 3px; line-height: 1.5; }
+
+/* ============ BUTTONS ============ */
+.btn-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-top: 4px; }
+.search-btn {
+  padding: 11px 32px; background: var(--primary); color: #fff;
+  border: none; border-radius: var(--radius-md); font-size: 14px; font-weight: 600; cursor: pointer;
+  display: inline-flex; align-items: center; gap: 8px; transition: all .2s;
+  font-family: var(--font-ui); letter-spacing: 0.3px;
+}
+.search-btn:hover { background: var(--primary-light); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,104,183,0.25); }
+.search-btn:active { transform: translateY(0); }
+.btn-clear {
+  padding: 11px 20px; background: transparent; color: var(--text-secondary);
+  border: 1.5px solid var(--border); border-radius: var(--radius-md); font-size: 13px; cursor: pointer;
+  font-family: var(--font-ui); font-weight: 500; transition: all .2s;
+}
+.btn-clear:hover { background: var(--border-light); color: var(--text); }
+
+/* ============ RESULT SUMMARY ============ */
+.result-summary {
+  display: flex; gap: 12px; flex-wrap: wrap; margin: 16px 0 12px; padding: 10px 16px;
+  background: var(--card); border-radius: var(--radius-md);
+  border: 1px solid var(--border-light); font-size: 13px; color: var(--text-secondary);
+  align-items: center; font-family: var(--font-ui);
+}
+.result-summary strong { color: var(--primary); font-weight: 700; }
+.summary-divider { width: 1px; height: 14px; background: var(--border); }
+
+/* ============ RESULT CARDS ============ */
+.result-card {
+  background: var(--card); border-radius: var(--radius-md); padding: 16px;
+  margin-bottom: 10px; box-shadow: var(--shadow-sm); cursor: pointer;
+  border: 1px solid var(--border-light); position: relative;
+  transition: all .2s; overflow: hidden;
+}
+.result-card:hover {
+  border-color: var(--primary); box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+.result-card.best { border-left: 4px solid var(--success); }
+.result-card.good { border-left: 4px solid var(--info); }
+.result-card.fair { border-left: 4px solid var(--warning); }
+.result-card.none { border-left: 4px solid var(--text-muted); }
+.result-card.best::before, .result-card.good::before, .result-card.fair::before, .result-card.none::before {
+  content: ''; position: absolute; top: 0; bottom: 0; left: 0; width: 4px;
+}
+.card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; flex-wrap: wrap; }
+.card-name { font-size: 14px; font-weight: 600; word-break: keep-all; overflow-wrap: break-word; line-height: 1.4; }
+.card-meta { font-size: 12px; color: var(--text-secondary); margin-top: 3px; }
+.score-badge {
+  font-size: 11px; padding: 3px 12px; border-radius: 20px; white-space: nowrap;
+  font-weight: 600; flex-shrink: 0; font-family: var(--font-ui);
+}
+.badge-high { background: var(--success-bg); color: var(--success); border: 1px solid var(--success-border); }
+.badge-mid { background: var(--info-bg); color: var(--info); border: 1px solid #D0E0F0; }
+.badge-low { background: var(--warning-bg); color: var(--warning); border: 1px solid #F0E4CC; }
+.badge-info { background: var(--muted-bg); color: var(--text-muted); border: 1px solid var(--border); }
+
+/* Score bar inside card */
+.score-bar-wrap { margin-top: 8px; height: 4px; background: var(--border-light); border-radius: 2px; overflow: hidden; }
+.score-bar-fill { height: 100%; border-radius: 2px; transition: width .4s ease; }
+.result-card.best .score-bar-fill { background: var(--success); }
+.result-card.good .score-bar-fill { background: var(--info); }
+.result-card.fair .score-bar-fill { background: var(--warning); }
+.result-card.none .score-bar-fill { background: var(--text-muted); }
+
+/* ============ RUNMEI BOX ============ */
+.runmei-box {
+  margin-top: 10px; padding: 12px 16px; background: var(--success-bg);
+  border-radius: var(--radius-md); border: 1px solid var(--success-border);
+  display: flex; justify-content: space-between; align-items: center; gap: 12px;
+  transition: background .2s;
+}
+.runmei-box:hover { background: #e8f5ea; }
+.runmei-info { flex: 1; min-width: 0; }
+.runmei-label { font-size: 11px; color: var(--success); font-weight: 700; font-family: var(--font-ui); letter-spacing: 0.5px; text-transform: uppercase; }
+.runmei-name { font-size: 15px; font-weight: 700; color: #166534; margin-top: 2px; word-break: keep-all; overflow-wrap: break-word; }
+.runmei-app { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+.copy-btn {
+  font-size: 12px; padding: 6px 14px; background: var(--card);
+  border: 1px solid var(--success-border); border-radius: var(--radius-sm);
+  color: var(--success); cursor: pointer; white-space: nowrap; flex-shrink: 0;
+  font-family: var(--font-ui); font-weight: 600; transition: all .2s;
+}
+.copy-btn:hover { background: var(--success-bg); border-color: var(--success); }
+.copy-btn.copied { background: var(--success-border); color: #166534; }
+
+.detail-btn {
+  font-size: 12px; padding: 6px 14px; background: var(--success);
+  border: 1px solid var(--success); border-radius: var(--radius-sm);
+  color: #fff; cursor: pointer; white-space: nowrap; flex-shrink: 0;
+  font-family: var(--font-ui); font-weight: 600; transition: all .2s;
+  margin-left: 8px;
+}
+.detail-btn:hover { background: #15803d; border-color: #15803d; }
+
+.viscosity-selector {
+  margin-top: 10px; padding: 12px 14px; background: var(--border-light);
+  border-radius: var(--radius-md); border: 1px solid var(--border);
+  display: none; flex-direction: column; gap: 8px; animation: fadeIn 0.2s ease-out;
+  width: 100%; box-sizing: border-box;
+}
+.viscosity-selector.active {
+  display: flex;
+}
+.vis-selector-title {
+  font-size: 11px; font-weight: bold; color: var(--text-secondary); margin-bottom: 2px;
+}
+.vis-btn-group {
+  display: flex; gap: 8px; flex-wrap: wrap;
+}
+.vis-btn {
+  font-size: 12px; padding: 6px 14px; background: var(--card);
+  border: 1px solid var(--border); border-radius: var(--radius-sm);
+  color: var(--text); cursor: pointer; font-weight: 600; transition: all .2s;
+}
+.vis-btn:hover {
+  border-color: var(--primary); color: var(--primary); background: var(--border-light);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ============ NO RUNMEI ============ */
+.no-runmei {
+  margin-top: 8px; padding: 8px 14px; background: var(--warning-bg);
+  border-radius: var(--radius-sm); border: 1px solid #F0E4CC;
+  font-size: 12px; color: var(--text-secondary);
+}
+
+/* ============ TAGS ============ */
+.tags { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 4px; }
+.tag { font-size: 11px; padding: 2px 8px; border-radius: 4px; background: var(--border-light); color: var(--text-secondary); }
+.tag.green { background: var(--success-bg); color: var(--success); }
+
+/* ============ EMPTY STATE ============ */
+.empty-state {
+  text-align: center; padding: 48px 20px; color: var(--text-muted); font-size: 14px;
+  font-family: var(--font-ui); font-weight: 500;
+}
+.empty-state .example { font-size: 12px; color: var(--text-muted); margin-top: 10px; line-height: 1.8; opacity: .7; }
+
+/* ============ RESULT EXPAND ============ */
+.result-expand {
+  display: none; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border-light);
+  font-size: 13px; color: var(--text-secondary); line-height: 1.8;
+  animation: fadeIn .2s ease;
+}
+.result-card.expanded .result-expand { display: block; }
+.result-card.expanded { box-shadow: var(--shadow-md); }
+
+/* ============ QUICK SEARCH ============ */
+.free-search { position: relative; }
+.free-search input {
+  width: 100%; padding: 13px 18px; border: 1.5px solid var(--border);
+  border-radius: var(--radius-lg); font-size: 15px; font-family: var(--font-body);
+  background: var(--card); transition: all .2s;
+}
+.free-search input:focus {
+  border-color: var(--primary); outline: none;
+  box-shadow: 0 0 0 3px rgba(0,104,183,0.1);
+}
+.stats-bar { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
+.stat-item {
+  font-size: 12px; color: var(--text-secondary); background: var(--card);
+  padding: 6px 14px; border-radius: 20px; border: 1px solid var(--border-light);
+  font-family: var(--font-ui);
+}
+.stat-item strong { color: var(--primary); }
+.quick-results { max-height: 560px; overflow-y: auto; }
+
+/* ============ BROWSE ============ */
+.browse-filter { margin-bottom: 12px; }
+.browse-filter input {
+  width: 100%; padding: 9px 14px; border: 1.5px solid var(--border);
+  border-radius: var(--radius-md); font-size: 13px; font-family: var(--font-body);
+  background: var(--card); transition: border-color .2s;
+}
+.browse-filter input:focus {
+  border-color: var(--primary); outline: none;
+  box-shadow: 0 0 0 3px rgba(0,104,183,0.1);
+}
+
+/* ============ TOAST ============ */
+.toast {
+  position: fixed; top: 80px; left: 50%; transform: translateX(-50%);
+  background: var(--primary); color: #fff; padding: 10px 24px;
+  border-radius: 24px; font-size: 13px; z-index: 999;
+  opacity: 0; transition: opacity .3s, transform .3s; pointer-events: none;
+  font-family: var(--font-ui); font-weight: 500; box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* ============ LOADING SHIMMER ============ */
+@keyframes shimmer { 0% { background-position:-200px 0; } 100% { background-position:calc(200px + 100%) 0; } }
+.loading-shimmer {
+  background: linear-gradient(90deg, var(--border-light) 25%, #f0ede8 50%, var(--border-light) 75%);
+  background-size: 200px 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+/* ============ RUNMEI BROWSER ============ */
+.runmei-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 12px; margin-top: 8px;
+}
+.runmei-card {
+  background: var(--card); border: 1px solid var(--border-light); border-radius: var(--radius-md);
+  padding: 16px; cursor: pointer; transition: all .2s; box-shadow: var(--shadow-sm);
+}
+.runmei-card:hover {
+  border-color: var(--primary); box-shadow: var(--shadow-md); transform: translateY(-2px);
+}
+.runmei-card-name { font-size: 14px; font-weight: 700; color: var(--primary); margin-bottom: 4px; line-height: 1.4; }
+.runmei-card-en { font-size: 11px; color: var(--text-muted); margin-bottom: 6px; }
+.runmei-card-tags { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 6px; }
+.runmei-card-features { font-size: 12px; color: var(--text-secondary); line-height: 1.6; }
+.runmei-card-industry { font-size: 11px; color: var(--text-muted); margin-top: 6px; }
+
+/* RUNMEI DETAIL MODAL */
+.runmei-modal {
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5); z-index: 1000;
+  display: flex; align-items: center; justify-content: center;
+}
+.runmei-modal-content {
+  background: var(--card); border-radius: var(--radius-lg); max-width: 600px;
+  width: 90%; max-height: 80vh; overflow-y: auto; padding: 28px;
+  position: relative; box-shadow: var(--shadow-lg); animation: fadeIn .2s ease;
+}
+.runmei-modal-close {
+  position: absolute; top: 12px; right: 16px; font-size: 24px; cursor: pointer;
+  color: var(--text-muted); transition: color .2s;
+}
+.runmei-modal-close:hover { color: var(--text); }
+
+/* Search highlight */
+.result-card mark {
+  background: #FFF3CD;
+  color: inherit;
+  padding: 1px 2px;
+  border-radius: 2px;
+}
+
+/* ====== Update modal ====== */
+.update-modal {
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5); z-index: 2000;
+  display: none; align-items: center; justify-content: center;
+}
+.update-modal.show { display: flex; }
+.update-modal-content {
+  background: var(--card); border-radius: var(--radius-lg); max-width: 420px;
+  width: 90%; padding: 28px; position: relative; box-shadow: var(--shadow-lg); animation: fadeIn .2s ease;
+  text-align: center;
+}
+.update-modal-content h2 { font-size: 18px; color: var(--primary); margin-bottom: 16px; font-family: var(--font-ui); }
+.update-notes-box {
+  background: var(--primary-surface); border-radius: var(--radius-md); padding: 14px 16px;
+  margin-bottom: 20px; text-align: left; font-size: 13px; line-height: 1.7;
+  color: var(--text); white-space: pre-wrap;
+}
+.update-actions { display: flex; gap: 12px; justify-content: center; }
+.update-actions button {
+  flex: 1; padding: 10px 16px; border-radius: var(--radius-md); font-size: 14px;
+  font-family: var(--font-ui); font-weight: 600; cursor: pointer; border: none; transition: all .2s;
+}
+.update-btn-skip { background: var(--bg); color: var(--text-secondary); }
+.update-btn-skip:hover { background: var(--border-light); }
+.update-btn-go { background: var(--primary); color: #fff; }
+.update-btn-go:hover { background: var(--primary-light); box-shadow: 0 2px 8px rgba(0,104,183,0.3); }
+.manual-download-area { display: none; margin-top: 16px; padding: 12px; background: #fef3c7; border-radius: 8px; border: 1px solid #fcd34d; text-align: left; }
+.manual-download-label { font-size: 12px; font-weight: 600; color: #92400e; margin-bottom: 4px; }
+.manual-download-link { font-size: 12px; word-break: break-all; color: #1d4ed8; }
+.runmei-detail-header { margin-bottom: 16px; }
+.runmei-detail-header h2 { font-size: 20px; color: var(--primary); }
+.runmei-detail-header .en { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
+.runmei-detail-section { margin-bottom: 16px; }
+.runmei-detail-section h3 {
+  font-size: 13px; font-weight: 700; color: var(--primary); margin-bottom: 8px;
+  font-family: var(--font-ui); letter-spacing: 0.3px;
+}
+.runmei-detail-section h3::before { content: ''; display: inline-block; width: 3px; height: 12px; background: var(--accent); border-radius: 2px; margin-right: 6px; vertical-align: -1px; }
+.runmei-detail-section p { font-size: 13px; color: var(--text-secondary); line-height: 1.7; }
+.runmei-detail-section .tag {
+  display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 12px;
+  background: var(--primary-surface); color: var(--primary); font-weight: 500; margin: 2px;
+}
+/* Parameter table */
+.param-table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+.param-table tr { border-bottom: 1px solid var(--border-light); }
+.param-table td { padding: 8px 12px; font-size: 13px; }
+.param-table td:nth-child(1) { color: var(--text-secondary); font-weight: 600; width: 40%; }
+.param-table td:nth-child(2) { color: var(--text-secondary); font-size: 12px; width: 35%; }
+.param-table td:nth-child(3) { color: var(--text); font-weight: 600; width: 25%; }
+
+/* 下载按钮及文档区域 */
+.download-area { display: flex; gap: 12px; margin-top: 8px; }
+.download-btn {
+  flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 10px 16px; background: var(--primary); color: #fff !important; border: none;
+  border-radius: var(--radius-md); font-size: 13px; font-weight: 600; cursor: pointer;
+  transition: all .2s; text-decoration: none;
+}
+.download-btn:hover { background: var(--primary-light); transform: translateY(-1px); box-shadow: var(--shadow-sm); }
+.download-btn.disabled {
+  background: var(--border-light); color: var(--text-muted) !important;
+  cursor: not-allowed; pointer-events: none; border: 1px dashed var(--border);
+}
+.download-btn svg { width: 15px; height: 15px; fill: currentColor; }
+
+/* 打印样式 */
+@media print {
+  body { background: #fff; color: #000; }
+  .header, .tabs, .mode-switch, .btn-row, .free-search, .stats-bar, .quick-results, .browse-filter, .runmei-modal-close, .download-area, #toast { display: none !important; }
+  .container { max-width: 100%; padding: 0; margin: 0; }
+  .runmei-modal { position: relative; background: none; z-index: auto; display: block; }
+  .runmei-modal-content { max-width: 100%; width: 100%; max-height: none; overflow: visible; padding: 0; box-shadow: none; }
+  .param-table tr { border-bottom: 1px solid #ddd; page-break-inside: avoid; }
+  .param-table td { padding: 6px 10px; }
+}
+
+/* ============ MODE SWITCH (TOGGLE) ============ */
+.mode-switch { display: flex; gap: 0; margin-bottom: 16px; border-radius: var(--radius-md); overflow: hidden; border: 1.5px solid var(--border); background: var(--bg); }
+.mode-option { flex: 1; text-align: center; padding: 10px 8px; cursor: pointer; font-size: 13px; font-weight: 600; font-family: var(--font-ui); color: var(--text-secondary); transition: all .2s; user-select: none; }
+.mode-option input { display: none; }
+.mode-option.active { background: var(--primary); color: #fff; }
+.mode-option:not(.active):hover { background: var(--primary-surface); color: var(--primary); }
+
+/* ============ BLEND CALC RESULT ============ */
+.blend-mode-panel { margin-top: 4px; }
+.blend-result-area { margin-top: 16px; padding: 14px 18px; background: var(--accent-surface); border-radius: var(--radius-md); border: 1px solid #D8E8B8; text-align: center; }
+.blend-result-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
+@media (max-width: 600px) { .blend-result-row { grid-template-columns: 1fr; } }
+.blend-result-row > div { padding: 14px 18px; background: var(--accent-surface); border-radius: var(--radius-md); border: 1px solid #D8E8B8; text-align: center; }
+.blend-result-label { font-size: 14px; color: var(--text-secondary); font-weight: 600; }
+.blend-result-value { font-size: 20px; font-weight: 800; color: var(--primary); margin-left: 6px; vertical-align: middle; }
+
+/* ============ KVT RESULT ============ */
+.kvt-result-area { margin-top: 16px; padding: 14px 18px; background: var(--primary-surface); border-radius: var(--radius-md); border: 1px solid #C0D8F0; text-align: center; }
+
+/* ====== Version note at bottom ====== */
+.version-note {
+  margin-top: 24px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border-light);
+  font-size: 11px;
+  color: var(--text-secondary);
+  font-family: var(--font-ui);
+  opacity: 0.7;
+}
+
+/* ====== Version badge in header ====== */
+.version-badge {
+  font-size: 11px;
+  background: rgba(255,255,255,0.15);
+  padding: 2px 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-family: var(--font-ui);
+  font-weight: 600;
+  transition: background .2s;
+  white-space: nowrap;
+  margin-left: auto;
+}
+.version-badge:hover {
+  background: rgba(255,255,255,0.3);
+}
+
+/* ====== Changelog modal ====== */
+.changelog-modal {
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5); z-index: 2000;
+  display: none; align-items: center; justify-content: center;
+}
+.changelog-modal.show { display: flex; }
+.changelog-modal-content {
+  background: var(--card); border-radius: var(--radius-lg); max-width: 480px;
+  width: 90%; max-height: 70vh; overflow-y: auto; padding: 28px;
+  position: relative; box-shadow: var(--shadow-lg); animation: fadeIn .2s ease;
+}
+.changelog-modal-content h2 {
+  font-size: 18px; color: var(--primary); margin-bottom: 16px;
+  font-family: var(--font-ui); padding-right: 24px;
+}
+.changelog-modal-close {
+  position: absolute; top: 12px; right: 16px; font-size: 24px;
+  cursor: pointer; color: var(--text-muted); transition: color .2s; line-height: 1;
+}
+.changelog-modal-close:hover { color: var(--text-primary); }
+.changelog-item {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border-light);
+}
+.changelog-item:last-child { border-bottom: none; }
+.changelog-version {
+  font-weight: 700; font-size: 14px; color: var(--primary);
+  margin-bottom: 4px; font-family: var(--font-ui);
+}
+.changelog-notes {
+  font-size: 13px; color: var(--text-secondary);
+  line-height: 1.5; white-space: pre-wrap;
+}
+.changelog-empty {
+  color: var(--text-muted); font-size: 13px; text-align: center; padding: 20px 0;
+}
+
+/* ====== Changelog download area ====== */
+.changelog-download {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border-light);
+}
+.changelog-download-label {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+}
+.changelog-download-btn {
+  display: block;
+  width: 100%;
+  padding: 10px 16px;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  font-family: var(--font-ui);
+  cursor: pointer;
+  text-align: center;
+  transition: opacity .2s;
+}
+.changelog-download-btn:hover {
+  opacity: 0.85;
+}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width: 640px) {
+  .header { padding: 10px 16px; }
+  .header h1 { font-size: 15px; }
+  .header-logo { height: 28px; }
+  .header-stats { font-size: 10px; gap: 10px; }
+  .container { padding: 14px 12px 24px; }
+  .card { padding: 16px; }
+  .tabs { border-radius: var(--radius-md); }
+  .search-btn { width: 100%; justify-content: center; }
+  .btn-clear { flex: 1; text-align: center; }
+  .result-card { padding: 12px; }
+  .card-name { font-size: 13px; }
+  .runmei-name { font-size: 14px; }
+  .runmei-box { flex-wrap: wrap; }
+}
+
+/* ============ Product Info Card (for image generation) ============ */
+.product-image-card-container {
+  position: absolute; left: -9999px; top: 0;
+  width: 680px; z-index: -1;
+}
+.product-image-card {
+  width: 680px; background: #ffffff; border-radius: 0;
+  overflow: hidden; font-family: 'Plus Jakarta Sans', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  color: #1a1a1a; line-height: 1.5;
+}
+.product-image-card-header {
+  background: linear-gradient(135deg, #1a5276 0%, #2e86c1 100%);
+  padding: 32px 36px 24px; color: #ffffff; position: relative;
+}
+.product-image-card-header .brand-row {
+  display: flex; align-items: center; gap: 10px; margin-bottom: 18px;
+}
+.product-image-card-header .brand-logo { height: 28px; width: auto; }
+.product-image-card-header .brand-name {
+  font-size: 13px; font-weight: 600; opacity: 0.85; letter-spacing: 2px;
+}
+.product-image-card-header .header-accent {
+  position: absolute; top: 0; right: 0; width: 140px; height: 140px;
+  background: rgba(255,255,255,0.06); border-radius: 0 0 0 100%;
+}
+.product-image-card-header .product-name {
+  font-size: 26px; font-weight: 800; line-height: 1.3; margin-bottom: 10px;
+  letter-spacing: 0.5px;
+}
+.product-image-card-header .series-badge {
+  display: inline-block; padding: 4px 16px; border-radius: 20px;
+  background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.35);
+  font-size: 12px; font-weight: 600; letter-spacing: 0.5px;
+}
+.product-image-card-body { padding: 24px 36px 16px; }
+.product-image-card-section { margin-bottom: 22px; }
+.product-image-card-section-title {
+  font-size: 12px; font-weight: 700; color: #2e86c1; text-transform: uppercase;
+  letter-spacing: 1.5px; margin-bottom: 10px; padding-bottom: 6px;
+  border-bottom: 2px solid #d6eaf8;
+}
+.product-image-card-section-title .accent-bar {
+  display: inline-block; width: 3px; height: 12px; background: #1abc9c;
+  border-radius: 2px; margin-right: 8px; vertical-align: -1px;
+}
+.product-image-card-features { font-size: 13px; line-height: 1.9; color: #333; margin: 0; padding: 0; list-style: none; }
+.product-image-card-features li {
+  position: relative; padding-left: 16px; margin-bottom: 2px;
+}
+.product-image-card-features li::before {
+  content: ''; position: absolute; left: 0; top: 8px;
+  width: 6px; height: 6px; background: #2e86c1; border-radius: 50%;
+}
+.product-image-card-params { display: flex; flex-wrap: wrap; gap: 10px; }
+.product-image-card-param-tile {
+  flex: 0 0 calc(20% - 8px); min-width: 0; box-sizing: border-box;
+  background: #f8f9fa; border-radius: 8px; padding: 10px 6px; text-align: center;
+  border: 1px solid #e9ecef;
+}
+.product-image-card-param-tile .param-value {
+  font-size: 17px; font-weight: 800; color: #1a5276; margin-bottom: 2px;
+  line-height: 1.2;
+}
+.product-image-card-param-tile .param-label {
+  font-size: 10px; color: #6c757d; line-height: 1.3; white-space: nowrap;
+  overflow: hidden; text-overflow: ellipsis;
+}
+.product-image-card-param-tile .param-standard {
+  font-size: 9px; color: #adb5bd; margin-top: 2px;
+}
+.product-image-card-info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.product-image-card-info-item { font-size: 13px; line-height: 1.6; }
+.product-image-card-info-item .info-label {
+  font-size: 10px; font-weight: 700; color: #2e86c1; text-transform: uppercase;
+  letter-spacing: 0.5px; margin-bottom: 2px;
+}
+.product-image-card-info-item .info-value { color: #333; }
+.product-image-card-footer {
+  padding: 14px 36px; background: #f8f9fa; border-top: 1px solid #e9ecef;
+  display: flex; justify-content: space-between; font-size: 10px; color: #adb5bd;
+}
+/* Loading overlay */
+.image-generate-overlay {
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.45); z-index: 2001;
+  display: none; align-items: center; justify-content: center;
+}
+.image-generate-spinner {
+  background: white; padding: 28px 40px; border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  font-size: 15px; color: #1a5276; font-weight: 600;
+  display: flex; align-items: center; gap: 14px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.spinner-icon { animation: spin 0.9s linear infinite; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-left">
+	    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAiCAYAAAA3WXuFAAAHxElEQVR4nK2Yf4xcVRXHP/e+N7/2Z6nbX9uqRGJAlGLTpWIU06poENo0xdk2lkr5kTY1EKhKijFxdtWEhAR/lKS/UiSVCmQWIgKWYANbRVpFSv+gQGulNcUtW4rddmZnZ+bNvHfNmblvO9Od2dqEk8y+d3+d873nnPu95y1MJimjwai6vrv/1sH6vVNJHYzW9SeNw0cg9cbqDKQdBnr9yvu63V9H6ZvBvwYTzMTgolQGOILSL0IxzaabhjFGVTUqcwGbMt4GfAl4EzgR9qtJwdzxh7nEW3+JjnwV7YBfAuODMaA0OBEq/V7+vxA8wKZvPFRVIHqbggoBdVhAB4H3mgMKwax5dimRtp04TivemI8RFOjKwupSg8JU+rXjEm+HwuhTTO9eCQNl+vvMBTzVUHRDMGtfWEi07SlMuZVirgw4KCVh0igluxdQGoEkEvhl8mcKxFq/zcnjj9HfH5AcqNNtDCpl0KnUeTYbuC9cIvuF7/1xCrhvoiOzKRd9lGqcrMYEOBFNJAGBhNJqi3VAZngd227cIhs06d5gAHSvwq8FNzCA7u091xeKO/6W2uOgFpVZu2s9iY7Z5EfKKO02BRNt0fjeEF5uOybYhxg06mpM5jbcyC+4e9fjqanfGlVKwmb8Z96hPe7GZhTKekypvCSxL8FWiqCRh6qJtn5vgrGz/8QV75QkIHoSMHsIzHK2fPODuvFbH43TMudpTeHPwebFDz68+4qPzZn5bp8xLPN9NV0p8q5r9o+O6p/ecm1x8HxQVYPJdPVZyMzDjc6h7NEYDBImRbl4AuMtq4BZ83qkknvyW7M1wo7bCjOy7/dSike3Ds7qmtF19OWWdnWXCVS3CXBNQLvjqoVt7ealgf3RZQImnWY8LaohuXKaTU4+SzRqKrlTG85xEe8kXApnt7DlppEKmG09pXPj+EKmp/pVLphvfqtXlx+e0hnMHflQF4GoHAcTwNgofjSKa+CR9Bu80juPDyWvlEKYuFaCzsm4EvGohNLX+yqHYORoMAFynzIBRv1ww0KvJZJbks2owIIRxfJXDLtFj3JbJ1NMEFkq9LFnT9VLVUBvn7J8oY5ggurCJngck1dzug4PCylz5VsTeKZP1hrFgk/tnRaLlhO+ryRHJugTbwmLacXl9RZEBpJBZcdO/CW80SEicQeMhCI0KAToEWvXjir85dUN9+aV0ibV1z8Bcvd+4SxMYJiXaK0wo/BYY6nCHJ0ISNYJkW1aNArqDkRJtDVSXSKEqxSJzqjycye9Qvfqt4fcG7cOzujqVwRbXyciSSmnRd7X9lAS8nO0+n65uqWGRCg8H/go36i3pL2nDmPt7d6vAu587jriiZ/j+wtQKg4qg9a72/Xwj7IbVx557LWW2+OR0srT75UWr13CWK2K9EGiTim6PdbCqlyGQOmGp9XIFRgE5Cm7l/V+YWw4TOqJuRKCErln8FK020lu9AO23fC+dCWTSSeZGnBUKToUi5tThTG9WSl/vylhiDjzHG3WxhLMzWUJVCPqqDJ1ub0TN3OGnSuu8VaJh0PWbpy8FVCVWJm6PvpI9/UruQaefC2yYlq3eiKXtUWA3BoJKHlQHGvimap3AkcIRVH0SuqqFfOLR+UgSPibAxoHkaqAoE+u0XPgwh09+Y/oI51TuT0zgvBMREjOMm8zML7cjK3tONkzZvXyntKOWu9cGFATCS9HkqAPRHe0TWHlaAb8MmU54gIqnCt5UTmjYOIJXDnu+THuWd7jbUwbHHvphjiaFGj/JyiswacPRO/VLj+OJeiSkyW/wJpxHIhEq/WcV+Bguah+kOwp/qkGTJ1MWptMJuGJkCN+8zzvV6NFd24+z30lzwz6vjkRBOQCn6xfNse8gvl9IW9uOf6y1yNgUincGs8oWz0muEjRzbClBuvvvfRB2p4/1jLzxX+1Tv/1LmJ1YzUXqRVZuxRYdLGAaqXhVVCpChtUhFq+XSSv6lfVtj4BTKntfB54DngCeBVYBfwMOA5ca+fsAqYBC4B3gdPAF4GvAcuBNUAvcLijg0uyWTYCZ4xiiIBbK+wPwmVDwNXAv237K1L4AA+KA8PdXAV0VQoQ+JwNz2eAK4BPAy3A9XZsNuABn7TrfgIsse/rJN8zGZLGcI0x/Iag8lWx2+qRuZdZjwiIuVBheqkgK18sYezzwCXADNu+3IIoWePyy9mx8GRIbhwGvmvbLwB3AhuA7wDbgTdq5p0B9llbZbvpEeAGe4nfXwvouA1TFtgKbAb2A88A84FO4IA9DWX7DEG0A1+WzwML4D7r7Z02JdZYMKcsiKzdlOSMEOorwKVhZRHmkNzsc4Bjtj0TGLbv06yik1ZJp1VYsqWDeK/VGhUvx+38oh2TvrPW1ojdTNy2PfsUfd3AO9JwbFJeB/wd+J011kgWAx+3n8HPAodqvkTDZ7iJu2zii2cep7ncb/Prr8Cj2nqnx6KfbwHWVo3KzsG69vPArJp5ugaMrvnNsqGMn6ejdo1rvTzLJrkQesVdI9Zlp23b1FWLjL+32ZMYs7ljGswN7DNRw75h//nv2oat0x4a49rwPGCT8aEm4Qrs85B1rZzGRqVp6KlZlqsOTXIlKKv3P5b/JMx11Cm7v5Bo63r5Nf6qrRfxZP3/kSbqC8frrpiPWi62ihi/3/4HyxEaqsvFns4AAAAASUVORK5CYII=" alt="" class="header-logo">
+	    <h1>润美润滑油产品匹配工具</h1></div>
+  <div class="header-stats">
+    <span>竞品: 326 款</span>
+    <span>润美: 183 款</span>
+    <span>品类: 13</span>
+    <span>品牌: 12</span>
+    <span class="version-badge" id="version-badge" onclick="showChangelog()" title="点击查看更新历史" style="display:none"></span>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<div class="container">
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('quick')">快速搜索</button>
+    <button class="tab" onclick="switchTab('runmei')">润美产品</button>
+    <button class="tab" onclick="switchTab('calc')">润滑工具</button>
+  </div>
+
+  <!-- ============ PANEL 1: QUICK SEARCH ============ -->
+  <div class="panel active" id="panel-quick">
+    <div class="card">
+      <div class="card-title">市场产品检索</div>
+      <div class="free-search">
+        <input type="text" id="quick-search" placeholder="试试输入: Tellus、得力士、PAO、风电、HM、CKC..." autocomplete="off" oninput="quickSearch()" />
+      </div>
+      <div class="stats-bar" style="margin-top:10px;" id="quick-stats"></div>
+    </div>
+    <div class="quick-results" id="quick-results"></div>
+  </div>
+
+<!-- ============ PANEL 2: RUNMEI PRODUCT BROWSER ============ -->
+  <div class="panel" id="panel-runmei">
+    <div class="card">
+      <div class="card-title">润美产品一览</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>产品系列</label>
+          <select id="runmei-series" onchange="filterRunmei()">
+            <option value="">全部系列</option><option value=""></option><option value="CKC工业齿轮油">CKC工业齿轮油</option><option value="CKD工业齿轮油">CKD工业齿轮油</option><option value="EP工业齿轮油">EP工业齿轮油</option><option value="EP工业齿轮油（大粘度）">EP工业齿轮油（大粘度）</option><option value="全合成工业齿轮油 SHC">全合成工业齿轮油 SHC</option><option value="合成型开式齿轮剂">合成型开式齿轮剂</option><option value="合成型开式齿轮剂（聚醚）">合成型开式齿轮剂（聚醚）</option><option value="合成型螺杆式空气压缩机油 PAG">合成型螺杆式空气压缩机油 PAG</option><option value="合成型螺杆式空气压缩机油 PAO">合成型螺杆式空气压缩机油 PAO</option><option value="合成工业齿轮油 SHP">合成工业齿轮油 SHP</option><option value="导轨油">导轨油</option><option value="工艺气体压缩机油">工艺气体压缩机油</option><option value="工艺气体压缩机油 WS PAG">工艺气体压缩机油 WS PAG</option><option value="抗燃液压油（全合成）">抗燃液压油（全合成）</option><option value="抗燃液压油（高性能）">抗燃液压油（高性能）</option><option value="抗燃液压液（HFC）">抗燃液压液（HFC）</option><option value="抗燃液压液（HFW）">抗燃液压液（HFW）</option><option value="抗磨液压油 HM">抗磨液压油 HM</option><option value="抗磨液压油 HV低温">抗磨液压油 HV低温</option><option value="抗磨液压油 Ultra HM">抗磨液压油 Ultra HM</option><option value="无渍液压油">无渍液压油</option><option value="无灰液压油">无灰液压油</option><option value="气柜密封油">气柜密封油</option><option value="矿物型油气润滑剂 OAM">矿物型油气润滑剂 OAM</option><option value="矿物型螺杆式空气压缩机油">矿物型螺杆式空气压缩机油</option><option value="蜗轮蜗杆油 CKE/P">蜗轮蜗杆油 CKE/P</option><option value="蜗轮蜗杆油 SHC GW">蜗轮蜗杆油 SHC GW</option><option value="长寿命液压油">长寿命液压油</option><option value="防锈汽轮机油">防锈汽轮机油</option><option value="风电齿轮油">风电齿轮油</option><option value="齿轮箱清洗油">齿轮箱清洗油</option></select>
+        </div>
+        <div class="form-group">
+          <label>搜索产品</label>
+          <input type="text" id="runmei-search" placeholder="产品名称、特性、应用行业..." oninput="filterRunmei()" />
+        </div>
+      </div>
+    </div>
+    <div id="runmei-results"></div>
+  </div>
+  <!-- ============ PANEL 3: VISCOSITY CALCULATOR ============ -->
+  <div class="panel" id="panel-calc">
+    <div class="card">
+      <div class="card-title">运动粘度计算器</div>
+      <div class="calc-desc">输入任意两个参数，自动计算第三个（基于 ASTM D2270 标准）</div>
+      <div class="calc-row">
+        <div class="calc-field">
+          <label>运动粘度 40℃ (mm²/s)</label>
+          <input type="text" inputmode="decimal" id="calc-kv40" placeholder="输入kv40..." oninput="calcViscosity('kv40')">
+        </div>
+        <div class="calc-field">
+          <label>运动粘度 100℃ (mm²/s)</label>
+          <input type="text" inputmode="decimal" id="calc-kv100" placeholder="输入kv100..." oninput="calcViscosity('kv100')">
+        </div>
+        <div class="calc-field">
+          <label>粘度指数</label>
+          <input type="text" inputmode="decimal" id="calc-vi" placeholder="输入VI..." oninput="calcViscosity('vi')">
+        </div>
+      </div>
+      <div id="calc-error" class="calc-error"></div>
+      <div style="text-align:center;margin-top:8px;">
+        <button class="btn-clear" onclick="clearCalc()">清空所有</button>
+      </div>
+    </div>
+
+    <!-- Card 2: 调和粘度计算器 -->
+    <div class="card">
+      <div class="card-title">调和粘度计算器</div>
+      <div class="calc-desc">计算两种油品混合后的粘度（基于 40°C 运动粘度数据）</div>
+
+      <div class="mode-switch">
+        <label class="mode-option active" id="mode-a-label" onclick="switchBlendMode('a')">
+          <input type="radio" name="blend-mode" value="a" checked onchange="switchBlendMode('a')">
+          <span>已知比例求调和粘度</span>
+        </label>
+        <label class="mode-option" id="mode-b-label" onclick="switchBlendMode('b')">
+          <input type="radio" name="blend-mode" value="b" onchange="switchBlendMode('b')">
+          <span>已知目标粘度求比例</span>
+        </label>
+      </div>
+
+      <div id="blend-mode-a" class="blend-mode-panel">
+        <div class="form-row">
+          <div class="form-group">
+            <label>油 A 粘度 (mm²/s)</label>
+            <input type="text" inputmode="decimal" id="blend-va" placeholder="如 100" oninput="calcBlendModeA()">
+          </div>
+          <div class="form-group">
+            <label>油 A 比例 (%)</label>
+            <input type="text" inputmode="decimal" id="blend-pa" placeholder="如 50" oninput="calcBlendModeA()">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>油 B 粘度 (mm²/s)</label>
+            <input type="text" inputmode="decimal" id="blend-vb" placeholder="如 10" oninput="calcBlendModeA()">
+          </div>
+          <div class="form-group">
+            <label>油 B 比例 (%)</label>
+            <div class="blend-result-box" id="blend-pb-result" style="padding:10px 14px;font-size:15px;border:1.5px solid var(--border);border-radius:var(--radius-md);background:var(--bg);color:var(--text-secondary);">—</div>
+          </div>
+        </div>
+        <div class="blend-result-area">
+          <span class="blend-result-label">调和粘度：</span>
+          <span class="blend-result-value" id="blend-result-a">—</span>
+        </div>
+      </div>
+
+      <div id="blend-mode-b" class="blend-mode-panel" style="display:none;">
+        <div class="form-row">
+          <div class="form-group">
+            <label>油 A 粘度 (mm²/s)</label>
+            <input type="text" inputmode="decimal" id="blend-b-va" placeholder="如 100" oninput="calcBlendModeB()">
+          </div>
+          <div class="form-group">
+            <label>油 B 粘度 (mm²/s)</label>
+            <input type="text" inputmode="decimal" id="blend-b-vb" placeholder="如 10" oninput="calcBlendModeB()">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>目标调和粘度 (mm²/s)</label>
+            <input type="text" inputmode="decimal" id="blend-b-target" placeholder="如 32.6" oninput="calcBlendModeB()">
+          </div>
+          <div class="form-group"></div>
+        </div>
+        <div class="blend-result-row">
+          <div><span class="blend-result-label">油 A 比例：</span><span class="blend-result-value" id="blend-result-b-a">—</span></div>
+          <div><span class="blend-result-label">油 B 比例：</span><span class="blend-result-value" id="blend-result-b-b">—</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 3: 粘度-温度计算器 -->
+    <div class="card">
+      <div class="card-title">粘度-温度计算器</div>
+      <div class="calc-desc">已知两个温度下的粘度，计算任意温度下的运动粘度（基于 ASTM D341 Walther 方程）</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>温度 T1 (°C)</label>
+          <input type="text" inputmode="decimal" id="kvt-t1" placeholder="如 40">
+        </div>
+        <div class="form-group">
+          <label>粘度 V1 (mm²/s)</label>
+          <input type="text" inputmode="decimal" id="kvt-v1" placeholder="如 68">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>温度 T2 (°C)</label>
+          <input type="text" inputmode="decimal" id="kvt-t2" placeholder="如 100">
+        </div>
+        <div class="form-group">
+          <label>粘度 V2 (mm²/s)</label>
+          <input type="text" inputmode="decimal" id="kvt-v2" placeholder="如 8.7">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>目标温度 T3 (°C)</label>
+          <input type="text" inputmode="decimal" id="kvt-t3" placeholder="如 80" oninput="calcKVT()">
+        </div>
+        <div class="form-group" style="justify-content:flex-end;">
+          <button class="search-btn" onclick="calcKVT()" style="width:100%;justify-content:center;">计算</button>
+        </div>
+      </div>
+      <div class="kvt-result-area" id="kvt-result" style="display:none;">
+        <span class="blend-result-label">在 T3 = <span id="kvt-result-t">—</span>°C 下的运动粘度：</span>
+        <span class="blend-result-value" id="kvt-result-v">—</span>
+        <span style="font-size:13px;color:var(--text-secondary);"> mm²/s</span>
+      </div>
+    </div>
+
+  </div>
+  <div class="version-note" id="version-note">请前往云之家或网盘下载最新版进行使用 2026.06.12</div>
+
+</div>
+
+<script>
+var DATA = [];
+var DATA_VERSION = '';
+var DATA_VERSION_NOTE = '';
+var DATA_LOADING = false;
+var APP_VERSION = window.AndroidBridge ? AndroidBridge.getAppVersion() : '';
+var APP_SKIP_VERSION = localStorage.getItem('app_skip_version') || '';
+var BRANDS = ["克鲁勃", "嘉实多", "壳牌", "奎克好富顿", "安索", "寿力", "昆仑", "美孚", "英格索兰", "道达尔", "长城", "雪佛龙"];
+var CATEGORIES = ["压缩机油", "导轨油", "工业齿轮油", "开式齿轮油", "汽轮机油", "汽轮机油/涡轮机油", "油膜轴承油", "涡轮机油", "液压油", "空压机油/压缩机油", "综合", "轴承油", "齿轮油"];
+var CAT_MAP = {"空压机油/压缩机油": "空压机油", "汽轮机油/涡轮机油": "涡轮机油", "轴承油/循环油": "轴承油"};
+var RUNMEI_CATALOG = [];
+var PARAM_CONFIG = [];
+var RUNMEI_SERIES = ["", "CKC工业齿轮油", "CKD工业齿轮油", "EP工业齿轮油", "EP工业齿轮油（大粘度）", "全合成工业齿轮油 SHC", "合成型开式齿轮剂", "合成型开式齿轮剂（聚醚）", "合成型螺杆式空气压缩机油 PAG", "合成型螺杆式空气压缩机油 PAO", "合成工业齿轮油 SHP", "导轨油", "工艺气体压缩机油", "工艺气体压缩机油 WS PAG", "抗燃液压油（全合成）", "抗燃液压油（高性能）", "抗燃液压液（HFC）", "抗燃液压液（HFW）", "抗磨液压油 HM", "抗磨液压油 HV低温", "抗磨液压油 Ultra HM", "无渍液压油", "无灰液压油", "气柜密封油", "矿物型油气润滑剂 OAM", "矿物型螺杆式空气压缩机油", "蜗轮蜗杆油 CKE/P", "蜗轮蜗杆油 SHC GW", "长寿命液压油", "防锈汽轮机油", "风电齿轮油", "齿轮箱清洗油"];
+var EMBEDDED_DATA = {"version":"2026-06-12-v1","updatedAt":"2026-06-12","versionNote":"请前往云之家或网盘下载最新版进行使用 2026.06.12","totalProducts":326,"products":[{"brand":"壳牌","category":"导轨油","product_cn":"壳牌通拿 S2 M 32 / 68 / 220","product_en":"","viscosity":"VG 32 / VG 68 / VG 220","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"壳牌","category":"导轨油","product_cn":"壳牌通拿 S3 M 32 / 68 / 220","product_en":"","viscosity":"VG 32 / VG 68 / VG 220","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"壳牌","category":"导轨油","product_cn":"壳牌通拿S4 M 32","product_en":"","viscosity":"VG 32 / VG 68 / VG 220","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"壳牌","category":"汽轮机油/涡轮机油","product_cn":"壳牌多宝 S4 GX 32","product_en":"Shell Turbo S4 GX","viscosity":"VG 32","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"壳牌","category":"汽轮机油/涡轮机油","product_cn":"壳牌多宝 S5 DR 46","product_en":"Shell Turbo S5 DR 46","viscosity":"VG 46","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"壳牌","category":"汽轮机油/涡轮机油","product_cn":"壳牌多宝 32 / 46","product_en":"","viscosity":"VG 32 / VG 46","source":"","runmei":"Lubemater TSA 32/46长寿命防锈汽轮机油","application":"矿物","compSpecs":{},"runmeiSpecs":{}},{"brand":"壳牌","category":"汽轮机油/涡轮机油","product_cn":"壳牌多宝 N 32/46","product_en":"Shell Turbo N","viscosity":"VG 32 / VG 46","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"壳牌","category":"汽轮机油/涡轮机油","product_cn":"壳牌多宝 S4 X 32","product_en":"","viscosity":"VG 32","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"壳牌","category":"汽轮机油/涡轮机油","product_cn":"壳牌多宝 T 32 / 46 / 68","product_en":"","viscosity":"VG 32 / VG 46 / VG 68","source":"","runmei":"Lubemater TSA 32/46/68 长寿命防锈汽轮机油","application":"加氢基础油和无锌添加剂调","compSpecs":{},"runmeiSpecs":{}},{"brand":"壳牌","category":"液压油","product_cn":"壳牌可耐压S5 Wind (Shell Omala S5 Wind) 320","product_en":"Shell Omala S5 Wind","viscosity":"VG 320","source":"","runmei":"Lubemater CF-20 320 风电齿轮油","application":"风电","compSpecs":{},"runmeiSpecs":{}},{"brand":"壳牌","category":"液压油","product_cn":"壳牌得力士 S1 M 32/46/68","product_en":"Shell Tellus S1 M","viscosity":"VG 32 / VG 46 / VG 68","source":"","runmei":"L-HM 32/46/68 抗磨液压油","application":"普通液压油","compSpecs":{},"runmeiSpecs":{}},{"brand":"壳牌","category":"液压油","product_cn":"壳牌得力士 S2 ZX 32/46/68","product_en":"Shell Tellus S2 ZX","viscosity":"VG 32 / VG 46 / VG 68","source":"","runmei":"Ultra HM 32/46/68高级抗磨液压油（原 HS-M）","application":"GTL合成技术工业液压油(可能是部分GTL)粘度指数112","compSpecs":{},"runmeiSpecs":{}},{"brand":"壳牌","category":"液压油","product_cn":"壳牌得力士 S3 VE 32/46","product_en":"Shell Tellus S3 VE","viscosity":"VG 32 / VG 46","source":"","runmei":"Lubemater XV 32/46 低温液压油","application":"高级全合成无灰长寿命工业液压油，三类油GTL","compSpecs":{},"runmeiSpecs":{}},{"brand":"壳牌","category":"液压油","product_cn":"壳牌得力士 S4 ME 32 / 46","product_en":"Shell Tellus S4 ME 32 / 46","viscosity":"VG 32 / VG 46","source":"","runmei":"Lubemater XV 32/46 低温液压油","application":"高级合成工业液压油，PAO，无灰","compSpecs":{},"runmeiSpecs":{}},{"brand":"壳牌","category":"液压油","product_cn":"壳牌得力士 S4 VX 32","product_en":"Shell Tellus S4 VX 32","viscosity":"VG 32","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"壳牌","category":"液压油","product_cn":"壳牌得力士S2 MX 22 / 100","product_en":"Shell Tellus S2 MX","viscosity":"VG 22 / VG 32 / VG 46 / VG 68 / VG 100","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"壳牌","category":"液压油","product_cn":"壳牌得力士 S2 VX 15/32/46/ 68 / 100","product_en":"Shell Tellus S2 VX","viscosity":"VG 15 / VG 32 / VG 46 / VG 68 / VG 100","source":"","runmei":"L-HV 32/46/68 抗磨液压油","application":"专用于极低环境温度下，粘度指数300","compSpecs":{},"runmeiSpecs":{}},{"brand":"壳牌","category":"液压油","product_cn":"壳牌得力士S3 M 32 / 46 / 68/100","product_en":"Shell Tellus S3 M","viscosity":"VG 32 / VG 46 / VG 68 / VG 100","source":"","runmei":"Clean 32/46/68 无灰抗磨液压油（原HMS）","application":"专用于极低环境温度下，粘度指数300","compSpecs":{},"runmeiSpecs":{}},{"brand":"壳牌","category":"液压油","product_cn":"壳牌海得力 S1 M 32 / 46 / 68","product_en":"Shell Hydraulic S1 M","viscosity":"VG 32 / VG 46 / VG 68","source":"","runmei":"L-HM 32/46/68 抗磨液压油","application":"同一级别甚至同一款产品在不同命名体系下的称呼","compSpecs":{},"runmeiSpecs":{}},{"brand":"壳牌","category":"轴承油","product_cn":"壳牌万利得S4 B (Shell Morlina S4 B) 220","product_en":"Shell Morlina S4 B","viscosity":"VG 220","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"壳牌","category":"空压机油/压缩机油","product_cn":"壳牌气体压缩机油","product_en":"","viscosity":"","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"壳牌","category":"空压机油/压缩机油","product_cn":"壳牌气体压缩机油 S3 PY 220","product_en":"","viscosity":"VG 220","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"壳牌","category":"空压机油/压缩机油","product_cn":"壳牌气体压缩机油 S4 PN 220","product_en":"","viscosity":"VG 220","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"壳牌","category":"空压机油/压缩机油","product_cn":"壳牌气体压缩机油 S4 PV 190","product_en":"","viscosity":"VG 190","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"壳牌","category":"空压机油/压缩机油","product_cn":"壳牌气体压缩机油 S4 PY 270","product_en":"","viscosity":"VG 270","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"壳牌","category":"空压机油/压缩机油","product_cn":"壳牌气体压缩机油 S4 RN 68","product_en":"","viscosity":"VG 68","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"壳牌","category":"轴承油","product_cn":"壳牌万利得5 / 10","product_en":"","viscosity":"VG 10","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"壳牌","category":"轴承油","product_cn":"壳牌万利得S1 B","product_en":"","viscosity":"","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"壳牌","category":"轴承油","product_cn":"壳牌万利得S2 B 32 / 46 / 68","product_en":"","viscosity":"VG 32 / VG 46 / VG 68 / VG 100 / VG 150 / VG 220 / VG 320","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"壳牌","category":"轴承油","product_cn":"壳牌万利得S2 BA 100 /150/ 220","product_en":"","viscosity":"VG 100 / VG 150 / VG 220","source":"","runmei":"Lubemater AW 100 /150/ 220油膜轴承油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"壳牌","category":"轴承油","product_cn":"壳牌万利得S3 BA 320 / 460","product_en":"","viscosity":"VG 320 / VG 460","source":"","runmei":"Lubemater R&O 320/460油膜轴承油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"导轨油","product_cn":"美孚威格力 1400系列","product_en":"","viscosity":"VG 140","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"导轨油","product_cn":"美孚威格力1405","product_en":"","viscosity":"VG 140","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"导轨油","product_cn":"美孚威格力1409","product_en":"","viscosity":"VG 140","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"导轨油","product_cn":"美孚威达数字系列","product_en":"","viscosity":"","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"导轨油","product_cn":"美孚格兰德 24","product_en":"","viscosity":"VG 24","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"导轨油","product_cn":"美孚维美 EDM 3","product_en":"","viscosity":"","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"导轨油","product_cn":"美孚美特 420系列","product_en":"","viscosity":"VG 420 / VG 440 / VG 760","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"空压机油/压缩机油","product_cn":"美孚SHC 拉力士系列","product_en":"Mobil SHC™ Rarus Series","viscosity":"","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"空压机油/压缩机油","product_cn":"美孚 SHC 拉力士 32","product_en":"Mobil SHC™ Rarus 32","viscosity":"32","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"空压机油/压缩机油","product_cn":"美孚 SHC 拉力士 46","product_en":"Mobil SHC™ Rarus 46","viscosity":"46","source":"","runmei":"Lubemater AIR S8146 转子冷却液","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"空压机油/压缩机油","product_cn":"美孚 SHC 拉力士 68","product_en":"Mobil SHC™ Rarus 68","viscosity":"68","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"空压机油/压缩机油","product_cn":"美孚拉力士SHC™ 1020系列","product_en":"Mobil Rarus SHC™ 1020 Series","viscosity":"32, 46, 68","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"空压机油/压缩机油","product_cn":"美孚拉力士 SHC 1024","product_en":"Mobil Rarus SHC 1024","viscosity":"32","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"空压机油/压缩机油","product_cn":"美孚拉力士 SHC 1025","product_en":"Mobil Rarus SHC 1024","viscosity":"46","source":"","runmei":"Lubemater AIR S8146 转子冷却液","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"空压机油/压缩机油","product_cn":"美孚拉力士 SHC 1026","product_en":"Mobil Rarus SHC 1024","viscosity":"68","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"空压机油/压缩机油","product_cn":"美孚拉力士™ 800系列 (Mobil Rarus™ 800 Series)","product_en":"","viscosity":"","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"空压机油/压缩机油","product_cn":"美孚拉力士 829","product_en":"","viscosity":"","source":"","runmei":"L-DAB 150","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"空压机油/压缩机油","product_cn":"美孚拉力士™ 400系列","product_en":"","viscosity":"","source":"","runmei":"Lubemater AIR S6032/6046 空气压缩机油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"空压机油/压缩机油","product_cn":"美孚拉力士 424","product_en":"","viscosity":"32","source":"","runmei":"Lubemater AIR S6032 空气压缩机油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"空压机油/压缩机油","product_cn":"美孚拉力士 425","product_en":"","viscosity":"46","source":"","runmei":"Lubemater AIR S6046 空气压缩机油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"空压机油/压缩机油","product_cn":"美孚拉力士 426","product_en":"","viscosity":"68","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"空压机油/压缩机油","product_cn":"美孚拉力士 427","product_en":"","viscosity":"100","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"空压机油/压缩机油","product_cn":"美孚拉力士 429","product_en":"","viscosity":"150","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"长城","category":"汽轮机油/涡轮机油","product_cn":"长城牌威越L","product_en":"","viscosity":"","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"长城","category":"液压油","product_cn":"长城牌4631水乙二醇","product_en":"","viscosity":"","source":"","runmei":"HFW 46 水-乙二醇抗燃液压液","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"长城","category":"液压油","product_cn":"长城牌卓力L","product_en":"","viscosity":"","source":"","runmei":"L-HM 32/46/68 抗磨液压油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"长城","category":"液压油","product_cn":"长城牌普力L","product_en":"","viscosity":"","source":"","runmei":"L-HM 32/46/68 抗磨液压油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"长城","category":"空压机油/压缩机油","product_cn":"长城牌4511","product_en":"","viscosity":"68, 100, 150, 220","source":"","runmei":"SPE C2/C3工艺气体压缩机防护剂（100/150）","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"长城","category":"空压机油/压缩机油","product_cn":"长城牌4513","product_en":"","viscosity":"","source":"","runmei":"MOON 150#","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"长城","category":"液压油","product_cn":"长城4631水乙二醇抗燃液压油","product_en":"","viscosity":"","source":"","runmei":"HFW 46 水-乙二醇抗燃液压液","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"长城","category":"液压油","product_cn":"长城4632酯型难燃液压油","product_en":"","viscosity":"","source":"","runmei":"HFDU 46/68 全合成型抗燃液压液","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"长城","category":"液压油","product_cn":"长城AE液压油","product_en":"","viscosity":"","source":"","runmei":"HS-M 32/46/68 抗磨液压油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"长城","category":"液压油","product_cn":"长城HV低温液压油 胶带 输送机 减速机","product_en":"","viscosity":"","source":"","runmei":"L-HV 32/46/68 低温抗磨液压油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"长城","category":"汽轮机油/涡轮机油","product_cn":"长城TSA汽轮机油","product_en":"","viscosity":"","source":"","runmei":"L-TSA 32/46/68 汽轮机油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"长城","category":"液压油","product_cn":"长城卓力HM抗磨液压油","product_en":"","viscosity":"","source":"","runmei":"L-HM 32/46/68 抗磨液压油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"长城","category":"汽轮机油/涡轮机油","product_cn":"长城威越TSA长寿命汽轮机油","product_en":"","viscosity":"","source":"","runmei":"TSA 32/46/68 长寿命汽轮机油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"长城","category":"齿轮油","product_cn":"长城得威AP工业齿轮油","product_en":"","viscosity":"","source":"","runmei":"EP68/100/150/220/320/460/680 工业齿轮油","application":"类型: 中负荷GB 5903 CKC","compSpecs":{},"runmeiSpecs":{}},{"brand":"长城","category":"齿轮油","product_cn":"长城得威CKD工业闭式齿轮油","product_en":"","viscosity":"","source":"","runmei":"Lubemater L-CKD 220/320/460/680  重负荷工业齿轮油","application":"类型: 中负荷GB 5903 CKC","compSpecs":{},"runmeiSpecs":{}},{"brand":"长城","category":"齿轮油","product_cn":"长城牌4405合成中负荷工业齿轮油","product_en":"","viscosity":"","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"长城","category":"齿轮油","product_cn":"长城牌4406合成重负荷工业齿轮油","product_en":"","viscosity":"","source":"","runmei":"L-CKC 320 工业齿轮油","application":"类型: 中负荷GB 5903 CKC","compSpecs":{},"runmeiSpecs":{}},{"brand":"长城","category":"齿轮油","product_cn":"长城牌4408合成重负荷工业齿轮油","product_en":"","viscosity":"","source":"","runmei":"L-CKC 320 工业齿轮油","application":"类型: 中负荷GB 5903 CKC","compSpecs":{},"runmeiSpecs":{}},{"brand":"长城","category":"齿轮油","product_cn":"长城牌A T","product_en":"","viscosity":"","source":"","runmei":"L-CKC 320 工业齿轮油","application":"类型: 中负荷GB 5903 CKC","compSpecs":{},"runmeiSpecs":{}},{"brand":"长城","category":"齿轮油","product_cn":"长城牌低气味工业齿轮油优选特殊添加剂技术","product_en":"","viscosity":"","source":"","runmei":"L-CKC 320 工业齿轮油","application":"类型: 中负荷GB 5903 CKC","compSpecs":{},"runmeiSpecs":{}},{"brand":"长城","category":"齿轮油","product_cn":"长城牌得威A P","product_en":"","viscosity":"","source":"","runmei":"L-CKC 320 工业齿轮油","application":"类型: 中负荷GB 5903 CKC","compSpecs":{},"runmeiSpecs":{}},{"brand":"长城","category":"齿轮油","product_cn":"长城牌得威A P工业齿轮油是高级重载工业齿轮油","product_en":"","viscosity":"","source":"","runmei":"L-CKC 320 工业齿轮油","application":"类型: 中负荷GB 5903 CKC","compSpecs":{},"runmeiSpecs":{}},{"brand":"长城","category":"齿轮油","product_cn":"长城牌得威L","product_en":"","viscosity":"","source":"","runmei":"L-CKC 320 工业齿轮油","application":"类型: 中负荷GB 5903 CKC","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"齿轮油","product_cn":"美孚SHC™ 600系列","product_en":"Mobil SHC™ 600 Series","viscosity":"32, 68, 100, 150, 220, 320, 460, 680, 1000","source":"","runmei":"Lubemater SHC GI 100/150/220/320/460/680 全合成工业齿轮油","application":"PAO","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"齿轮油","product_cn":"Mobil SHC 624","product_en":"Mobil SHC 624","viscosity":"32","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"齿轮油","product_cn":"Mobil SHC 626","product_en":"Mobil SHC 626","viscosity":"68","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"齿轮油","product_cn":"Mobil SHC 627","product_en":"Mobil SHC 627","viscosity":"100","source":"","runmei":"Lubemater SHC GI 100 全合成工业齿轮油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"齿轮油","product_cn":"Mobil SHC 629","product_en":"Mobil SHC 629","viscosity":"150","source":"","runmei":"Lubemater SHC GI 150 全合成工业齿轮油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"齿轮油","product_cn":"Mobil SHC 630","product_en":"Mobil SHC 630","viscosity":"220","source":"","runmei":"Lubemater SHC GI 220 全合成工业齿轮油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"齿轮油","product_cn":"Mobil SHC 632","product_en":"Mobil SHC 632","viscosity":"320","source":"","runmei":"Lubemater SHC GI 320 全合成工业齿轮油","application":"mPAO风电","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"齿轮油","product_cn":"Mobil SHC 634","product_en":"Mobil SHC 634","viscosity":"460","source":"","runmei":"Lubemater SHC GI 460 全合成工业齿轮油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"齿轮油","product_cn":"Mobil SHC 636","product_en":"Mobil SHC 636","viscosity":"680","source":"","runmei":"Lubemater SHC GI 680 全合成工业齿轮油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"齿轮油","product_cn":"Mobil SHC 639","product_en":"Mobil SHC 639","viscosity":"1000","source":"","runmei":"Lubemater SHC GI 1000 全合成工业齿轮油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"齿轮油","product_cn":"美孚SHC™齿轮油系列","product_en":"Mobil SHC™ Gear Series","viscosity":"150, 220, 320, 460, 680","source":"","runmei":"Lubemater SHC GI 100/150/220/320/460/680/1000全合成工业齿轮油","application":"PAO重负荷工业齿轮","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"齿轮油","product_cn":"美孚SHC 齿轮油150","product_en":"","viscosity":"150","source":"","runmei":"Lubemater SHC GI 150 全合成工业齿轮油","application":"mPAO风电","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"齿轮油","product_cn":"美孚SHC 齿轮油220","product_en":"","viscosity":"220","source":"","runmei":"Lubemater SHC GI 220 全合成工业齿轮油","application":"mPAO风电","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"齿轮油","product_cn":"美孚SHC 齿轮油320","product_en":"","viscosity":"320","source":"","runmei":"Lubemater SHC GI 320 全合成工业齿轮油","application":"mPAO风电","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"齿轮油","product_cn":"美孚SHC 齿轮油460","product_en":"","viscosity":"460","source":"","runmei":"Lubemater SHC GI 460 全合成工业齿轮油","application":"mPAO风电","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"齿轮油","product_cn":"美孚SHC 齿轮油680","product_en":"","viscosity":"680","source":"","runmei":"Lubemater SHC GI 680 全合成工业齿轮油","application":"mPAO风电","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"齿轮油","product_cn":"美孚SHC™齿轮油320 WT","product_en":"Mobil SHC™ Gear 320 WT","viscosity":"320","source":"","runmei":"Lubemater CF-20 320 风电齿轮油","application":"mPAO风电","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"齿轮油","product_cn":"美孚SHC齿轮油3200","product_en":"Mobil SHC  Gear 3200","viscosity":"3200","source":"","runmei":"OG-30 CSF 3500 高性能开式齿轮剂","application":"PAO","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"齿轮油","product_cn":"美孚SHC齿轮油6800","product_en":"Mobil SHC  Gear 6800","viscosity":"6800","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"齿轮油","product_cn":"美孚齿轮油SHC XMP 320","product_en":"Mobil Gear SHC XMP 320","viscosity":"320","source":"","runmei":"Lubemater CF-20 320 风电齿轮油","application":"mPAO风电","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"齿轮油","product_cn":"美孚齿轮油SHC XMP 460","product_en":"Mobil Gear SHC XMP 460","viscosity":"460","source":"","runmei":"Lubemater SHC GI 460 全合成工业齿轮油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"齿轮油","product_cn":"美孚格高“系列","product_en":"Mobil Glygoyle Series","viscosity":"150, 220, 320, 460, 680, 1000","source":"","runmei":"Lubemater SHC GI 100/150/220/320/460/680 全合成工业齿轮油","application":"PAG蜗轮蜗杆专用","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"齿轮油","product_cn":"格高 150","product_en":"Glygoyle 150","viscosity":"150","source":"","runmei":"SHC GW 150 全合成涡轮蜗杆油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"齿轮油","product_cn":"格高 220","product_en":"Glygoyle 220","viscosity":"220","source":"","runmei":"SHC GW 220 全合成涡轮蜗杆油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"齿轮油","product_cn":"格高 320","product_en":"Glygoyle 320","viscosity":"320","source":"","runmei":"SHC GW 320 全合成涡轮蜗杆油","application":"mPAO风电","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"齿轮油","product_cn":"格高 460","product_en":"Glygoyle 460","viscosity":"460","source":"","runmei":"SHC GW 460 全合成涡轮蜗杆油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"齿轮油","product_cn":"格高 680","product_en":"Glygoyle 680","viscosity":"680","source":"","runmei":"SHC GW 680 全合成涡轮蜗杆油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"齿轮油","product_cn":"格高 1000","product_en":"Glygoyle 1000","viscosity":"1000","source":"","runmei":"SHC GW 1000 全合成涡轮蜗杆油","application":"PAO","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"齿轮油","product_cn":"美孚齿轮油”600XP系列","product_en":"Mobilgear™ 600 XP Series","viscosity":"68, 100, 150, 220, 320, 460, 680","source":"","runmei":"Lubemater L-CKD 220/320/460/680  重负荷工业齿轮油","application":"矿物，通用工业极压齿轮油","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"齿轮油","product_cn":"美孚齿轮油 600 XP 68","product_en":"","viscosity":"68","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"齿轮油","product_cn":"美孚齿轮油 600 XP 100","product_en":"","viscosity":"100","source":"","runmei":"L-CKD 100 重负荷工业齿轮油","application":"PAO","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"齿轮油","product_cn":"美孚齿轮油 600 XP 150","product_en":"","viscosity":"150","source":"","runmei":"L-CKD 150 重负荷工业齿轮油","application":"PAO","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"齿轮油","product_cn":"美孚齿轮油 600 XP 220","product_en":"","viscosity":"220","source":"","runmei":"L-CKD 220 重负荷工业齿轮油","application":"PAO","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"齿轮油","product_cn":"美孚齿轮油 600 XP 320","product_en":"","viscosity":"320","source":"","runmei":"L-CKD 320 重负荷工业齿轮油","application":"PAO","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"齿轮油","product_cn":"美孚齿轮油 600 XP 460","product_en":"","viscosity":"460","source":"","runmei":"L-CKD 460 重负荷工业齿轮油","application":"PAO","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"齿轮油","product_cn":"美孚齿轮油 600 XP 680","product_en":"","viscosity":"680","source":"","runmei":"L-CKD 680 重负荷工业齿轮油","application":"PAO","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"齿轮油","product_cn":"美孚喷雾齿轮油”MS系列","product_en":"Mobilgear MS Series","viscosity":"100, 320, 460","source":"","runmei":"Lubemater ST-OAM 220/320 油气润滑剂","application":"矿物油","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"齿轮油","product_cn":"美孚600W 超级汽缸油","product_en":"","viscosity":"460","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"齿轮油","product_cn":"事必达EP系列","product_en":"SPARTAN EP","viscosity":"150, 220, 320, 460","source":"","runmei":"朗麦EP 系列工业齿轮油","application":"矿物油，经济型/标准型工业齿轮油线","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"齿轮油","product_cn":"事必达EP 150","product_en":"SPARTAN EP 150","viscosity":"150","source":"","runmei":"朗麦EP 150 工业齿轮油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"齿轮油","product_cn":"事必达EP 220","product_en":"SPARTAN EP 220","viscosity":"220","source":"","runmei":"朗麦EP 220 工业齿轮油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"齿轮油","product_cn":"事必达EP 320","product_en":"SPARTAN EP 320","viscosity":"320","source":"","runmei":"朗麦EP 320 工业齿轮油","application":"mPAO风电","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"齿轮油","product_cn":"事必达EP 460","product_en":"SPARTAN EP 460","viscosity":"460","source":"","runmei":"朗麦EP 460 工业齿轮油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"液压油","product_cn":"美孚SHC™ 500系列","product_en":"Mobil SHC 500 Series","viscosity":"32, 46, 68, 100","source":"","runmei":"Lubemater XV 32/46 低温液压油","application":"PAO","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"液压油","product_cn":"美孚 SHC 524","product_en":"Mobil SHC 524","viscosity":"32","source":"","runmei":"Lubemater XV 32 低温液压油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"液压油","product_cn":"美孚 SHC 525","product_en":"Mobil SHC 525","viscosity":"46","source":"","runmei":"Lubemater XV 46 低温液压油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"液压油","product_cn":"美孚DTE 10 超凡 系列","product_en":"Mobil DTE 10 Excel™ Series","viscosity":"15, 32, 46, 68, 100, 150","source":"","runmei":"Lubemater XV 32/46 低温液压油","application":"PAO","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"液压油","product_cn":"美孚 DTE 10 超凡 32","product_en":"","viscosity":"32","source":"","runmei":"Lubemater XV 32 低温液压油","application":"PAO","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"液压油","product_cn":"美孚 DTE 10 超凡 46","product_en":"","viscosity":"46","source":"","runmei":"Lubemater XV 46 低温液压油","application":"PAO","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"液压油","product_cn":"美孚 DTE 超凡系列","product_en":"Mobil DTE Excel™ Series","viscosity":"46, 68, 100","source":"","runmei":"L-HMS 32/46/68无灰抗磨液压油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"液压油","product_cn":"美孚 DTE 超凡 46","product_en":"","viscosity":"46","source":"","runmei":"L-HMS 32无灰抗磨液压油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"液压油","product_cn":"美孚 DTE 超凡 68","product_en":"","viscosity":"68","source":"","runmei":"L-HMS 68无灰抗磨液压油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"液压油","product_cn":"美孚 DTE 20 系列","product_en":"Mobil DTE 20 Series)","viscosity":"15, 32, 46, 68, 100, 150","source":"","runmei":"HS-M 32/46/68 抗磨液压油","application":"矿物油","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"液压油","product_cn":"美孚 DTE 24","product_en":"","viscosity":"32","source":"","runmei":"HS-M 32 抗磨液压油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"液压油","product_cn":"美孚 DTE 25","product_en":"","viscosity":"46","source":"","runmei":"HS-M 46 抗磨液压油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"液压油","product_cn":"美孚 DTE 26","product_en":"","viscosity":"68","source":"","runmei":"HS-M 68 抗磨液压油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"液压油","product_cn":"优力威 (Univis) N 系列","product_en":"","viscosity":"32，46","source":"","runmei":"L-HV 32/46/68 低温抗磨液压油","application":"矿物油","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"液压油","product_cn":"优力威 N 32","product_en":"Univis N 32","viscosity":"32","source":"","runmei":"L-HV 32 低温抗磨液压油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"液压油","product_cn":"优力威 N 46","product_en":"Univis N 46","viscosity":"46","source":"","runmei":"L-HV 46 低温抗磨液压油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"液压油","product_cn":"优力威 (Univis) HVI 系列","product_en":"","viscosity":"13,26","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"液压油","product_cn":"力图 (Nuto) H 系列","product_en":"","viscosity":"32, 46, 68, 100","source":"","runmei":"L-HM 32/46/68 抗磨液压油","application":"矿物油","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"液压油","product_cn":"美孚派路特™ HFD 46","product_en":"Mobil Pyrotec HFD 46","viscosity":"46","source":"","runmei":"HFDR 46 磷酸酯抗磨液压油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"液压油","product_cn":"美孚纽华™ FR 200D","product_en":"Mobil Nyvac FR 200D","viscosity":"46","source":"","runmei":"HFW 46 水-乙二醇抗燃液压液","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"轴承油","product_cn":"美孚威格力 500系列","product_en":"Mobil Vacuoline 500 Series","viscosity":"100，150, 220, 320, 460, 680,","source":"","runmei":"Lubemater AW 100/150/220 R&O320/460/680油膜轴承油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"轴承油","product_cn":"美孚威格力 525","product_en":"Mobil Vacuoline 525","viscosity":"100","source":"","runmei":"Lubemater FB 100 油膜轴承油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"轴承油","product_cn":"美孚威格力 533","product_en":"Mobil Vacuoline 533","viscosity":"220","source":"","runmei":"Lubemater FB 220油膜轴承油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"汽轮机油/涡轮机油","product_cn":"美孚SHC™ 800系列","product_en":"Mobil SHC 800 Series","viscosity":"32，46","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"汽轮机油/涡轮机油","product_cn":"美孚DTE™ 800系列","product_en":"Mobil DTE 800 Series","viscosity":"32，46","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"汽轮机油/涡轮机油","product_cn":"美孚DTE™ 700系列","product_en":"Mobil DTE 700 Series","viscosity":"32, 46, 68","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"汽轮机油/涡轮机油","product_cn":"美孚DTE™ 732 M","product_en":"Mobil DT 732 M","viscosity":"32","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"汽轮机油/涡轮机油","product_cn":"特力索™ T系列","product_en":"Teresstic T Series","viscosity":"32, 46, 68","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"开式齿轮油","product_cn":"美孚SHC™ 齿轮油22M及46M","product_en":"","viscosity":"22000 46000","source":"","runmei":"L-TSA 32/46/68 汽轮机油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"壳牌","category":"齿轮油","product_cn":"壳牌可耐压 S4 GX 150/220/320/460/680","product_en":"","viscosity":"VG 150 / VG 220 / VG 320 / VG 460 / VG 680","source":"","runmei":"Lubemater SHC GI 100/150/220/320/460/680 全合成工业齿轮油","application":"PAO齿轮油，矿用电动轮","compSpecs":{},"runmeiSpecs":{}},{"brand":"壳牌","category":"齿轮油","product_cn":"壳牌可耐压 S4 WE 150/220/320/460/680","product_en":"","viscosity":"VG 150 / VG 220 / VG 320 / VG 460 / VG 680","source":"","runmei":"Lubemater SHC GW 150/220/320/460/680全合成蜗轮蜗杆油","application":"PAO齿轮油，矿用电动轮","compSpecs":{},"runmeiSpecs":{}},{"brand":"壳牌","category":"齿轮油","product_cn":"壳牌可耐压S4 Wheel 460","product_en":"","viscosity":"460","source":"","runmei":"Lubemater SHC GI 460 全合成工业齿轮油","application":"PAO齿轮油，矿用电动轮","compSpecs":{},"runmeiSpecs":{}},{"brand":"壳牌","category":"齿轮油","product_cn":"壳牌可耐压S4 Wheel 680","product_en":"","viscosity":"680","source":"","runmei":"Lubemater SHC GI 680 全合成工业齿轮油","application":"PAO齿轮油，矿用电动轮","compSpecs":{},"runmeiSpecs":{}},{"brand":"壳牌","category":"齿轮油","product_cn":"壳牌可耐压 S5 Wind 320","product_en":"","viscosity":"320","source":"","runmei":"Lubemater CF-20 320 风电齿轮油","application":"风电","compSpecs":{},"runmeiSpecs":{}},{"brand":"壳牌","category":"齿轮油","product_cn":"壳牌可耐压 HD 1000","product_en":"","viscosity":"1000","source":"","runmei":"Lubemater SHC GI 1000 全合成工业齿轮油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"壳牌","category":"齿轮油","product_cn":"壳牌可耐压 S3 GP 460","product_en":"Shell Omala S3 GP 460","viscosity":"460","source":"","runmei":"SHP EP 680 工业齿轮油","application":"高极压性能的应用，粘指98，烧结负荷500kg","compSpecs":{},"runmeiSpecs":{}},{"brand":"壳牌","category":"齿轮油","product_cn":"壳牌可耐压 S2 GX 68/100/150/220/320/460/680","product_en":"Shell Omala S2 GX 68/100/150","viscosity":"VG 150 / VG 220 / VG 320 / VG 460 / VG 680","source":"","runmei":"EP 68/100/150/220/320/460/680 工业齿轮油","application":"极压（EP）润滑油","compSpecs":{},"runmeiSpecs":{}},{"brand":"壳牌","category":"齿轮油","product_cn":"壳牌可耐压 S2 G","product_en":"Shell Omala S2 G 68/100/150/220/320/460/680","viscosity":"68, 100, 150, 220, 320, 460, 680","source":"","runmei":"EP 68/100/150/220/320/460/680 工业齿轮油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"壳牌","category":"齿轮油","product_cn":"壳牌可耐压 S1 W 460 / 680","product_en":"Shell Omala S1 W 460 / 680","viscosity":"460680","source":"","runmei":"EP 68/100/150/220/320/460/680 工业齿轮油","application":"矿物油+脂肪油","compSpecs":{},"runmeiSpecs":{}},{"brand":"壳牌","category":"齿轮油","product_cn":"壳牌齿轮油 S1 G 150 / 220 / 320 / 460","product_en":"Shell Gear Oil S1 G 150 / 220 / 320 / 460","viscosity":"150, 220, 320, 460","source":"","runmei":"L-CKD 150/220/320/460/680  重负荷工业齿轮油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"壳牌","category":"齿轮油","product_cn":"壳牌齿轮油 S1 G 150","product_en":"Shell Gear Oil S1 G 150","viscosity":"150","source":"","runmei":"L-CKD 150 重负荷工业齿轮油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"壳牌","category":"齿轮油","product_cn":"壳牌齿轮油 S1 G 220","product_en":"Shell Gear Oil S1 G 220","viscosity":"220","source":"","runmei":"L-CKD 220 重负荷工业齿轮油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"壳牌","category":"齿轮油","product_cn":"壳牌齿轮油 S1 G 320","product_en":"Shell Gear Oil S1 G 320","viscosity":"320","source":"","runmei":"L-CKD 320 重负荷工业齿轮油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"壳牌","category":"齿轮油","product_cn":"壳牌齿轮油 S1 G 460","product_en":"Shell Gear Oil S1 G 460","viscosity":"460","source":"","runmei":"L-CKD 460 重负荷工业齿轮油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"壳牌","category":"液压油","product_cn":"壳牌防火液压液S2 DU 46/68","product_en":"","viscosity":"","source":"","runmei":"HFDU 46/68 全合成型抗燃液压液","application":"合成酯抗燃液压油","compSpecs":{},"runmeiSpecs":{}},{"brand":"壳牌","category":"液压油","product_cn":"壳牌防火液压液S1 DU 32 / 40 / 60","product_en":"","viscosity":"","source":"","runmei":"HFDU 32/46/68  高性能合成抗燃液压油","application":"天然酯抗燃液压油","compSpecs":{},"runmeiSpecs":{}},{"brand":"壳牌","category":"液压油","product_cn":"壳牌水乙二醇液压液 S2 CX 46","product_en":"Shell Water-Glycol S2 CX 46","viscosity":"","source":"","runmei":"HFW 46 水-乙二醇抗燃液压液","application":"水-乙二醇","compSpecs":{},"runmeiSpecs":{}},{"brand":"壳牌","category":"液压油","product_cn":"壳牌确能立S5 R 46","product_en":"Shell Corena S5 R 46","viscosity":"","source":"","runmei":"Lubemater AIR S8046 转子冷却液","application":"PAG","compSpecs":{},"runmeiSpecs":{}},{"brand":"壳牌","category":"液压油","product_cn":"壳牌确能立S5 A 32","product_en":"Shell Corena S5 A 32","viscosity":"","source":"","runmei":"Lubemater AIR S8032 转子冷却液","application":"PAG","compSpecs":{},"runmeiSpecs":{}},{"brand":"壳牌","category":"液压油","product_cn":"壳牌确能立 S4 R 32 / 46 / 68","product_en":"Shell Corena S4 R 32 / 46 / 68","viscosity":"","source":"","runmei":"Lubemater AIR 8132/8146 转子冷却液","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"壳牌","category":"液压油","product_cn":"壳牌确能立 S4 P 100","product_en":"Shell Corena S4 P 100","viscosity":"","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"壳牌","category":"液压油","product_cn":"壳牌确能立 S3 RX 32/46","product_en":"Shell Corena S3 RX 32/46","viscosity":"","source":"","runmei":"Lubemater AIR S6132/6146 转子冷却液","application":"GTL,6000-8000","compSpecs":{},"runmeiSpecs":{}},{"brand":"壳牌","category":"液压油","product_cn":"壳牌确能立 S3 R 32 / 46 / 68","product_en":"Shell Corena S3 R 32 /46/ 68","viscosity":"","source":"","runmei":"Lubemater AIR 6032/6046/6068空气压缩机油","application":"达 4000 -6000小时，旋转空气压缩机润滑油","compSpecs":{},"runmeiSpecs":{}},{"brand":"壳牌","category":"液压油","product_cn":"壳牌确能立 S2 R 46","product_en":"Shell Corena S2 R 46","viscosity":"","source":"","runmei":"Lubemater AIR 4046空气压缩机油","application":"达 2000-4000 小时，旋转空气压缩机润滑油","compSpecs":{},"runmeiSpecs":{}},{"brand":"壳牌","category":"液压油","product_cn":"壳牌确能立 S2 P 68 / 100 / 150","product_en":"Shell Corena S2 P 68 /100 /150","viscosity":"","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"壳牌","category":"液压油","product_cn":"壳牌确能立 S2 RJ","product_en":"","viscosity":"","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"壳牌","category":"空压机油/压缩机油","product_cn":"壳牌空气压缩机油 S1 R 46","product_en":"Shell Air Compressor S1 R 46","viscosity":"","source":"","runmei":"Lubemater AIR 3046空气压缩机油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"壳牌","category":"轴承油","product_cn":"壳牌万利得 S4 B 220","product_en":"","viscosity":"","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"壳牌","category":"轴承油","product_cn":"万利得 S3 BA 系列","product_en":"","viscosity":"320/460","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"壳牌","category":"轴承油","product_cn":"万利得 S2 BA 系列","product_en":"","viscosity":"100/220","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"壳牌","category":"轴承油","product_cn":"万利得 S2 BL (5/10)","product_en":"","viscosity":"","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"壳牌","category":"轴承油","product_cn":"万利得 S2 B  系列","product_en":"","viscosity":"32 到 320 宽粘度范围","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"壳牌","category":"轴承油","product_cn":"万利得 S1 B 系列","product_en":"","viscosity":"","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"长城","category":"空压机油/压缩机油","product_cn":"4502","product_en":"","viscosity":"","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"长城","category":"空压机油/压缩机油","product_cn":"4506","product_en":"","viscosity":"","source":"","runmei":"S8146 转子冷却液","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"长城","category":"空压机油/压缩机油","product_cn":"4508","product_en":"","viscosity":"","source":"","runmei":"Lubemater AIR S8032/8032G/8046 转子冷却液","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"长城","category":"空压机油/压缩机油","product_cn":"4503","product_en":"","viscosity":"","source":"","runmei":"S6146 空气压缩机油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"寿力","category":"空压机油/压缩机油","product_cn":"Sullube","product_en":"39","viscosity":"","source":"","runmei":"S8032G 转子冷却液","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"英格索兰","category":"空压机油/压缩机油","product_cn":"SSR Ultra Coolant","product_en":"46","viscosity":"","source":"","runmei":"Lubemater AIR S8046 转子冷却液","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"雪佛龙","category":"液压油","product_cn":"长效无灰合成抗磨液压油","product_en":"Clarity® Synthetic\n Hydraulic Oil AW","viscosity":"32 46 68","source":"","runmei":"Lubemater XV 32/46 低温液压油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"雪佛龙","category":"液压油","product_cn":"合成环保抗磨液压油","product_en":"Clarity® Synthetic EA Hydraulic Oil","viscosity":"46 68 100","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"雪佛龙","category":"液压油","product_cn":"超级宽温抗磨液压油","product_en":"Rando HDZ","viscosity":"15 22 32 46 68 100","source":"","runmei":"HS-M 32/46/68 抗磨液压油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"雪佛龙","category":"液压油","product_cn":"长效无灰抗磨液压油","product_en":"Clarity® Hydraulic Oil AW","viscosity":"22 32 46 68 100","source":"","runmei":"L-HMS 32/46/68无灰抗磨液压油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"雪佛龙","category":"液压油","product_cn":"特级宽温抗磨液压油","product_en":"Rando MV","viscosity":"15 22 32 46 68 100","source":"","runmei":"L-HV 32/46/68 低温抗磨液压油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"雪佛龙","category":"液压油","product_cn":"特级抗磨液压油","product_en":"Rando HD","viscosity":"22 32 46 68 100 150","source":"","runmei":"L-HM 32/46/68 抗磨液压油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"雪佛龙","category":"液压油","product_cn":"抗磨液压油","product_en":"Hydraulic Oil AW","viscosity":"32 46 68 100","source":"","runmei":"L-HM 32/46/68 抗磨液压油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"雪佛龙","category":"液压油","product_cn":"工程机械液压油","product_en":"Chevron Construction Hydraulic Oil","viscosity":"46 68","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"雪佛龙","category":"液压油","product_cn":"风力涡轮机液压油","product_en":"Rando WM ISO 32","viscosity":"32","source":"","runmei":"Lubemater XV 32 低温液压油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"雪佛龙","category":"齿轮油","product_cn":"合成极压齿轮油","product_en":"Meropa® Synthetic EP","viscosity":"150 220 320 460 680","source":"","runmei":"Lubemater SHC GI 100/150/220/320/460/680 全合成工业齿轮油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"雪佛龙","category":"齿轮油","product_cn":"高性能抗点蚀合成工业齿轮油XM","product_en":"Meropa® EliteSyn XM","viscosity":"150 220 320 460 680","source":"","runmei":"Lubemater SHC GI 100/150/220/320/460/680 全合成工业齿轮油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"雪佛龙","category":"齿轮油","product_cn":"合成工业齿轮油 WS","product_en":"Meropa® Synlube WS","viscosity":"150 220 320 460 680","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"雪佛龙","category":"齿轮油","product_cn":"蜗轮蜗杆齿轮油","product_en":"Meropa® WG","viscosity":"220 460 680","source":"","runmei":"L-CKE /P 220 / 320 涡轮蜗杆油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"雪佛龙","category":"齿轮油","product_cn":"工业极压齿轮油","product_en":"Meropa®","viscosity":"68 100 150 220 320 460 680 1000 3200","source":"","runmei":"Lubemater L-CKD 150/220/320/460/680  重负荷工业齿轮油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"雪佛龙","category":"齿轮油","product_cn":"风力涡轮机齿轮油","product_en":"Meropa® WM","viscosity":"320","source":"","runmei":"Lubemater CF-20 320 风电齿轮油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"雪佛龙","category":"齿轮油","product_cn":"合成环保齿轮油","product_en":"Clarity® Synthetic EA Gear Oil","viscosity":"100 150","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"雪佛龙","category":"齿轮油","product_cn":"开式齿轮润滑剂","product_en":"Chevron Open Gear Lubricant","viscosity":"100 250","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"雪佛龙","category":"涡轮机油","product_cn":"优质燃气轮机油(超长寿命)","product_en":"GST® Premium XL","viscosity":"32 46","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"雪佛龙","category":"涡轮机油","product_cn":"极压燃气轮机油","product_en":"GST® EP","viscosity":"32 46","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"雪佛龙","category":"涡轮机油","product_cn":"优质燃气轮机油","product_en":"GST® Premium","viscosity":"32","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"雪佛龙","category":"涡轮机油","product_cn":"燃气轮机油","product_en":"GST® Oil","viscosity":"32 46 68 100","source":"","runmei":"Lubemater TSA 46 长寿命汽轮机油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"雪佛龙","category":"涡轮机油","product_cn":"防锈抗氧化润滑油","product_en":"Regal® R&O","viscosity":"32 46 68 100","source":"","runmei":"L-TSA 32/46/68 汽轮机油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"雪佛龙","category":"压缩机油","product_cn":"PAO合成压缩机油","product_en":"Cetus® PAO","viscosity":"32 46 68","source":"","runmei":"Lubemater AIR S8146 转子冷却液","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"雪佛龙","category":"压缩机油","product_cn":"双酯基往复式压缩机油","product_en":"Cetus® DE","viscosity":"68 100","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"雪佛龙","category":"压缩机油","product_cn":"高性能合成压缩机油","product_en":"Cetus® HiPerSYN™ Oil","viscosity":"32 46 68","source":"","runmei":"Lubemater AIR S8146 转子冷却液","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"雪佛龙","category":"压缩机油","product_cn":"极压压缩机油","product_en":"Compressor Oil EP VDL","viscosity":"32 46 68 100 150","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"昆仑","category":"液压油","product_cn":"L-HM抗磨液压油(高压)","product_en":"","viscosity":"32 46 68","source":"","runmei":"L-HM 32/46/68 抗磨液压油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"昆仑","category":"液压油","product_cn":"HM抗磨液压油(经济型)","product_en":"","viscosity":"32 46 68","source":"","runmei":"L-HM 32/46/68 抗磨液压油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"昆仑","category":"液压油","product_cn":"HM N无灰抗磨液压油(高压)","product_en":"","viscosity":"32 46 68","source":"","runmei":"L-HMS 32/46/68无灰抗磨液压油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"昆仑","category":"液压油","product_cn":"HML长寿命液压油","product_en":"","viscosity":"32 46 68","source":"","runmei":"HS-M 32/46/68 抗磨液压油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"昆仑","category":"液压油","product_cn":"HLN长寿命无灰液压油","product_en":"","viscosity":"46 68","source":"","runmei":"L-HMS 32/46/68无灰抗磨液压油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"昆仑","category":"液压油","product_cn":"HVN低温无灰液压油","product_en":"","viscosity":"32 46 68","source":"","runmei":"L-HV 32/46/68 低温抗磨液压油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"昆仑","category":"液压油","product_cn":"HSN超低温无灰液压油","product_en":"","viscosity":"22 32 46","source":"","runmei":"Lubemater XV 32/46 低温液压油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"昆仑","category":"液压油","product_cn":"水-乙二醇抗燃液压液","product_en":"","viscosity":"46","source":"","runmei":"HFW 46 水-乙二醇抗燃液压液","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"昆仑","category":"液压油","product_cn":"HFDU合成酯型难燃液压油","product_en":"","viscosity":"46 68","source":"","runmei":"HFDU 46/68 全合成型抗燃液压液","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"昆仑","category":"工业齿轮油","product_cn":"L-CKC中负荷工业齿轮油","product_en":"","viscosity":"100 150 220 320 460 680","source":"","runmei":"L-CKC 100/150/220/320/460/680工业齿轮油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"昆仑","category":"工业齿轮油","product_cn":"L-CKD重负荷工业齿轮油","product_en":"","viscosity":"150 220 320 460 680","source":"","runmei":"L-CKD 100/150/220/320/460/680工业齿轮油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"昆仑","category":"工业齿轮油","product_cn":"KG重负荷工业齿轮油","product_en":"","viscosity":"220 320 460","source":"","runmei":"EP 68/100/150/220/320/460/680 工业齿轮油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"昆仑","category":"工业齿轮油","product_cn":"KG/PS半合成重负荷工业齿轮油","product_en":"","viscosity":"150 220 320","source":"","runmei":"SHP XP 150/220/320 工业齿轮油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"昆仑","category":"工业齿轮油","product_cn":"KG/S合成工业齿轮油","product_en":"","viscosity":"150 220 320 460","source":"","runmei":"Lubemater SHC GI 100/150/220/320/460/680 全合成工业齿轮油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"昆仑","category":"工业齿轮油","product_cn":"L-CKE/P蜗轮蜗杆油","product_en":"","viscosity":"220 320 460","source":"","runmei":"L-CKE/P 220 蜗轮蜗杆油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"昆仑","category":"工业齿轮油","product_cn":"M重负荷开式工业齿轮油","product_en":"","viscosity":"150 220 320","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"昆仑","category":"工业齿轮油","product_cn":"KCB开式齿轮油","product_en":"","viscosity":"500","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"昆仑","category":"汽轮机油","product_cn":"L-TSA汽轮机油(A级)","product_en":"","viscosity":"32 46 68 100","source":"","runmei":"L-TSA 32/46/68 汽轮机油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"昆仑","category":"汽轮机油","product_cn":"L-TSA汽轮机油(B级)","product_en":"","viscosity":"32 46 68 100","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"昆仑","category":"汽轮机油","product_cn":"KTP优质抗氧防锈汽轮机油","product_en":"","viscosity":"32 46 68","source":"","runmei":"L-TSA 32/46/68 汽轮机油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"昆仑","category":"汽轮机油","product_cn":"KTL长寿命汽轮机油","product_en":"","viscosity":"32 46 68","source":"","runmei":"Lubemater TSA 46 长寿命汽轮机油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"昆仑","category":"汽轮机油","product_cn":"KTL(EP)极压型长寿命汽轮机油","product_en":"","viscosity":"32 46 68","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"昆仑","category":"汽轮机油","product_cn":"KTG联合循环汽轮机油","product_en":"","viscosity":"32 46","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"昆仑","category":"汽轮机油","product_cn":"KTGS极压型联合循环汽轮机油","product_en":"","viscosity":"32 46","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"昆仑","category":"汽轮机油","product_cn":"KTA抗氨汽轮机油","product_en":"","viscosity":"32 46 68","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"昆仑","category":"压缩机油","product_cn":"L-DAB空气压缩机油","product_en":"","viscosity":"32 46 68 100 150 220","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"昆仑","category":"压缩机油","product_cn":"L-DAC空气压缩机油","product_en":"","viscosity":"32 46 68 100 150","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"昆仑","category":"压缩机油","product_cn":"L-DAH回转式(螺杆)空气压缩机油","product_en":"","viscosity":"32 46 32A 46A","source":"","runmei":"Lubemater AIR S6046 空气压缩机油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"昆仑","category":"压缩机油","product_cn":"KTGS离心式压缩机油","product_en":"","viscosity":"32 46","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"昆仑","category":"压缩机油","product_cn":"KCR重负荷螺杆空气压缩机油","product_en":"","viscosity":"46","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"昆仑","category":"压缩机油","product_cn":"KCRS合成型螺杆空气压缩机油","product_en":"","viscosity":"46","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"道达尔","category":"液压油","product_cn":"高性能抗磨液压油","product_en":"TOTAL AZOLLA ZS","viscosity":"10 22 32 46 68 100 150","source":"","runmei":"HS-M 32/46/68 抗磨液压油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"道达尔","category":"液压油","product_cn":"高粘度指数抗磨液压油","product_en":"TOTAL EQUIVIS ZS","viscosity":"15 22 32 46 68 100","source":"","runmei":"L-HV 32/46/68 低温抗磨液压油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"道达尔","category":"液压油","product_cn":"高性能无灰抗磨液压油","product_en":"TOTAL AZOLLA AF","viscosity":"22 32 46 68 100 220 320","source":"","runmei":"L-HMS 32/46/68无灰抗磨液压油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"道达尔","category":"液压油","product_cn":"清净型抗磨液压油","product_en":"TOTAL AZOLLA DZF","viscosity":"10 22 32 46 68 100","source":"","runmei":"L-HMS 32/46/68无灰抗磨液压油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"道达尔","category":"液压油","product_cn":"轧机用无渍液压油","product_en":"TOTAL AZOLLA AL","viscosity":"15 22 32 46 68","source":"","runmei":"Lubemater N32/46 无渍液压油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"道达尔","category":"液压油","product_cn":"超高粘度指数抗磨液压油","product_en":"TOTAL EQUIVIS XV","viscosity":"32 46","source":"","runmei":"Lubemater XV 32/46 低温液压油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"道达尔","category":"工业齿轮油","product_cn":"工业闭式齿轮油","product_en":"TOTAL CARTER EP","viscosity":"68 100 150 220 320 460 680 1000","source":"","runmei":"L-CKD 100/150/220/320/460/680工业齿轮油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"道达尔","category":"工业齿轮油","product_cn":"高性能闭式齿轮油","product_en":"TOTAL CARTER XEP","viscosity":"150 220 320 460 680","source":"","runmei":"EP 68/100/150/220/320/460/680 工业齿轮油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"道达尔","category":"工业齿轮油","product_cn":"合成型(聚α-烯烃)闭式齿轮油","product_en":"TOTAL CARTER SH","viscosity":"150 220 320 460 680 1000","source":"","runmei":"Lubemater SHC GI 100/150/220/320/460/680/1000全合成工业齿轮油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"道达尔","category":"工业齿轮油","product_cn":"合成型(PAG聚醚)闭式齿轮油","product_en":"TOTAL CARTER SY","viscosity":"150 220 320 460 680","source":"","runmei":"Lubemater SHC GW 150/220/320/460/680全合成蜗轮蜗杆油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"道达尔","category":"工业齿轮油","product_cn":"合成型(聚醚)闭式齿轮油","product_en":"TOTAL CARTER SY WM 320","viscosity":"320","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"道达尔","category":"工业齿轮油","product_cn":"无渍闭式齿轮油","product_en":"TOTAL CARTER ALS","viscosity":"220","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"道达尔","category":"开式齿轮油","product_cn":"开式齿轮和钢缆润滑剂","product_en":"TOTAL CARTER ENS 400","viscosity":"-","source":"","runmei":"OG-30 CSF 5000 高性能开式齿轮剂","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"道达尔","category":"工业齿轮油","product_cn":"含固体添加剂闭式齿轮油","product_en":"TOTAL KASSILLA GMP","viscosity":"150 220 320 460 680 1000","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"道达尔","category":"压缩机油","product_cn":"矿物型回转式空气压缩机油","product_en":"TOTAL DACNIS VS","viscosity":"32 46 68 100 150","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"道达尔","category":"压缩机油","product_cn":"长寿命合成型空气压缩机油","product_en":"TOTAL DACNIS SIS 46","viscosity":"46","source":"","runmei":"Lubemater AIR S6146 转子冷却液","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"道达尔","category":"压缩机油","product_cn":"合成型(聚α-烯烃)旋转式空气压缩机油","product_en":"TOTAL DACNIS SH","viscosity":"32 46 68 100","source":"","runmei":"Lubemater AIR S8146 转子冷却液","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"道达尔","category":"压缩机油","product_cn":"合成二元酯型空气压缩机油","product_en":"TOTAL DACNIS SE","viscosity":"46 68 100","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"道达尔","category":"涡轮机油","product_cn":"涡轮机油","product_en":"TOTAL PRESLIA","viscosity":"32 46 68 100","source":"","runmei":"L-TSA 32/46/68 汽轮机油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"道达尔","category":"涡轮机油","product_cn":"高性能燃气涡轮机油","product_en":"TOTAL PRESLIA GT","viscosity":"32 46","source":"","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"奎克好富顿","category":"液压油","product_cn":"阻燃液压油888-46","product_en":"QUINTOLUBRIC 888","viscosity":"46","source":"","runmei":"HFDU 46 全合成型抗燃液压液","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"奎克好富顿","category":"液压油","product_cn":"聚酯难燃液压油853 68","product_en":"QUINTOLUBRIC 853","viscosity":"68","source":"","runmei":"HFDU 68 全合成型抗燃液压液","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"嘉实多","category":"齿轮油","product_cn":"BP 高性能极压齿轮油","product_en":"Castrol Alpha SP 220","viscosity":"220","source":"","runmei":"朗麦EP 220 工业齿轮油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"嘉实多","category":"液压油","product_cn":"无锌抗磨液压油HLP-46","product_en":"","viscosity":"46","source":"","runmei":"Clean 46 无灰抗磨液压油","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"油膜轴承油","product_cn":"威格力 525","product_en":"Mobil Vacuoline 525","viscosity":"","source":"具有抗磨性能的高速线材轧机循环油","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"油膜轴承油","product_cn":"威格力 533","product_en":"Mobil Vacuoline 533","viscosity":"","source":"具有抗磨性能的高速线材轧机循环油","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"壳牌","category":"液压油","product_cn":"壳牌得力士 S3 M 32/46/68/100","product_en":"Shell Tellus S3 M 32/46/68/100","viscosity":"","source":"产品对标-壳牌液压油","runmei":"","application":"II 类无锌液压油","compSpecs":{},"runmeiSpecs":{}},{"brand":"壳牌","category":"液压油","product_cn":"壳牌得力士 S2 VX 15 / 32 / 46","product_en":"Shell Tellus S2 VX 15/32/46","viscosity":"","source":"产品对标-壳牌液压油","runmei":"","application":"II 类基础油,高粘指，粘度指数143需匹配","compSpecs":{},"runmeiSpecs":{}},{"brand":"壳牌","category":"液压油","product_cn":"壳牌得力士 S2 VX 68 / 100","product_en":"Shell Tellus S2 VX 68 / 100","viscosity":"","source":"产品对标-壳牌液压油","runmei":"","application":"II 类基础油，多工况适用,高粘指，粘度指数143需匹配","compSpecs":{},"runmeiSpecs":{}},{"brand":"壳牌","category":"液压油","product_cn":"壳牌得力士 S2 MX 32/46/68","product_en":"Shell Tellus S2 MX 32/46/68","viscosity":"","source":"产品对标-壳牌液压油","runmei":"","application":"II 类基础油，粘度指数105","compSpecs":{},"runmeiSpecs":{}},{"brand":"壳牌","category":"液压油","product_cn":"壳牌得力士 S2 MX 22 / 100","product_en":"Shell Tellus S2 MX 22 / 100","viscosity":"","source":"产品对标-壳牌液压油","runmei":"","application":"II 类基础油，粘度指数105","compSpecs":{},"runmeiSpecs":{}},{"brand":"壳牌","category":"液压油","product_cn":"壳牌惠得力 M 32/46/68","product_en":"Shell Hydraulic M 32/46/68","viscosity":"","source":"产品对标-壳牌液压油","runmei":"","application":"同一级别甚至同一款产品在不同命名体系下的称呼","compSpecs":{},"runmeiSpecs":{}},{"brand":"壳牌","category":"液压油","product_cn":"壳牌超低温润滑油","product_en":"Shell Ultra Low Temperature Oil","viscosity":"","source":"产品对标-壳牌液压油","runmei":"","application":"40℃运动粘度14.3，粘度指数373，外观红色","compSpecs":{},"runmeiSpecs":{}},{"brand":"壳牌","category":"液压油","product_cn":"壳牌Naturelle S4 46","product_en":"Shell Naturelle S4 46","viscosity":"","source":"产品对标-壳牌液压油","runmei":"","application":"合成酯及无灰添加剂配方调配，全饱和合成酯","compSpecs":{},"runmeiSpecs":{}},{"brand":"壳牌","category":"液压油","product_cn":"壳牌Naturelle S2 32/46/68","product_en":"Shell Naturelle S2 32/46/68","viscosity":"","source":"产品对标-壳牌液压油","runmei":"","application":"全合成，可生物降解，难燃液压液，不饱和合成酯","compSpecs":{},"runmeiSpecs":{}},{"brand":"壳牌","category":"液压油","product_cn":"壳牌防火液压液S3 DU 32/46/68","product_en":"","viscosity":"","source":"产品对标-壳牌液压油","runmei":"","application":"高粘度指数的聚乙二醇（PAG）基础油","compSpecs":{},"runmeiSpecs":{}},{"brand":"壳牌","category":"齿轮油","product_cn":"壳牌可耐压 S4 Wheel 460/680","product_en":"Shell Omala S4 Wheel 460/680","viscosity":"","source":"产品对标-壳牌齿轮油","runmei":"","application":"PAO齿轮油，矿用电动轮","compSpecs":{},"runmeiSpecs":{}},{"brand":"壳牌","category":"齿轮油","product_cn":"壳牌可耐压 S4 WE 150 / 220 / 320","product_en":"Shell Omala S4 WE 150 / 220 / 320","viscosity":"","source":"产品对标-壳牌齿轮油","runmei":"","application":"聚醚齿轮油","compSpecs":{},"runmeiSpecs":{}},{"brand":"壳牌","category":"齿轮油","product_cn":"壳牌可耐压 S4 WE 460 / 680","product_en":"Shell Omala S4 WE 460 / 680","viscosity":"","source":"产品对标-壳牌齿轮油","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"壳牌","category":"齿轮油","product_cn":"壳牌可耐压 S4 GX 150 / 220 / 320","product_en":"Shell Omala S4 GX 150 / 220 / 320","viscosity":"","source":"产品对标-壳牌齿轮油","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"壳牌","category":"齿轮油","product_cn":"壳牌可耐压 S4 GX 460 / 680","product_en":"Shell Omala S4 GX 460 / 680","viscosity":"","source":"产品对标-壳牌齿轮油","runmei":"","application":"PAO齿轮油，工业齿轮系统","compSpecs":{},"runmeiSpecs":{}},{"brand":"壳牌","category":"涡轮机油","product_cn":"壳牌 Turbo S5 DR 46","product_en":"Shell Turbo S5 DR 46","viscosity":"","source":"产品对标-壳牌涡轮机油","runmei":"","application":"涡轮机组防火液压润滑油，基于丁基苯酚的三芳基磷酸酯","compSpecs":{},"runmeiSpecs":{}},{"brand":"壳牌","category":"涡轮机油","product_cn":"壳牌多宝 S4 GX 46","product_en":"Shell Turbo S4 GX 46","viscosity":"","source":"产品对标-壳牌涡轮机油","runmei":"","application":"基于 GTL的燃气轮机、蒸汽轮机和联合循环机组透平油GX 代表 \"Extra Gearbox Protection\"（额外的齿轮箱保护）","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"齿轮油","product_cn":"美孚SHC\"齿轮油OH系列","product_en":"Mobil SHC™ Gear OH Series","viscosity":"","source":"产品对标-美孚齿轮油","runmei":"","application":"PAO，OH 代表 Off-Highway，露天矿山设备专用","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"齿轮油","product_cn":"美孚SHC\"齿轮油3200,6800","product_en":"Mobil SHC  Gear 3200, 6800","viscosity":"","source":"产品对标-美孚齿轮油","runmei":"","application":"PAO，超高粘度系列。针对极低转速、重载且边界润滑严重的工况（如磨机、开式齿轮）。","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"齿轮油","product_cn":"美孚齿轮油SHC XMP系列","product_en":"Mobil Gear SHC™ XMP Series","viscosity":"","source":"产品对标-美孚齿轮油","runmei":"","application":"PAO 上一代风电","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"齿轮油","product_cn":"美孚600W”超级汽缸油","product_en":"","viscosity":"","source":"产品对标-美孚齿轮油","runmei":"","application":"高粘度矿物油，低速重载蒸汽机/齿轮","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"液压油","product_cn":"美孚 DTE 10 超凡系列","product_en":"","viscosity":"","source":"产品对标-美孚液压油","runmei":"","application":"高粘指 矿物油","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"液压油","product_cn":"跟岳老师沟通产品命名意义规则","product_en":"","viscosity":"","source":"产品对标-美孚液压油","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"壳牌","category":"齿轮油","product_cn":"可耐压Omala S2 G 320、S2 GX 320","product_en":"","viscosity":"","source":"总表","runmei":"","application":"类型: 中负荷GB 5903 CKC","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"齿轮油","product_cn":"Mobilgear 600 XP 320","product_en":"","viscosity":"","source":"总表","runmei":"","application":"类型: 中负荷GB 5903 CKC","compSpecs":{},"runmeiSpecs":{}},{"brand":"嘉实多","category":"齿轮油","product_cn":"Alpha SP 320","product_en":"","viscosity":"","source":"总表","runmei":"","application":"类型: 中负荷GB 5903 CKC","compSpecs":{},"runmeiSpecs":{}},{"brand":"安索","category":"齿轮油","product_cn":"EP Series","product_en":"","viscosity":"","source":"总表","runmei":"","application":"类型: 中负荷GB 5903 CKC","compSpecs":{},"runmeiSpecs":{}},{"brand":"克鲁勃","category":"齿轮油","product_cn":"Klüberoil GEM 1 N 系列","product_en":"","viscosity":"","source":"总表","runmei":"","application":"类型: 中负荷GB 5903 CKC","compSpecs":{},"runmeiSpecs":{}},{"brand":"长城","category":"齿轮油","product_cn":"得威L-CKC 320","product_en":"","viscosity":"","source":"总表","runmei":"","application":"类型: 中负荷GB 5903 CKC","compSpecs":{},"runmeiSpecs":{}},{"brand":"昆仑","category":"齿轮油","product_cn":"昆仑 L-CKC","product_en":"","viscosity":"","source":"总表","runmei":"","application":"类型: 中负荷GB 5903 CKC","compSpecs":{},"runmeiSpecs":{}},{"brand":"长城","category":"齿轮油","product_cn":"得威L-CKD 320","product_en":"","viscosity":"","source":"总表","runmei":"","application":"类型: 重负荷GB 5903 CKD","compSpecs":{},"runmeiSpecs":{}},{"brand":"昆仑","category":"齿轮油","product_cn":"昆仑 L-CKD","product_en":"","viscosity":"","source":"总表","runmei":"","application":"类型: 重负荷GB 5903 CKD","compSpecs":{},"runmeiSpecs":{}},{"brand":"壳牌","category":"齿轮油","product_cn":"Omala S3 GP 460","product_en":"","viscosity":"","source":"总表","runmei":"","application":"类型: 极压型","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"齿轮油","product_cn":"SPARTAN™ EP","product_en":"","viscosity":"","source":"总表","runmei":"","application":"类型: 极压型","compSpecs":{},"runmeiSpecs":{}},{"brand":"嘉实多","category":"齿轮油","product_cn":"Alpha EP","product_en":"","viscosity":"","source":"总表","runmei":"","application":"类型: 极压型","compSpecs":{},"runmeiSpecs":{}},{"brand":"安索","category":"齿轮油","product_cn":"EP Series-MPT","product_en":"","viscosity":"","source":"总表","runmei":"","application":"类型: 极压型","compSpecs":{},"runmeiSpecs":{}},{"brand":"长城","category":"齿轮油","product_cn":"4407合成重负荷工业齿轮油","product_en":"","viscosity":"","source":"总表","runmei":"","application":"类型: 极压型","compSpecs":{},"runmeiSpecs":{}},{"brand":"长城","category":"齿轮油","product_cn":"得威AP","product_en":"","viscosity":"","source":"总表","runmei":"","application":"类型: 半合成","compSpecs":{},"runmeiSpecs":{}},{"brand":"壳牌","category":"齿轮油","product_cn":"Omala S4 GX 320","product_en":"","viscosity":"","source":"总表","runmei":"","application":"类型: 全合成：PAO","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"齿轮油","product_cn":"Mobil SHC™ 600 /Mobil SHC™ Gear","product_en":"","viscosity":"","source":"总表","runmei":"","application":"类型: 全合成：PAO","compSpecs":{},"runmeiSpecs":{}},{"brand":"嘉实多","category":"齿轮油","product_cn":"Alphasyn EP、Alphasyn T","product_en":"","viscosity":"","source":"总表","runmei":"","application":"类型: 全合成：PAO","compSpecs":{},"runmeiSpecs":{}},{"brand":"安索","category":"齿轮油","product_cn":"EP Series-S","product_en":"","viscosity":"","source":"总表","runmei":"","application":"类型: 全合成：PAO","compSpecs":{},"runmeiSpecs":{}},{"brand":"克鲁勃","category":"齿轮油","product_cn":"Klübersynth GEM 4 N","product_en":"","viscosity":"","source":"总表","runmei":"","application":"类型: 全合成：PAO","compSpecs":{},"runmeiSpecs":{}},{"brand":"长城","category":"齿轮油","product_cn":"得威 L-CKT 、4408 合成重负荷工业齿轮油（PAO型）","product_en":"","viscosity":"","source":"总表","runmei":"","application":"类型: 全合成：PAO","compSpecs":{},"runmeiSpecs":{}},{"brand":"昆仑","category":"齿轮油","product_cn":"昆仑 KG/S 合成重负荷工业齿轮油、昆仑 L-CKT 全合成重负荷工业齿轮油","product_en":"","viscosity":"","source":"总表","runmei":"","application":"类型: 全合成：PAO","compSpecs":{},"runmeiSpecs":{}},{"brand":"壳牌","category":"综合","product_cn":"Omala S4 WE 320","product_en":"","viscosity":"","source":"总表","runmei":"","application":"类型: 全合成：聚醚","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"综合","product_cn":"Mobil Glygoyle格高","product_en":"","viscosity":"","source":"总表","runmei":"","application":"类型: 全合成：聚醚","compSpecs":{},"runmeiSpecs":{}},{"brand":"嘉实多","category":"综合","product_cn":"Alphasyn PG","product_en":"","viscosity":"","source":"总表","runmei":"","application":"类型: 全合成：聚醚","compSpecs":{},"runmeiSpecs":{}},{"brand":"安索","category":"综合","product_cn":"EP Series-PG","product_en":"","viscosity":"","source":"总表","runmei":"","application":"类型: 全合成：聚醚","compSpecs":{},"runmeiSpecs":{}},{"brand":"克鲁勃","category":"综合","product_cn":"Klübersynth GH 6 系列","product_en":"","viscosity":"","source":"总表","runmei":"","application":"类型: 全合成：聚醚","compSpecs":{},"runmeiSpecs":{}},{"brand":"长城","category":"综合","product_cn":"4405 合成中负荷工业齿轮油（PAG型）","product_en":"","viscosity":"","source":"总表","runmei":"","application":"类型: 全合成：聚醚","compSpecs":{},"runmeiSpecs":{}},{"brand":"昆仑","category":"综合","product_cn":"昆仑 L-CKE/P 聚醚合成蜗轮蜗杆油","product_en":"","viscosity":"","source":"总表","runmei":"","application":"类型: 全合成：聚醚","compSpecs":{},"runmeiSpecs":{}},{"brand":"美孚","category":"综合","product_cn":"Mobilgear™ MS","product_en":"","viscosity":"","source":"总表","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}},{"brand":"长城","category":"综合","product_cn":"L-CKE / L-CKE/P 蜗轮蜗杆油","product_en":"","viscosity":"","source":"总表","runmei":"","application":"","compSpecs":{},"runmeiSpecs":{}}],"runmeiCatalog":[{"series":"齿轮箱清洗油","product_cn":"Lubemater CF-10 150 风电专用清洗油","packaging":"18L / 200L","industry":"风电","application_site":"换油清洗","features":"和市场主流齿轮油兼容\n具备风电齿轮油基础性能","notes":"换油前设备冲洗","appearance":"","kv40":"150","vi":"170","pour_point":"-39","copper_corrosion":"1b"},{"series":"齿轮箱清洗油","product_cn":"Lubemater CF-10 320 风电专用清洗油","packaging":"18L / 200L","industry":"风电","application_site":"换油清洗","features":"和市场主流齿轮油兼容\n具备风电齿轮油基础性能","notes":"换油前设备冲洗","appearance":"","kv40":"320","vi":"172","pour_point":"-39","copper_corrosion":"1b"},{"series":"风电齿轮油","product_cn":"Lubemater CF-20 150 风电齿轮油","packaging":"18L/200L/1000L","industry":"风电","application_site":"风电机组齿轮箱","features":"抗磨损和抗微点蚀能力\n优异粘温性能和宽温工作能力\n出色的抗氧化性能与长寿命","notes":"偏航变桨","appearance":"","kv40":"151.8","kv100":"23.24","vi":"183","pour_point":"-45","flash_point":"240","copper_corrosion":"1b","rust_b":"无锈","cleanliness_nas":"≤8","wear_scar":"0.3","weld_load":"2453"},{"series":"风电齿轮油","product_cn":"Lubemater CF-20 220 风电齿轮油","packaging":"18L/200L/1000L","industry":"风电","application_site":"风电机组齿轮箱","features":"抗磨损和抗微点蚀能力\n优异粘温性能和宽温工作能力\n出色的抗氧化性能与长寿命","notes":"偏航变桨","appearance":"","kv40":"228.9","kv100":"31.7","vi":"182","pour_point":"-42","flash_point":"244","copper_corrosion":"1b","rust_b":"无锈","cleanliness_nas":"≤8","wear_scar":"0.29","weld_load":"2453"},{"series":"风电齿轮油","product_cn":"Lubemater CF-20 320 风电齿轮油","packaging":"18L/200L/1000L","industry":"风电","application_site":"风电机组齿轮箱","features":"抗磨损和抗微点蚀能力\n优异粘温性能和宽温工作能力\n出色的抗氧化性能与长寿命","notes":"主齿箱润滑","appearance":"","kv40":"337.7","kv100":"42.41","vi":"181","pour_point":"-39","flash_point":"245","copper_corrosion":"1b","rust_b":"无锈","cleanliness_nas":"≤8","cleanliness_iso":"≤-/14/11","wear_scar":"0.28","weld_load":"2453","demulsibility_82_detail":"＜0.025\n84.5\n0.9","foam":"10/0\n10/0\n10/0"},{"series":"抗燃液压油（高性能）","product_cn":"HFDU 46 高性能合成抗燃液压油","packaging":"170kg","industry":"冶金、电力、煤矿、压铸","application_site":"抗燃、高压、对润滑性有要求的液压设备","features":"兼具抗燃/润滑性","notes":"天然酯型；兼具抗燃/润滑性","appearance":"","kv40":"46.2","vi":"200","pour_point":"-33","flash_point":"305","air_release":"7.5","demulsibility_54":"15","foam":"10/0\n10/0\n10/0"},{"series":"抗燃液压油（高性能）","product_cn":"HFDU 68 高性能合成抗燃液压油","packaging":"170kg","industry":"冶金、电力、煤矿、压铸","application_site":"抗燃、高压、对润滑性有要求的液压设备","features":"兼具抗燃/润滑性","notes":"天然酯型；兼具抗燃/润滑性","appearance":"","kv40":"68.5","vi":"183","pour_point":"-33","flash_point":"310","air_release":"10","demulsibility_54":"15"},{"series":"抗燃液压油（全合成）","product_cn":"HFDU 46 全合成型抗燃液压油","packaging":"170kg","industry":"冶金、电力、煤矿、压铸","application_site":"抗燃、高压、对润滑性有要求的液压设备","features":"更优异的抗燃/润滑性","notes":"合成酯型；更优异的抗燃/润滑性","appearance":"","kv40":"46.93","vi":"190","pour_point":"-45","flash_point":"316","air_release":"0.5","demulsibility_54":"10","foam":"10/0\n10/0\n10/0"},{"series":"抗燃液压油（全合成）","product_cn":"HFDU 68 全合成型抗燃液压油","packaging":"170kg","industry":"冶金、电力、煤矿、压铸","application_site":"抗燃、高压、对润滑性有要求的液压设备","features":"更优异的抗燃/润滑性","notes":"合成酯型；更优异的抗燃/润滑性","appearance":"","kv40":"69.74","vi":"190","pour_point":"-39","flash_point":"318","demulsibility_54":"20","foam":"10/0\n10/0\n10/0"},{"series":"抗燃液压液（HFW）","product_cn":"HFW 46 水-乙二醇抗燃液压液","packaging":"200kg","industry":"冶金、电力、煤矿、压铸","application_site":"炼焦炉门、压铸机、连铸机、热轧机、煤矿液压支柱等有明火、中低压系统","features":"极佳抗燃性\n抗磨一般，高负载下需注意","notes":"乙二醇型，抗燃性能优异","appearance":"","kv40":"46.1","pour_point":"-55","air_release":"10","foam":"10/0\n10/0\n10/0","ph_value":"9.5"},{"series":"抗燃液压液（HFC）","product_cn":"HFC 46 合成抗燃液压液","packaging":"200kg","industry":"冶金、电力、煤矿、压铸","application_site":"炼焦炉门、压铸机、连铸机、热轧机、煤矿液压支柱等有明火、中低压系统","features":"极佳抗燃性\n对环境和人体更友好","notes":"丙三醇型，极佳抗燃性，同时抗磨优于乙二醇型；\n对环境和人体更友好","appearance":"","kv40":"46.2","copper_corrosion":"1a","air_release":"10","foam":"30/0\n30/0\n30/0","ph_value":"9.33","solidification_point":"-48"},{"series":"抗磨液压油 HM","product_cn":"L-HM 32 抗磨液压油","packaging":"170kg","industry":"冶金、钢铁、火电等通用领域","application_site":"工程机械、数控机床等设备的叶片泵、柱塞泵和齿轮泵液压系统","features":"极压抗磨性、良好的抗乳化性、防锈性以及抗泡性和空气释放值\n出色的抗氧化安定性和热稳定性","notes":"通用标准HM 抗磨液压油","appearance":"","kv40":"32.3","vi":"120","pour_point":"-36","flash_point":"225","rust_b":"无锈","demulsibility_54":"10","foam":"20/0\n20/0\n20/0"},{"series":"抗磨液压油 HM","product_cn":"L-HM 46 抗磨液压油","packaging":"170kg","industry":"冶金、钢铁、火电等通用领域","application_site":"工程机械、数控机床等设备的叶片泵、柱塞泵和齿轮泵液压系统","features":"极压抗磨性、良好的抗乳化性、防锈性以及抗泡性和空气释放值\n出色的抗氧化安定性和热稳定性","notes":"通用标准HM 抗磨液压油","appearance":"","kv40":"46.8","vi":"115","pour_point":"-36","flash_point":"230","rust_b":"无锈","demulsibility_54":"15","foam":"10/0\n20/0\n20/0"},{"series":"抗磨液压油 HM","product_cn":"L-HM 68 抗磨液压油","packaging":"170kg","industry":"冶金、钢铁、火电等通用领域","application_site":"工程机械、数控机床等设备的叶片泵、柱塞泵和齿轮泵液压系统","features":"极压抗磨性、良好的抗乳化性、防锈性以及抗泡性和空气释放值\n出色的抗氧化安定性和热稳定性","notes":"通用标准HM 抗磨液压油","appearance":"","kv40":"67.5","vi":"132","pour_point":"-30","flash_point":"230","rust_b":"无锈","demulsibility_54":"15","foam":"10/0\n20/0\n10/0"},{"series":"抗磨液压油 Ultra HM","product_cn":"Ultra HM 32 高级抗磨液压油（原HS-M 32）","packaging":"170kg","industry":"冶金、钢铁、火电等通用领域","application_site":"工程机械、数控机床等设备的液压系统","features":"提升的综合性能，主打抗磨保护，适合常温环境","notes":"精制Ⅱ类基础油，通用标准HM 抗磨液压油","appearance":"","kv40":"33.2","vi":"115","pour_point":"-33","flash_point":"218"},{"series":"抗磨液压油 Ultra HM","product_cn":"Ultra HM 46 高级抗磨液压油（原HS-M 46）","packaging":"170kg","industry":"冶金、钢铁、火电等通用领域","application_site":"工程机械、数控机床等设备的液压系统","features":"提升的综合性能，主打抗磨保护，适合常温环境","notes":"精制Ⅱ类基础油，通用标准HM 抗磨液压油","appearance":"","kv40":"46.5","vi":"110","pour_point":"-33","flash_point":"228"},{"series":"抗磨液压油 Ultra HM","product_cn":"Ultra HM 68 高级抗磨液压油（原HS-M 68）","packaging":"170kg","industry":"冶金、钢铁、火电等通用领域","application_site":"工程机械、数控机床等设备的液压系统","features":"提升的综合性能，主打抗磨保护，适合常温环境","notes":"精制Ⅱ类基础油，通用标准HM 抗磨液压油","appearance":"","kv40":"67.1","vi":"104","pour_point":"-27","flash_point":"235"},{"series":"抗磨液压油 HV低温","product_cn":"L-HV 32 低温抗磨液压油","packaging":"170kg","industry":"冶金、钢铁、火电等通用领域","application_site":"露天、寒区作业的工程机械、矿山机械、船舶起重机等液压系统","features":"具备抗磨性的同时，更强化了卓越的低温流动性和粘温特性，专为低温或温差大的环境设计","notes":"标准通用低温抗磨液压油L-HV","appearance":"","kv40":"32.6","kv100":"11.74","vi":"165","pour_point":"-51","flash_point":"228","copper_corrosion":"1a"},{"series":"抗磨液压油 HV低温","product_cn":"L-HV 46 低温抗磨液压油","packaging":"170kg","industry":"冶金、钢铁、火电等通用领域","application_site":"露天、寒区作业的工程机械、矿山机械、船舶起重机等液压系统","features":"具备抗磨性的同时，更强化了卓越的低温流动性和粘温特性，专为低温或温差大的环境设计","notes":"标准通用低温抗磨液压油L-HV","appearance":"","kv40":"45.5","kv100":"12.24","vi":"164","pour_point":"-48","flash_point":"232","copper_corrosion":"1a"},{"series":"抗磨液压油 HV低温","product_cn":"L-HV 68 低温抗磨液压油","packaging":"170kg","industry":"冶金、钢铁、火电等通用领域","application_site":"露天、寒区作业的工程机械、矿山机械、船舶起重机等液压系统","features":"具备抗磨性的同时，更强化了卓越的低温流动性和粘温特性，专为低温或温差大的环境设计","notes":"标准通用低温抗磨液压油L-HV","appearance":"","kv40":"68.8","kv100":"13.42","vi":"158","pour_point":"-45","flash_point":"238","copper_corrosion":"1a"},{"series":"长寿命液压油","product_cn":"Lubemater XV 32 低温液压油","packaging":"170kg","industry":"冶金、钢铁、火电等通用领域","application_site":"工作在巨大温差下的各种液压循环系统","features":"卓越的综合性能：抗磨、防锈、抗泡、抗乳化\n优异的稳定性：优秀的剪切稳定性、抗氧化和抗水解\n极佳的粘温特性与低温流动性，倾点≤-55℃","notes":"PAO型；超低温液压油","appearance":"","kv40":"31.6","vi":"150","pour_point":"-57"},{"series":"长寿命液压油","product_cn":"Lubemater XV 68 低温液压油","packaging":"170kg","industry":"冶金、钢铁、火电等通用领域","application_site":"工作在巨大温差下的各种液压循环系统","features":"卓越的综合性能：抗磨、防锈、抗泡、抗乳化\n优异的稳定性：优秀的剪切稳定性、抗氧化和抗水解\n极佳的粘温特性与低温流动性，倾点≤-55℃","notes":"PAO型；超低温液压油","appearance":""},{"series":"无灰液压油","product_cn":"Clean 46 无灰抗磨液压油（原HMS）","packaging":"170kg","industry":"冶金、钢铁、火电等通用领域","application_site":"高精度、敏感元件、特殊环境设等对油品清洁度和部件敏感性有严苛要求的液压系统","features":"无灰/无锌配方，避免损坏对锌敏感的部件（如铜合金），减少油泥生成，保持系统清洁\n优良的过滤性与抗乳化性：能迅速与水分离，有效防止过滤系统堵塞","notes":"不含ZDDP的无灰/无锌配方","appearance":"","kv40":"44.72","kv100":"7.136","vi":"113","pour_point":"-36","flash_point":"230","demulsibility_54":"10","foam":"10/0\n10/0\n10/0"},{"series":"无渍液压油","product_cn":"Lubemater L-HM N32 无渍液压油","packaging":"170kg","industry":"精密机械与自动化设备","application_site":"用于高洁净要求设备，降低油泥和沉积物形成；应用于精密冲压、贴装、自动化设备；自动化生产线液压系统；高频伺服液压系统","features":"无污染、低油渍、高清洁度：不易形成明显油斑，对产品外观影响小\n优异抗磨性能：保护液压泵和阀件，延长设备寿命","notes":"无渍液压油","appearance":"","kv40":"33","vi":"140","pour_point":"-36","cleanliness_nas":"6","demulsibility_54":"5","foam":"10/0\n10/0\n10/0"},{"series":"无渍液压油","product_cn":"Lubemater L-HM N46 无渍液压油","packaging":"170kg","industry":"精密机械与自动化设备","application_site":"用于高洁净要求设备，降低油泥和沉积物形成；应用于精密冲压、贴装、自动化设备；自动化生产线液压系统；高频伺服液压系统","features":"无污染、低油渍、高清洁度：不易形成明显油斑，对产品外观影响小\n优异抗磨性能：保护液压泵和阀件，延长设备寿命","notes":"无渍液压油","appearance":"","kv40":"47","vi":"167","pour_point":"-42","cleanliness_nas":"6","demulsibility_54":"10","foam":"10/0\n10/0\n10/0","acid_value":"0.12"},{"series":"CKC工业齿轮油","product_cn":"CKC 100 中负荷工业齿轮油","packaging":"170kg","industry":"冶金、矿山、水泥、建材","application_site":"中负荷齿轮，如矿山减速机的、正齿轮、斜齿轮","features":"良好的极压抗磨性\n热氧化安定性\n防锈防腐\n抗乳化性","notes":"标准通用CKC工业齿轮油","appearance":"","kv40":"100.2","vi":"95","pour_point":"-24","flash_point":"204","copper_corrosion":"1b","rust_b":"无锈"},{"series":"CKC工业齿轮油","product_cn":"CKC 150 中负荷工业齿轮油","packaging":"170kg","industry":"冶金、矿山、水泥、建材","application_site":"中负荷齿轮，如矿山减速机的、正齿轮、斜齿轮","features":"良好的极压抗磨性\n热氧化安定性\n防锈防腐\n抗乳化性","notes":"标准通用CKC工业齿轮油","appearance":"","kv40":"154.8","vi":"95","pour_point":"-12","flash_point":"230","copper_corrosion":"1b","rust_b":"无锈"},{"series":"CKC工业齿轮油","product_cn":"CKC 220 中负荷工业齿轮油","packaging":"170kg","industry":"冶金、矿山、水泥、建材","application_site":"中负荷齿轮，如矿山减速机的、正齿轮、斜齿轮","features":"良好的极压抗磨性\n热氧化安定性\n防锈防腐\n抗乳化性","notes":"标准通用CKC工业齿轮油","appearance":"","kv40":"226.6","vi":"95","pour_point":"-12","flash_point":"230","copper_corrosion":"1b","rust_b":"无锈"},{"series":"CKC工业齿轮油","product_cn":"CKC 320 中负荷工业齿轮油","packaging":"170kg","industry":"冶金、矿山、水泥、建材","application_site":"中负荷齿轮，如矿山减速机的、正齿轮、斜齿轮","features":"良好的极压抗磨性\n热氧化安定性\n防锈防腐\n抗乳化性","notes":"标准通用CKC工业齿轮油","appearance":"","kv40":"331.2","vi":"95","pour_point":"-9","flash_point":"230","copper_corrosion":"1b","rust_b":"无锈"},{"series":"CKC工业齿轮油","product_cn":"CKC 460 中负荷工业齿轮油","packaging":"170kg","industry":"冶金、矿山、水泥、建材","application_site":"中负荷齿轮，如矿山减速机的、正齿轮、斜齿轮","features":"良好的极压抗磨性\n热氧化安定性\n防锈防腐\n抗乳化性","notes":"标准通用CKC工业齿轮油","appearance":"","kv40":"446.7","vi":"95","pour_point":"-9","flash_point":"235","copper_corrosion":"1b","rust_b":"无锈"},{"series":"CKC工业齿轮油","product_cn":"CKC 680 中负荷工业齿轮油","packaging":"170kg","industry":"冶金、矿山、水泥、建材","application_site":"中负荷齿轮，如矿山减速机的、正齿轮、斜齿轮","features":"良好的极压抗磨性\n热氧化安定性\n防锈防腐\n抗乳化性","notes":"标准通用CKC工业齿轮油","appearance":"","kv40":"665","vi":"98","pour_point":"-6","flash_point":"240","copper_corrosion":"1b","rust_b":"无锈"},{"series":"CKD工业齿轮油","product_cn":"L-CKD 150重负荷工业齿轮油","packaging":"170kg","industry":"钢铁、电力、矿山、水泥","application_site":"高温、重负荷、冲击负荷的苛刻工况的重载齿轮","features":"比CKC更优的极压抗磨性和热稳定性，适用于更苛刻的工况","notes":"标准通用CKD工业齿轮油","appearance":"","kv40":"150","vi":"103","pour_point":"-30","flash_point":"235","copper_corrosion":"1b","rust_b":"无锈","weld_load":"2453","demulsibility_82_detail":"＜0.025\n0.4\n86.5","foam":"10/0\n10/0\n10/0"},{"series":"CKD工业齿轮油","product_cn":"L-CKD 220 重负荷工业齿轮油","packaging":"170kg","industry":"钢铁、电力、矿山、水泥","application_site":"高温、重负荷、冲击负荷的苛刻工况的重载齿轮","features":"比CKC更优的极压抗磨性和热稳定性，适用于更苛刻的工况","notes":"标准通用CKD工业齿轮油","appearance":"","kv40":"221.8","vi":"101","pour_point":"-24","flash_point":"240","copper_corrosion":"1b","rust_b":"无锈","weld_load":"3090","demulsibility_82_detail":"＜0.025\n0.7\n83.7","foam":"10/0\n10/0\n10/0"},{"series":"CKD工业齿轮油","product_cn":"L-CKD 320 重负荷工业齿轮油","packaging":"170kg","industry":"钢铁、电力、矿山、水泥","application_site":"高温、重负荷、冲击负荷的苛刻工况的重载齿轮","features":"比CKC更优的极压抗磨性和热稳定性，适用于更苛刻的工况","notes":"标准通用CKD工业齿轮油","appearance":"","kv40":"330.6","vi":"97","pour_point":"-21","flash_point":"245","copper_corrosion":"1b","rust_b":"无锈","weld_load":"3090","demulsibility_82_detail":"＜0.025\n0.4\n84.5","foam":"10/0\n10/0\n10/0"},{"series":"CKD工业齿轮油","product_cn":"L-CKD 460 重负荷工业齿轮油","packaging":"170kg","industry":"钢铁、电力、矿山、水泥","application_site":"高温、重负荷、冲击负荷的苛刻工况的重载齿轮","features":"比CKC更优的极压抗磨性和热稳定性，适用于更苛刻的工况","notes":"标准通用CKD工业齿轮油","appearance":"","kv40":"465.6","vi":"100","pour_point":"-21","flash_point":"250","copper_corrosion":"1b","rust_b":"无锈","weld_load":"3090","demulsibility_82_detail":"＜0.025\n0.4\n86.5"},{"series":"CKD工业齿轮油","product_cn":"L-CKD 680 重负荷工业齿轮油","packaging":"170kg","industry":"钢铁、电力、矿山、水泥","application_site":"高温、重负荷、冲击负荷的苛刻工况的重载齿轮","features":"比CKC更优的极压抗磨性和热稳定性，适用于更苛刻的工况","notes":"标准通用CKD工业齿轮油","appearance":"","kv40":"692.6","vi":"106","pour_point":"-21","flash_point":"260","copper_corrosion":"1b","rust_b":"无锈","weld_load":"3090","demulsibility_82_detail":"＜0.025\n0.4\n86.5"},{"series":"EP工业齿轮油","product_cn":"朗麦 EP 150 工业齿轮油","packaging":"170kg","industry":"各类工业领域，如传送机、搅拌机等","application_site":"重负荷齿轮箱（正齿轮、伞齿轮），能应对冲击荷载","features":"更好的承载能力与抗磨损保护","notes":"矿物·极压型","appearance":"","kv40":"153.8","vi":"100","pour_point":"-30","flash_point":"240","copper_corrosion":"1b","rust_b":"无锈","weld_load":"3090","demulsibility_82_detail":"＜0.025\n0.4\n86.5"},{"series":"EP工业齿轮油","product_cn":"朗麦 EP 220 工业齿轮油","packaging":"170kg","industry":"各类工业领域，如传送机、搅拌机等","application_site":"重负荷齿轮箱（正齿轮、伞齿轮），能应对冲击荷载","features":"更好的承载能力与抗磨损保护","notes":"矿物·极压型","appearance":"","kv40":"227.1","vi":"101","pour_point":"-24","flash_point":"255","copper_corrosion":"1b","rust_b":"无锈","weld_load":"3090","demulsibility_82_detail":"＜0.025\n0.4\n86.5"},{"series":"EP工业齿轮油","product_cn":"朗麦 EP 320 工业齿轮油","packaging":"170kg","industry":"各类工业领域，如传送机、搅拌机等","application_site":"重负荷齿轮箱（正齿轮、伞齿轮），能应对冲击荷载","features":"更好的承载能力与抗磨损保护","notes":"矿物·极压型","appearance":"","kv40":"330.6","vi":"102","pour_point":"-21","flash_point":"278","copper_corrosion":"1b","rust_b":"无锈","weld_load":"3090","demulsibility_82_detail":"＜0.025\n0.4\n86.5"},{"series":"EP工业齿轮油","product_cn":"朗麦 EP 460 工业齿轮油","packaging":"170kg","industry":"各类工业领域，如传送机、搅拌机等","application_site":"重负荷齿轮箱（正齿轮、伞齿轮），能应对冲击荷载","features":"更好的承载能力与抗磨损保护","notes":"矿物·极压型","appearance":"","kv40":"465.6","vi":"102","pour_point":"-15","flash_point":"282","copper_corrosion":"1b","rust_b":"无锈","weld_load":"3090","demulsibility_82_detail":"＜0.025\n0.4\n86.5"},{"series":"EP工业齿轮油","product_cn":"朗麦 EP 680 工业齿轮油","packaging":"170kg","industry":"各类工业领域，如传送机、搅拌机等","application_site":"重负荷齿轮箱（正齿轮、伞齿轮），能应对冲击荷载","features":"更好的承载能力与抗磨损保护","notes":"矿物·极压型","appearance":"","kv40":"692.6","vi":"105","pour_point":"-21","flash_point":"285","copper_corrosion":"1b","rust_b":"无锈","weld_load":"3090","demulsibility_82_detail":"＜0.025\n0.4\n86.5"},{"series":"EP工业齿轮油（大粘度）","product_cn":"Lubemater SHP EP 460 工业齿轮油","packaging":"170kg","industry":"各类工业领域","application_site":"重负荷齿轮箱","features":"极压抗磨保护","notes":"强化极压性能","appearance":"","kv40":"466.0","vi":"96","pour_point":"-18","flash_point":"283","copper_corrosion":"1b","rust_b":"无锈","demulsibility_82_detail":"＜0.025\n0.4\n86.5"},{"series":"EP工业齿轮油（大粘度）","product_cn":"Lubemater SHP EP 680 工业齿轮油","packaging":"170kg","industry":"各类工业领域","application_site":"重负荷齿轮箱","features":"极压抗磨保护","notes":"强化极压性能","appearance":"","kv40":"676.7","vi":"102","pour_point":"-9","flash_point":"283","copper_corrosion":"1b","rust_b":"无锈","demulsibility_82_detail":"＜0.025\n0.4\n86.5"},{"series":"合成工业齿轮油 SHP","product_cn":"Lubemater SHP XP 150 工业齿轮油","packaging":"170kg","industry":"矿山、冶金、水泥等行业的重型设备","application_site":"重工机械、矿山机械、水泥建材设备、冶金设备、化工设备等中的重负荷和冲击负荷设备","features":"优异的粘温性能与宽温适用性\n卓越的热稳定性和抗氧化性\n出色的极压抗磨保护\n良好的抗乳化性和分水性能","notes":"半合成型工业齿轮油","appearance":"","kv40":"154.1","vi":"101","pour_point":"-27","flash_point":"257","copper_corrosion":"1b","rust_b":"无锈","demulsibility_82_detail":"＜0.025\n0.4\n86.5"},{"series":"合成工业齿轮油 SHP","product_cn":"Lubemater SHP XP 220 工业齿轮油","packaging":"170kg","industry":"矿山、冶金、水泥等行业的重型设备","application_site":"重工机械、矿山机械、水泥建材设备、冶金设备、化工设备等中的重负荷和冲击负荷设备","features":"优异的粘温性能与宽温适用性\n卓越的热稳定性和抗氧化性\n出色的极压抗磨保护\n良好的抗乳化性和分水性能","notes":"半合成型工业齿轮油","appearance":"","kv40":"219.3","vi":"105","pour_point":"-24","flash_point":"269","copper_corrosion":"1b","rust_b":"无锈","demulsibility_82_detail":"＜0.025\n0.4\n86.5"},{"series":"合成工业齿轮油 SHP","product_cn":"Lubemater SHP XP 320 工业齿轮油","packaging":"170kg","industry":"矿山、冶金、水泥等行业的重型设备","application_site":"重工机械、矿山机械、水泥建材设备、冶金设备、化工设备等中的重负荷和冲击负荷设备","features":"优异的粘温性能与宽温适用性\n卓越的热稳定性和抗氧化性\n出色的极压抗磨保护\n良好的抗乳化性和分水性能","notes":"半合成型工业齿轮油","appearance":"","kv40":"321.9","vi":"103","pour_point":"-21","flash_point":"272","copper_corrosion":"1b","rust_b":"无锈","demulsibility_82_detail":"＜0.025\n0.4\n86.5"},{"series":"合成工业齿轮油 SHP","product_cn":"Lubemater SHP XP 460 工业齿轮油","packaging":"170kg","industry":"矿山、冶金、水泥等行业的重型设备","application_site":"重工机械、矿山机械、水泥建材设备、冶金设备、化工设备等中的重负荷和冲击负荷设备","features":"优异的粘温性能与宽温适用性\n卓越的热稳定性和抗氧化性\n出色的极压抗磨保护\n良好的抗乳化性和分水性能","notes":"半合成型工业齿轮油","appearance":"","kv40":"459.7","vi":"108","pour_point":"-18","flash_point":"274","copper_corrosion":"1b","rust_b":"无锈","demulsibility_82_detail":"＜0.025\n0.4\n86.5"},{"series":"合成工业齿轮油 SHP","product_cn":"Lubemater SHP XP 680 工业齿轮油","packaging":"170kg","industry":"矿山、冶金、水泥等行业的重型设备","application_site":"重工机械、矿山机械、水泥建材设备、冶金设备、化工设备等中的重负荷和冲击负荷设备","features":"优异的粘温性能与宽温适用性\n卓越的热稳定性和抗氧化性\n出色的极压抗磨保护\n良好的抗乳化性和分水性能","notes":"半合成型工业齿轮油","appearance":"","kv40":"677.0","vi":"115","pour_point":"-15","flash_point":"278","copper_corrosion":"1b","rust_b":"无锈","demulsibility_82_detail":"＜0.025\n0.4\n86.5"},{"series":"全合成工业齿轮油 SHC","product_cn":"Lubemater SHC GI 100 全合成工业齿轮油","packaging":"170kg","industry":"矿山、冶金、水泥等行业的重型设备","application_site":"极端温度环境、重负荷和冲击负荷设备、长寿命、低维护的设备要求的重型设备","features":"全面提升的、卓越的综合性能","notes":"PAO全合成工业齿轮油","appearance":"","kv40":"100","vi":"165","pour_point":"-48","flash_point":"230","copper_corrosion":"1b","rust_b":"无锈","wear_scar":"0.28","weld_load":"2453","demulsibility_82":"10","demulsibility_82_detail":"＜0.025\n1.1\n84.5","foam":"10/0\n10/0\n10/0","density":"0.86","fzg":"12"},{"series":"全合成工业齿轮油 SHC","product_cn":"Lubemater SHC GI 150 全合成工业齿轮油","packaging":"170kg","industry":"矿山、冶金、水泥等行业的重型设备","application_site":"极端温度环境、重负荷和冲击负荷设备、长寿命、低维护的设备要求的重型设备","features":"全面提升的、卓越的综合性能","notes":"PAO全合成工业齿轮油","appearance":"","kv40":"153.0","kv100":"21.9","vi":"170","pour_point":"-45","flash_point":"230","copper_corrosion":"1b","rust_b":"无锈","wear_scar":"0.28","weld_load":"2453","demulsibility_82":"10","demulsibility_82_detail":"＜0.025\n1.1\n84.5","foam":"10/0\n10/0\n10/0","density":"0.86","fzg":"＞12"},{"series":"全合成工业齿轮油 SHC","product_cn":"Lubemater SHC GI 220 全合成工业齿轮油","packaging":"170kg","industry":"矿山、冶金、水泥等行业的重型设备","application_site":"极端温度环境、重负荷和冲击负荷设备、长寿命、低维护的设备要求的重型设备","features":"全面提升的、卓越的综合性能","notes":"PAO全合成工业齿轮油","appearance":"","kv40":"218.9","kv100":"28.75","vi":"170","pour_point":"-42","flash_point":"240","copper_corrosion":"1b","rust_b":"无锈","wear_scar":"0.28","weld_load":"2453","demulsibility_82":"10","demulsibility_82_detail":"＜0.025\n1.1\n84.5","foam":"10/0\n10/0\n10/0","density":"0.86","fzg":"＞12"},{"series":"全合成工业齿轮油 SHC","product_cn":"Lubemater SHC GI 320 全合成工业齿轮油","packaging":"170kg","industry":"矿山、冶金、水泥等行业的重型设备","application_site":"极端温度环境、重负荷和冲击负荷设备、长寿命、低维护的设备要求的重型设备","features":"全面提升的、卓越的综合性能","notes":"PAO全合成工业齿轮油","appearance":"","kv40":"326.4","kv100":"39.89","vi":"175","pour_point":"-42","flash_point":"245","copper_corrosion":"1b","rust_b":"无锈","wear_scar":"0.28","weld_load":"2453","demulsibility_82":"15","demulsibility_82_detail":"＜0.025\n1.1\n84.5","foam":"10/0\n10/0\n10/0","density":"0.86","fzg":"＞12"},{"series":"全合成工业齿轮油 SHC","product_cn":"Lubemater SHC GI 460 全合成工业齿轮油","packaging":"170kg","industry":"矿山、冶金、水泥等行业的重型设备","application_site":"极端温度环境、重负荷和冲击负荷设备、长寿命、低维护的设备要求的重型设备","features":"全面提升的、卓越的综合性能","notes":"PAO全合成工业齿轮油","appearance":"","kv40":"468.7","kv100":"53.1","vi":"178","pour_point":"-39","flash_point":"250","copper_corrosion":"1b","rust_b":"无锈","wear_scar":"0.28","weld_load":"2453","demulsibility_82":"15","demulsibility_82_detail":"＜0.025\n1.1\n84.5","foam":"10/0\n10/0\n10/0","density":"0.86","fzg":"＞12"},{"series":"全合成工业齿轮油 SHC","product_cn":"Lubemater SHC GI 680 全合成工业齿轮油","packaging":"170kg","industry":"矿山、冶金、水泥等行业的重型设备","application_site":"极端温度环境、重负荷和冲击负荷设备、长寿命、低维护的设备要求的重型设备","features":"全面提升的、卓越的综合性能","notes":"PAO全合成工业齿轮油","appearance":"","kv40":"687.4","kv100":"69","vi":"176","pour_point":"-36","flash_point":"250","copper_corrosion":"1b","rust_b":"无锈","wear_scar":"0.28","weld_load":"2453","demulsibility_82":"20","demulsibility_82_detail":"＜0.025\n1.1\n84.5","density":"0.86","fzg":"＞12"},{"series":"全合成工业齿轮油 SHC","product_cn":"Lubemater SHC GI 1000 全合成工业齿轮油","packaging":"170kg","industry":"矿山、冶金、水泥等行业的重型设备","application_site":"极端温度环境、重负荷和冲击负荷设备、长寿命、低维护的设备要求的重型设备","features":"全面提升的、卓越的综合性能","notes":"PAO全合成工业齿轮油","appearance":"","kv40":"947.1","kv100":"90.5","vi":"183","pour_point":"-36","flash_point":"250","copper_corrosion":"1b","rust_b":"无锈","wear_scar":"0.27","weld_load":"2453","demulsibility_82":"20","demulsibility_82_detail":"1.0\n0.2\n83.5","density":"0.86","fzg":"＞12"},{"series":"蜗轮蜗杆油 CKE/P","product_cn":"LMT CKE/P 220蜗轮蜗杆油","packaging":"170kg","industry":"通用工业的蜗轮蜗杆减速机","application_site":"轻中负荷、运行平稳的蜗轮蜗杆副，如普通减速机","features":"良好的油性、减摩性，成本较低\n适用于轻中负荷、运行平稳的传动","notes":"矿物\n用于常规工况","appearance":"","kv40":"153.8","vi":"98","pour_point":"-18","flash_point":"240"},{"series":"蜗轮蜗杆油 SHC GW","product_cn":"Lubemater SHC GW 150 全合成蜗轮蜗杆油","packaging":"200kg","industry":"重工业、通用工业的蜗轮蜗杆减速机","application_site":"高负荷、强冲击、极温环境下的蜗轮蜗杆，如电梯曳引机、野外重型机械、钢铁水泥设备","features":"极高的粘度指数、粘温性能优异，宽温适用\n摩擦系数极低、卓越的极压抗磨性\n长寿命","notes":"聚醚（PAG）型齿轮油\n用于苛刻工况","appearance":"","kv40":"147.1","vi":"200","pour_point":"-36","flash_point":"240","copper_corrosion":"1b","wear_scar":"0.28","foam":"10/0\n10/0\n10/0"},{"series":"蜗轮蜗杆油 SHC GW","product_cn":"Lubemater SHC GW 220 全合成蜗轮蜗杆油","packaging":"200kg","industry":"重工业、通用工业的蜗轮蜗杆减速机","application_site":"高负荷、强冲击、极温环境下的蜗轮蜗杆，如电梯曳引机、野外重型机械、钢铁水泥设备","features":"极高的粘度指数、粘温性能优异，宽温适用\n摩擦系数极低、卓越的极压抗磨性\n长寿命","notes":"聚醚（PAG）型齿轮油\n用于苛刻工况","appearance":"","kv40":"221.1","vi":"220","pour_point":"-39","flash_point":"258","copper_corrosion":"1b","wear_scar":"0.28","foam":"10/0\n10/0\n10/0"},{"series":"蜗轮蜗杆油 SHC GW","product_cn":"Lubemater SHC GW 320 全合成蜗轮蜗杆油","packaging":"200kg","industry":"重工业、通用工业的蜗轮蜗杆减速机","application_site":"高负荷、强冲击、极温环境下的蜗轮蜗杆，如电梯曳引机、野外重型机械、钢铁水泥设备","features":"极高的粘度指数、粘温性能优异，宽温适用\n摩擦系数极低、卓越的极压抗磨性\n长寿命","notes":"聚醚（PAG）型齿轮油\n用于苛刻工况","appearance":"","kv40":"321.3","vi":"229","pour_point":"-33","flash_point":"248","copper_corrosion":"1b","wear_scar":"0.28","foam":"10/0\n10/0\n10/0"},{"series":"蜗轮蜗杆油 SHC GW","product_cn":"Lubemater SHC GW 460 全合成蜗轮蜗杆油","packaging":"200kg","industry":"重工业、通用工业的蜗轮蜗杆减速机","application_site":"高负荷、强冲击、极温环境下的蜗轮蜗杆，如电梯曳引机、野外重型机械、钢铁水泥设备","features":"极高的粘度指数、粘温性能优异，宽温适用\n摩擦系数极低、卓越的极压抗磨性\n长寿命","notes":"聚醚（PAG）型齿轮油\n用于苛刻工况","appearance":"","kv40":"464.6","vi":"238","pour_point":"-27","flash_point":"245","copper_corrosion":"1b","wear_scar":"0.29","weld_load":"3090"},{"series":"蜗轮蜗杆油 SHC GW","product_cn":"Lubemater SHC GW 680 全合成蜗轮蜗杆油","packaging":"200kg","industry":"重工业、通用工业的蜗轮蜗杆减速机","application_site":"高负荷、强冲击、极温环境下的蜗轮蜗杆，如电梯曳引机、野外重型机械、钢铁水泥设备","features":"极高的粘度指数、粘温性能优异，宽温适用\n摩擦系数极低、卓越的极压抗磨性\n长寿命","notes":"聚醚（PAG）型齿轮油\n用于苛刻工况","appearance":"","kv40":"698.5","vi":"255","pour_point":"-30","flash_point":"247","copper_corrosion":"1b","wear_scar":"0.26","weld_load":"3090"},{"series":"蜗轮蜗杆油 SHC GW","product_cn":"Lubemater SHC GW 1000 全合成蜗轮蜗杆油","packaging":"200kg","industry":"重工业、通用工业的蜗轮蜗杆减速机","application_site":"高负荷、强冲击、极温环境下的蜗轮蜗杆，如电梯曳引机、野外重型机械、钢铁水泥设备","features":"极高的粘度指数、粘温性能优异，宽温适用\n摩擦系数极低、卓越的极压抗磨性\n长寿命","notes":"聚醚（PAG）型齿轮油\n用于苛刻工况","appearance":"","kv40":"975","vi":"260","pour_point":"-27","flash_point":"248","copper_corrosion":"1b","wear_scar":"0.27","weld_load":"3090"},{"series":"矿物型油气润滑剂 OAM","product_cn":"Lubemater ST-OAM 220 油气润滑剂","packaging":"170kg","industry":"钢铁、冶金、矿山、火电","application_site":"常规温度和负荷下运行的机床、风机、水泵等设备的轴承润滑","features":"良好的热稳定性与抗氧化性\n良好的极压抗磨性\n良好的雾化性与流动性","notes":"矿物型油气润滑","appearance":"","kv40":"232","vi":"95","pour_point":"-24","flash_point":"240","copper_corrosion":"1b"},{"series":"矿物型油气润滑剂 OAM","product_cn":"Lubemater ST-OAM 320 油气润滑剂","packaging":"170kg","industry":"钢铁、冶金、矿山、火电","application_site":"常规温度和负荷下运行的机床、风机、水泵等设备的轴承润滑","features":"良好的热稳定性与抗氧化性\n良好的极压抗磨性\n良好的雾化性与流动性","notes":"矿物型油气润滑","appearance":"","kv40":"318","vi":"100","pour_point":"-24","flash_point":"245","copper_corrosion":"1b"},{"series":"合成型开式齿轮剂","product_cn":"Lubemater OG-30 CSF 2000 高性能开式齿轮剂","packaging":"180kg / 50kg","industry":"水泥、冶金、矿业、化工、火电","application_site":"球磨机、回转窑、滚筒混料机等中大型开式齿轮装置，尤其适用于苛刻条件","features":"高粘附性\n极压抗磨性\n防锈防腐性\n良好的渗透性\n抗氧化性与结焦抵抗性，适应高低温变化","notes":"基础型开式齿轮剂","appearance":"","kv40":"2456","kv100":"153.1","vi":"120","wear_scar":"0.45","weld_load":"≥7848","pb_load":"2207"},{"series":"合成型开式齿轮剂","product_cn":"Lubemater OG-30 CSF 3500 高性能开式齿轮剂","packaging":"180kg / 50kg","industry":"水泥、冶金、矿业、化工、火电","application_site":"球磨机、回转窑、滚筒混料机等中大型开式齿轮装置，尤其适用于苛刻条件","features":"高粘附性\n极压抗磨性\n防锈防腐性\n良好的渗透性\n抗氧化性与结焦抵抗性，适应高低温变化","notes":"基础型开式齿轮剂","appearance":"","kv40":"3709","kv100":"276.6","vi":"215","copper_corrosion":"1b","wear_scar":"0.4","weld_load":"≥7848","pb_load":"2207"},{"series":"合成型开式齿轮剂","product_cn":"Lubemater OG-30 CSF 5000 高性能开式齿轮剂","packaging":"180kg / 50kg","industry":"水泥、冶金、矿业、化工、火电","application_site":"球磨机、回转窑、滚筒混料机等中大型开式齿轮装置，尤其适用于苛刻条件","features":"高粘附性\n极压抗磨性\n防锈防腐性\n良好的渗透性\n抗氧化性与结焦抵抗性，适应高低温变化","notes":"基础型开式齿轮剂","appearance":"","kv40":"5449","kv100":"421.9","vi":"244","copper_corrosion":"1b","wear_scar":"0.42","weld_load":"≥7848","pb_load":"1765"},{"series":"合成型开式齿轮剂","product_cn":"Lubemater OG-30 CSF 12000 高性能开式齿轮剂","packaging":"180kg / 50kg","industry":"水泥、冶金、矿业、化工、火电","application_site":"球磨机、回转窑、滚筒混料机等中大型开式齿轮装置，尤其适用于苛刻条件","features":"高粘附性\n极压抗磨性\n防锈防腐性\n良好的渗透性\n抗氧化性与结焦抵抗性，适应高低温变化","notes":"基础型开式齿轮剂","appearance":"","kv40":"11300","kv100":"690.4","vi":"248","copper_corrosion":"1b","wear_scar":"0.41","weld_load":"9810","pb_load":"1874"},{"series":"合成型开式齿轮剂","product_cn":"Lubemater OG-60 CSF 15 高性能开式齿轮剂","packaging":"15:15000 / 30:30000 / 45:36000","industry":"水泥、冶金、矿业、化工、火电","application_site":"球磨机、回转窑、滚筒混料机等中大型开式齿轮装置，尤其适用于苛刻条件","features":"高粘附性\n极压抗磨性\n防锈防腐性\n良好的渗透性\n抗氧化性与结焦抵抗性，适应高低温变化","notes":"合成型开式齿轮剂","appearance":"","kv40":"15261","kv100":"659.9","vi":"206","copper_corrosion":"1b","wear_scar":"0.4","weld_load":"≥7848","pb_load":"1678"},{"series":"合成型开式齿轮剂","product_cn":"Lubemater OG-60 CSF 30 高性能开式齿轮剂","packaging":"15:15000 / 30:30000 / 45:36000","industry":"水泥、冶金、矿业、化工、火电","application_site":"球磨机、回转窑、滚筒混料机等中大型开式齿轮装置，尤其适用于苛刻条件","features":"高粘附性\n极压抗磨性\n防锈防腐性\n良好的渗透性\n抗氧化性与结焦抵抗性，适应高低温变化","notes":"合成型开式齿轮剂","appearance":"","kv40":"31756","kv100":"1553","vi":"275","copper_corrosion":"1b","wear_scar":"0.40","weld_load":"≥7848","pb_load":"1432"},{"series":"合成型开式齿轮剂","product_cn":"Lubemater OG-60 CSF 45 高性能开式齿轮剂","packaging":"15:15000 / 30:30000 / 45:36000","industry":"水泥、冶金、矿业、化工、火电","application_site":"球磨机、回转窑、滚筒混料机等中大型开式齿轮装置，尤其适用于苛刻条件","features":"高粘附性\n极压抗磨性\n防锈防腐性\n良好的渗透性\n抗氧化性与结焦抵抗性，适应高低温变化","notes":"合成型开式齿轮剂","appearance":"","kv40":"37000","kv100":"1353","vi":"241","copper_corrosion":"1b","wear_scar":"0.43","weld_load":"9810","pb_load":"1765"},{"series":"合成型开式齿轮剂（聚醚）","product_cn":"Lubemater OG-90 CSF 10 高性能开式齿轮剂","packaging":"10:10000 / 17:17000","industry":"水泥、冶金、矿业、化工、火电","application_site":"球磨机、回转窑、滚筒混料机等中大型开式齿轮装置","features":"高粘附性\n极压抗磨性","notes":"聚醚型开齿，更高粘附性，极致性能","appearance":"","kv40":"10000","vi":"＞400","flash_point":"≥190","copper_corrosion":"1b","weld_load":"≥7848"},{"series":"合成型开式齿轮剂（聚醚）","product_cn":"Lubemater OG-90 CSF 17 高性能开式齿轮剂","packaging":"10:10000 / 17:17000","industry":"水泥、冶金、矿业、化工、火电","application_site":"球磨机、回转窑、滚筒混料机等中大型开式齿轮装置","features":"高粘附性\n极压抗磨性","notes":"聚醚型开齿，更高粘附性，极致性能","appearance":"","kv40":"17000","vi":"＞400","flash_point":"≥190","copper_corrosion":"1b","weld_load":"≥7848"},{"series":"矿物型螺杆式空气压缩机油","product_cn":"Lubemater AIR S3046 空气压缩机油","packaging":"170kg/15kg","industry":"工业领域螺杆空压机","application_site":"螺杆空压机","features":"优良的抗氧化\n优良的抗结焦、油泥性能","notes":"标准服役周期2000-3000h","appearance":"","kv40":"46.8","vi":"110","pour_point":"-33","flash_point":"235"},{"series":"矿物型螺杆式空气压缩机油","product_cn":"Lubemater AIR S4032 空气压缩机油","packaging":"170kg/15kg","industry":"工业领域螺杆空压机","application_site":"螺杆空压机","features":"优良的抗氧化\n优良的抗结焦、油泥性能","notes":"标准服役周期3000-4000h","appearance":"","kv40":"32.6","vi":"110","pour_point":"-33","flash_point":"234"},{"series":"矿物型螺杆式空气压缩机油","product_cn":"Lubemater AIR S4046 空气压缩机油","packaging":"170kg/15kg","industry":"工业领域螺杆空压机","application_site":"螺杆空压机","features":"优良的抗氧化\n优良的抗结焦、油泥性能","notes":"标准服役周期3000-4000h","appearance":"","kv40":"46.3","vi":"115","pour_point":"-36","flash_point":"236"},{"series":"矿物型螺杆式空气压缩机油","product_cn":"Lubemater AIR S6032 空气压缩机油","packaging":"170kg/15kg","industry":"工业领域螺杆空压机","application_site":"螺杆空压机","features":"优良的抗氧化\n优良的抗结焦、油泥性能","notes":"标准服役周期4000-6000h","appearance":"","kv40":"32.7","vi":"115","pour_point":"-36","flash_point":"240"},{"series":"矿物型螺杆式空气压缩机油","product_cn":"Lubemater AIR S6046 空气压缩机油","packaging":"170kg/15kg","industry":"工业领域螺杆空压机","application_site":"螺杆空压机","features":"优良的抗氧化\n优良的抗结焦、油泥性能","notes":"标准服役周期4000-6000h","appearance":"","kv40":"46.8","vi":"115","pour_point":"-36","flash_point":"242"},{"series":"合成型螺杆式空气压缩机油 PAG","product_cn":"Lubemater AIR S8032 转子冷却液","packaging":"200kg/18kg","industry":"工业领域螺杆空压机","application_site":"螺杆空压机","features":"极佳的抗结焦、油泥性能","notes":"聚醚型；标准服役周期6000-8000h","appearance":"","kv40":"32.5","vi":"170","pour_point":"-45","flash_point":"255","copper_corrosion":"1b","rust_b":"无锈","foam":"10/0\n10/0\n10/0"},{"series":"合成型螺杆式空气压缩机油 PAG","product_cn":"Lubemater AIR S8032G 转子冷却液","packaging":"200kg/18kg","industry":"工业领域螺杆空压机","application_site":"螺杆空压机","features":"极佳的抗结焦、油泥性能；墨绿色透明液体","notes":"聚醚型；标准服役周期6000-8000h","appearance":"","kv40":"39.5","vi":"170","pour_point":"-54","flash_point":"262","copper_corrosion":"1b","rust_b":"无锈","foam":"10/0\n10/0\n10/0"},{"series":"合成型螺杆式空气压缩机油 PAG","product_cn":"Lubemater AIR S8046 转子冷却液","packaging":"200kg/18kg","industry":"工业领域螺杆空压机","application_site":"螺杆空压机","features":"超级冷却剂；极佳的抗结焦、油泥性能","notes":"聚醚型；标准服役周期6000-8000h；超级冷却剂；极佳的抗结焦、油泥性能","appearance":"","kv40":"46.2","vi":"174","pour_point":"-51","flash_point":"266","copper_corrosion":"1b","rust_b":"无锈","foam":"10/0\n10/0\n10/0"},{"series":"合成型螺杆式空气压缩机油 PAG","product_cn":"Lubemater AIR S32 转子冷却液","packaging":"200kg/18kg","industry":"工业领域螺杆空压机","application_site":"螺杆空压机","features":"极佳的抗结焦、油泥性能；墨绿色透明液体","notes":"聚醚型；标准服役周期6000-8000h；极佳的抗结焦、油泥性能；墨绿色透明液体","appearance":"","kv40":"39.8","vi":"170","pour_point":"-54","flash_point":"260","copper_corrosion":"1b","rust_b":"无锈","foam":"10/0\n10/0\n10/0"},{"series":"合成型螺杆式空气压缩机油 PAG","product_cn":"Lubemater AIR S46 转子冷却液","packaging":"200kg/18kg","industry":"工业领域螺杆空压机","application_site":"螺杆空压机","features":"极佳的抗结焦、油泥性能","notes":"聚醚型；标准服役周期6000-8000h","appearance":"","kv40":"46.2","vi":"172","pour_point":"-45","flash_point":"260","copper_corrosion":"1b","rust_b":"无锈","foam":"10/0\n10/0\n10/0"},{"series":"合成型螺杆式空气压缩机油 PAO","product_cn":"Lubemater AIR S6146 转子冷却液","packaging":"170kg/15kg","industry":"工业领域螺杆空压机","application_site":"螺杆空压机","features":"极佳的抗氧化、抗乳化性能\n长寿命","notes":"GTL-PAO型；标准服役周期6000-8000h","appearance":"","kv40":"45.8","vi":"143","pour_point":"-48","flash_point":"246","copper_corrosion":"1b"},{"series":"合成型螺杆式空气压缩机油 PAO","product_cn":"Lubemater AIR S8146 转子冷却液","packaging":"170kg/15kg","industry":"工业领域螺杆空压机","application_site":"螺杆空压机","features":"极佳的抗氧化、抗乳化性能\n长寿命","notes":"PAO型；标准服役周期6000-8000h","appearance":"","kv40":"46.6","vi":"136","pour_point":"-48","flash_point":"260","copper_corrosion":"1b"},{"series":"工艺气体压缩机油 WS PAG","product_cn":"MAIJI SPE C2 气体压缩机防护剂 100#","packaging":"200L","industry":"气体运输、天然气开采、化学合成等","application_site":"工艺压缩机","features":"抗碳氢化合物稀释性\n优异润滑性\n低倾点\n耐腐蚀特性\n长使用寿命","notes":"烃类气体压缩机油 与CPI-1519同类型产品","appearance":"","kv40":"100.2","vi":"220","pour_point":"-45","flash_point":"250","copper_corrosion":"1b","solidification_point":"1.0045"},{"series":"工艺气体压缩机油 WS PAG","product_cn":"MAIJI SPE C3 气体压缩机防护剂 150#","packaging":"200L","industry":"气体运输、天然气开采、化学合成等","application_site":"工艺压缩机","features":"抗碳氢化合物稀释性\n优异润滑性\n低倾点\n耐腐蚀特性\n长使用寿命","notes":"烃类气体压缩机油 与CPI-1519同类型产品","appearance":"","kv40":"151","vi":"220","pour_point":"-45","flash_point":"255","copper_corrosion":"1b","solidification_point":"1.0045"},{"series":"工艺气体压缩机油","product_cn":"Lubemater SPE AC100 工艺气体压缩机油","packaging":"170KG","industry":"多晶硅","application_site":"酸性气体工艺压缩","features":"优异的防腐蚀性能\n良好的抗磨性","notes":"矿物型抗酸性气体压缩机油","appearance":"","kv40":"97.5","kv100":"11.32","vi":"100","pour_point":"-15","flash_point":"156","acid_value":"0.01"},{"series":"防锈汽轮机油","product_cn":"Lubemater TSA 46 长寿命汽轮机油","packaging":"170kg","industry":"电力","application_site":"蒸汽轮机、燃气轮机、水轮发电机组（滑动轴承、减速齿轮、调速系统）","features":"具备优异的氧化安定性和抗乳化性","notes":"三类基础油产品","appearance":"","kv40":"46.6","vi":"117","pour_point":"-39","flash_point":"222","copper_corrosion":"1a","rust_b":"无锈","cleanliness_nas":"≤8","air_release":"2","demulsibility_54":"5","foam":"10/0"},{"series":"防锈汽轮机油","product_cn":"L-TSA 32 防锈汽轮机油","packaging":"170kg","industry":"电力","application_site":"蒸汽轮机、燃气轮机、水轮发电机组（滑动轴承、减速齿轮、调速系统）","features":"具备优异的氧化安定性和抗乳化性","notes":"标准L-TSA产品","appearance":"","kv40":"31.5","vi":"105","pour_point":"-39","flash_point":"230","copper_corrosion":"1a","rust_b":"无锈","cleanliness_nas":"≤8","air_release":"1.3","demulsibility_54":"10","foam":"10/0"},{"series":"防锈汽轮机油","product_cn":"L-TSA 46 防锈汽轮机油","packaging":"170kg","industry":"电力","application_site":"蒸汽轮机、燃气轮机、水轮发电机组（滑动轴承、减速齿轮、调速系统）","features":"具备优异的氧化安定性和抗乳化性","notes":"标准L-TSA产品","appearance":"","kv40":"46.6","vi":"108","pour_point":"-36","flash_point":"232","copper_corrosion":"1a","rust_b":"无锈","cleanliness_nas":"≤8","air_release":"2","demulsibility_54":"10","foam":"10/0"},{"series":"防锈汽轮机油","product_cn":"L-TSA 68 防锈汽轮机油","packaging":"170kg","industry":"电力","application_site":"蒸汽轮机、燃气轮机、水轮发电机组（滑动轴承、减速齿轮、调速系统）","features":"具备优异的氧化安定性和抗乳化性","notes":"标准L-TSA产品","appearance":"","kv40":"68.2","vi":"112","pour_point":"-27","flash_point":"235","copper_corrosion":"1a","rust_b":"无锈","cleanliness_nas":"≤8","air_release":"3.8","demulsibility_54":"10","foam":"10/0"},{"series":"气柜密封油","product_cn":"Lubemater AIP 10 气柜密封油","packaging":"170kg","industry":"冶金、城市煤气、石油化工、焦化等涉及气体储存与输配的行业","application_site":"活塞油沟、侧板与滑板之间的间隙、底部油槽及循环系统","features":"卓越的抗乳化性与分水性能\n良好的粘温特性\n优异的氧化安定性\n良好的防锈防腐性能\n适宜的粘度与较低的凝点","notes":"","appearance":"","kv40":"78.96","vi":"130","pour_point":"-39","flash_point":"226","demulsibility_54":"5"},{"series":"导轨油","product_cn":"L-HG 68 导轨油","packaging":"170kg","industry":"CNC精密加工","application_site":"适于高精度、高速机床的高性能导轨专用油。","features":"卓越的防粘连、防滑特性，确保滑道顺畅运行及精密加工","notes":"","appearance":"黄色液体","kv40":"68.64","vi":"108","pour_point":"-21","demulsibility_54":"10","foam":"10/0\n20/0\n10/0"},{"series":"","product_cn":"Lubemater FB 100 油膜轴承油","packaging":"170","industry":"钢铁轧钢 油膜轴承","application_site":"高速线材轧机循环油","features":"优异的分水性能与抗磨性能","notes":"","appearance":"","kv40":"98.5","vi":"98","pour_point":"-24","flash_point":"240","copper_corrosion":"1b"},{"series":"","product_cn":"Lubemater FB 220 油膜轴承油","packaging":"170","industry":"钢铁轧钢 油膜轴承","application_site":"高速线材轧机循环油","features":"优异的分水性能与抗磨性能","notes":"","appearance":"","kv40":"218","vi":"99","pour_point":"-15","flash_point":"255","copper_corrosion":"1b"}],"paramConfig":[{"key":"kv40","label":"运动粘度40℃(mm²/s)","standard":"GB/T 265"},{"key":"kv100","label":"运动粘度100℃(mm²/s)","standard":"GB/T 265"},{"key":"vi","label":"粘度指数","standard":"GB/T 1995"},{"key":"pour_point","label":"倾点(℃)","standard":"GB/T 3535"},{"key":"flash_point","label":"闪点(℃)","standard":"GB/T 3536"},{"key":"copper_corrosion","label":"铜片腐蚀(100℃,3h)","standard":"GB/T 5096"},{"key":"rust_a","label":"液相锈蚀A法","standard":"GB/T 11143"},{"key":"rust_b","label":"液相锈蚀B法","standard":"GB/T 11143"},{"key":"cleanliness_nas","label":"清洁度(NAS1638)","standard":"NAS 1638"},{"key":"cleanliness_iso","label":"清洁度(ISO 4406)","standard":"ISO 4406"},{"key":"wear_scar","label":"磨斑直径(mm)","standard":"SH/T 0189"},{"key":"weld_load","label":"烧结负荷(N)","standard":"GB/T 3142"},{"key":"pb_load","label":"最大无卡咬负荷(N)","standard":"GB/T 3142"},{"key":"air_release","label":"空气释放值(50℃)(min)","standard":"SH/T 0308"},{"key":"demulsibility_54","label":"抗乳化性(54℃)(min)","standard":"GB/T 7305"},{"key":"demulsibility_82","label":"抗乳化性(82℃)(min)","standard":"GB/T 7305"},{"key":"demulsibility_82_detail","label":"抗乳化性(82℃) 乳化液/分离水/油中水","standard":"GB/T 7305"},{"key":"foam","label":"泡沫特性(mL/mL)","standard":"GB/T 12579"},{"key":"ph_value","label":"pH值","standard":"GB/T 7304"},{"key":"solidification_point","label":"凝点(℃)","standard":"GB/T 3535"},{"key":"density","label":"密度（15°C）(g/cm³)","standard":"GB/T 1884"},{"key":"acid_value","label":"酸值(mgKOH/g)","standard":"GB/T 4945"},{"key":"fzg","label":"FZG A20/8.3/90","standard":"NB/SH/T 0306-2013"}],"appUpdate":{"latestVersion":"1.1.5","updateNotes":"1.修复产品数据卡功能：Android端直接保存到下载目录\n2.优化匹配后技术规格展示","apkUrl":"https://kaiz1995.github.io/Oil-Matching-Search/RunmeiMatching.apk","forceUpdate":true},"versionHistory":[{"version":"1.0.1","notes":"搜索匹配逻辑优化\n支持跨字段自由组合搜索\n搜索结果关键词高亮"},{"version":"1.0.2","notes":"优化模糊搜索"},{"version":"1.0.3","notes":"修复复制按钮不可用的问题"},{"version":"1.0.4","notes":"修复复制按钮不可用的问题 \n优化更新的bug"},{"version":"1.0.5","notes":"增加版本号"},{"version":"1.0.6","notes":"增加发布页"},{"version":"1.0.7","notes":"修复发布页点击无效bug"},{"version":"1.0.8","notes":"修复粘度计算公式的bug"},{"version":"1.0.9","notes":"修复版本号显示和更新检测逻辑"},{"version":"1.0.10","notes":"修复运动粘度计算器：支持任意二字段计算第三字段\n新增清空按钮，可一键清除所有输入"},{"version":"1.1.0","notes":"快速搜索标题改为市场产品检索\n版本号移至右上角"},{"version":"1.1.1","notes":"修复运动粘度计算公式：采用中国润滑油网分段经验公式替换ASTM查表法\n修复输入框无法删除的bug：改输入字段自动重算，改输出字段不覆盖"},{"version":"1.1.2","notes":"彻底修复更新通知不弹出的bug：冷却机制改为版本感知，新版本发布时始终弹出\n新增 localStorage 清除逻辑提升健壮性"},{"version":"1.1.3","notes":"1. 动态列检测：新增参数列自动读取并显示（FZG A20/8.3/90、抗乳化性54℃/82℃、密度、凝点）\n2. 修复抗乳化性重复显示问题，拆分为54℃/82℃两个独立指标\n3. 密度标签补全为\"密度（15°C）(g/cm³)\"\n4. FZG 技术指标规范为\"FZG A20/8.3/90\"，试验方法\"NB/SH/T 0306-2013\"\n5. 彻底修复 FZG 数据反复丢失问题：所有数据加载路径增加参数配置保护\n6. 全量代码审查修复多处bug"},{"version":"1.1.4","notes":"1.增加产品数据卡功能\n2.增加匹配后展示技术规格功能"},{"version":"1.1.5","notes":"1.修复产品数据卡功能：Android端直接保存到下载目录\n2.优化匹配后技术规格展示"}],"releasePages":{"下载地址":"https://wwamc.lanzouv.com/b01bjfoqfi\n密码:emec"}};async function loadData() {
+  if (DATA_LOADING) return;
+  DATA_LOADING = true;
+  var dataUrl = 'https://kaiz1995.github.io/Oil-Matching-Search/data.json';
+
+  // 本地浏览器双击打开调试环境检测 (file: 协议且无 Android 桥)
+  var isLocalDebug = (window.location.protocol === 'file:' && !window.AndroidBridge);
+  if (isLocalDebug) {
+    if (typeof EMBEDDED_DATA !== 'undefined' && EMBEDDED_DATA.products && EMBEDDED_DATA.products.length > 0) {
+      DATA = EMBEDDED_DATA.products;
+      DATA_VERSION = EMBEDDED_DATA.version || '';
+      DATA_VERSION_NOTE = EMBEDDED_DATA.versionNote || '';
+      RUNMEI_CATALOG = EMBEDDED_DATA.runmeiCatalog || [];
+      PARAM_CONFIG = EMBEDDED_DATA.paramConfig || [];
+      initVersionUI();
+      updateVersionNote();
+      DATA_LOADING = false;
+      return;
+    }
+  }
+
+  try {
+    var resp = await fetch(dataUrl + '?_=' + Date.now());
+    var json = await resp.json();
+    if (json.products && json.products.length > 0) {
+      DATA = json.products;
+      DATA_VERSION = json.version || '';
+      DATA_VERSION_NOTE = json.versionNote || '';
+      RUNMEI_CATALOG = json.runmeiCatalog || [];
+      // Preserve existing paramConfig if incoming data lacks it
+        if (json.paramConfig && json.paramConfig.length > 0) {
+          PARAM_CONFIG = json.paramConfig;
+        }
+      localStorage.setItem('oil_pm_data', JSON.stringify(json));
+      updateVersionNote();
+      checkAppUpdate(json); updateVersionUI(json);
+      DATA_LOADING = false;
+      return;
+    }
+  } catch(e) {}
+
+  try {
+    var cached = localStorage.getItem('oil_pm_data');
+    if (cached) {
+      var json = JSON.parse(cached);
+      if (json.products && json.products.length > 0) {
+        DATA = json.products;
+        DATA_VERSION = json.version || '';
+        DATA_VERSION_NOTE = json.versionNote || '';
+        RUNMEI_CATALOG = json.runmeiCatalog || [];
+      // Preserve existing paramConfig if incoming data lacks it
+        if (json.paramConfig && json.paramConfig.length > 0) {
+          PARAM_CONFIG = json.paramConfig;
+        }
+        updateVersionNote();
+        checkAppUpdate(json); updateVersionUI(json);
+        DATA_LOADING = false;
+        return;
+      }
+    }
+  } catch(e) {}
+
+  try {
+    var resp = await fetch('./data.json?_=' + Date.now());
+    var json = await resp.json();
+    if (json.products && json.products.length > 0) {
+      DATA = json.products;
+      DATA_VERSION = json.version || '';
+      DATA_VERSION_NOTE = json.versionNote || '';
+      RUNMEI_CATALOG = json.runmeiCatalog || [];
+      // Preserve existing paramConfig if incoming data lacks it
+        if (json.paramConfig && json.paramConfig.length > 0) {
+          PARAM_CONFIG = json.paramConfig;
+        }
+      localStorage.setItem('oil_pm_data', JSON.stringify(json));
+      updateVersionNote();
+      checkAppUpdate(json); updateVersionUI(json);
+      DATA_LOADING = false;
+      return;
+    }
+  } catch(e) {}
+
+  try {
+    if (window.AndroidBridge) {
+      var fb = AndroidBridge.getFallbackData();
+      if (fb) {
+        var json = JSON.parse(fb);
+        if (json.products && json.products.length > 0) {
+          DATA = json.products;
+          DATA_VERSION = json.version || '';
+          DATA_VERSION_NOTE = json.versionNote || '';
+          RUNMEI_CATALOG = json.runmeiCatalog || [];
+      // Preserve existing paramConfig if incoming data lacks it
+        if (json.paramConfig && json.paramConfig.length > 0) {
+          PARAM_CONFIG = json.paramConfig;
+        }
+          checkAppUpdate(json);
+        }
+      }
+    }
+  } catch(e) {}
+
+  if (DATA.length === 0 && typeof EMBEDDED_DATA !== 'undefined' && EMBEDDED_DATA.products && EMBEDDED_DATA.products.length > 0) {
+    DATA = EMBEDDED_DATA.products;
+    DATA_VERSION = EMBEDDED_DATA.version || '';
+    DATA_VERSION_NOTE = EMBEDDED_DATA.versionNote || '';
+    RUNMEI_CATALOG = EMBEDDED_DATA.runmeiCatalog || [];
+      PARAM_CONFIG = EMBEDDED_DATA.paramConfig || [];
+    initVersionUI();
+    checkAppUpdate(EMBEDDED_DATA);
+  }
+
+  if (DATA.length === 0) {
+    var el = document.getElementById('toast');
+    if (el) { el.textContent = '\u6570\u636e\u52a0\u8f7d\u5931\u8d25\uff0c\u8bf7\u68c0\u67e5\u7f51\u7edc'; el.classList.add('show'); }
+  }
+  updateVersionNote();
+  DATA_LOADING = false;
+}
+
+function updateVersionNote() {
+  var el = document.getElementById('version-note');
+  if (!el) return;
+  var note = DATA_VERSION_NOTE || '';
+  if (!note && typeof EMBEDDED_DATA !== 'undefined' && EMBEDDED_DATA.versionNote) {
+    note = EMBEDDED_DATA.versionNote;
+  }
+  el.textContent = note;
+}
+
+async function checkForUpdates() {
+  if (!DATA_VERSION) return;
+  try {
+    var resp = await fetch('https://kaiz1995.github.io/Oil-Matching-Search/data.json?_=' + Date.now());
+    var json = await resp.json();
+    if (!json.products) return;
+    // Always check for app updates
+    checkAppUpdate(json);
+    if (json.version && json.version !== DATA_VERSION) {
+      DATA = json.products;
+      DATA_VERSION = json.version;
+      DATA_VERSION_NOTE = json.versionNote || '';
+      RUNMEI_CATALOG = json.runmeiCatalog || [];
+      // Preserve existing paramConfig if incoming data lacks it
+        if (json.paramConfig && json.paramConfig.length > 0) {
+          PARAM_CONFIG = json.paramConfig;
+        }
+      localStorage.setItem('oil_pm_data', JSON.stringify(json));
+      updateVersionNote();
+      updateVersionUI(json);
+      var el = document.getElementById('toast');
+      if (el) { el.textContent = '\u6570\u636e\u5df2\u66f4\u65b0\u81f3 ' + DATA_VERSION; el.classList.add('show');
+        setTimeout(function() { el.classList.remove('show'); }, 3000); }
+    }
+  } catch(e) {}
+}
+
+// ============== QUICK SEARCH ==============
+var quickTimeout = null;
+function quickSearch() { clearTimeout(quickTimeout); quickTimeout = setTimeout(doQuickSearch, 200); }
+
+function doQuickSearch() {
+  var q = document.getElementById('quick-search').value.trim();
+  var container = document.getElementById('quick-results'), stats = document.getElementById('quick-stats');
+  if (!q || q.length < 2) { container.innerHTML = '<div class="empty-state">输入至少2个字符开始搜索<div class="example">试试: 525, 46, Tellus, 得力士, PAO, CKC, 风电...</div></div>'; stats.innerHTML=''; return; }
+
+  var ql = q.toLowerCase();
+  // Tokenize: split by alphanumeric/chinese to separate languages and digits
+  var tokens = (ql.match(/[a-z0-9\-]+|[\u4e00-\u9fa5]+/gi) || []).filter(function(t){return t.length >= 1;});
+
+  // If single token, try to split by known brand/category prefix (handles "壳牌S2" → ["壳牌","s2"])
+  if (tokens.length === 1) {
+    var m = ql.match(/^(壳牌[\/]?Shell|美孚[\/]?Mobil|长城[牌]?|克鲁勃[\/]?Kl[üu]ber|嘉实多|福斯|昆仑|安索|寿力|英格索兰)(.+)/i);
+    if (!m) m = ql.match(/^(导轨油|开式齿轮油|汽轮机油|涡轮机油|液压油|空压机油|压缩机油|轴承油|齿轮油)(.+)/);
+    if (m) tokens = [m[1], m[2]];
+  }
+
+  // Build matched list with scores
+  var matched = [];
+  DATA.forEach(function(p) {
+    var pText = (p.product_cn + ' ' + p.product_en + ' ' + p.brand + ' ' + p.category + ' ' + p.viscosity + ' ' + p.runmei + ' ' + (p.application||'') + ' ' + (p.source||'')).toLowerCase();
+    // AND logic: each token must match somewhere
+    if (!tokens.every(function(t){return pText.indexOf(t) >= 0;})) return;
+
+    // Score for sorting
+    var score = 0;
+    var cnText = p.product_cn.toLowerCase();
+    // Full query in product_cn = best
+    if (cnText.indexOf(ql) >= 0) score += 10000;
+    // Full query anywhere
+    else if (pText.indexOf(ql) >= 0) score += 5000;
+    // Token in product_cn
+    tokens.forEach(function(t){if(cnText.indexOf(t)>=0) score+=1000;});
+    // Token in product_en
+    var enText = (p.product_en||'').toLowerCase();
+    tokens.forEach(function(t){if(enText.indexOf(t)>=0) score+=500;});
+    // Token in brand
+    var bText = p.brand.toLowerCase();
+    tokens.forEach(function(t){if(bText.indexOf(t)>=0) score+=200;});
+    // Token in category
+    var cText = p.category.toLowerCase();
+    tokens.forEach(function(t){if(cText.indexOf(t)>=0) score+=100;});
+
+    matched.push({product:p, score:score});
+  });
+
+  matched.sort(function(a,b){return b.score-a.score;});
+
+  var hasRunmei = matched.filter(function(m){return m.product.runmei;}).length;
+  stats.innerHTML = '<span class="stat-item">匹配 <strong>'+matched.length+'</strong> 条</span><span class="stat-item">润美 <strong>'+hasRunmei+'</strong> 条</span>';
+
+  if (matched.length === 0) { container.innerHTML = '<div class="empty-state">未找到包含 "'+esc(q)+'" 的产品</div>'; return; }
+
+  // Highlight helper: escape then wrap matched tokens in <mark>
+  function highlight(text, toks) {
+    if (!text) return '';
+    var t = esc(text);
+    toks.forEach(function(tk) {
+      var re = new RegExp('(' + tk.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi');
+      t = t.replace(re, '<mark>$1</mark>');
+    });
+    return t;
+  }
+
+  var html = '';
+  matched.forEach(function(m) {
+    var p = m.product;
+    var level = p.runmei ? { cls:'best', badgeCls:'badge-high' } : { cls:'none', badgeCls:'badge-info' };
+    html += '<div class="result-card ' + level.cls + '">';
+    html += '<div class="card-top"><div><div class="card-name">' + highlight(p.product_cn, tokens) + '</div>';
+    html += '<div class="card-meta">' + highlight(p.brand, tokens) + ' · ' + highlight(p.category, tokens);
+    if (p.viscosity) html += ' · ' + esc(p.viscosity);
+    html += '</div></div><span class="score-badge ' + level.badgeCls + '">' + (p.runmei ? '已匹配' : '待匹配') + '</span></div>';
+    if (p.runmei) {
+      html += '<div class="runmei-box"><div class="runmei-info"><div class="runmei-label">润美对应产品</div><div class="runmei-name">' + highlight(p.runmei, tokens) + '</div></div>';
+      html += '<div class="runmei-actions" style="display: flex; gap: 8px; align-items: center;">';
+      html += '<button class="copy-btn" data-runmei="' + escAttr(p.runmei) + '">复制</button>';
+      html += '<button class="detail-btn" data-runmei="' + escAttr(p.runmei) + '">技术规格/TDS</button>';
+      html += '</div></div>';
+    } else {
+      if (p.source) {
+        html += '<div style="margin:8px 0;padding:10px 14px;background:var(--warning-bg);border-radius:var(--radius-sm);border:1px solid #F0E4CC;font-size:12px;color:var(--text-secondary);line-height:1.6;">';
+        html += '<div style="font-size:11px;font-weight:600;color:var(--text-muted);margin-bottom:2px;">特性</div>';
+        html += highlight(p.source, tokens) + '</div>';
+      }
+      html += '<div style="margin-top:4px;font-size:11px;color:var(--text-muted);">暂无匹配</div>';
+    }
+    html += '<div class="result-expand"><strong>英文名:</strong> ' + esc(p.product_en || '(无)') + '<br><strong>说明:</strong>' + esc(p.source || '') + '</div></div>';
+  });
+  container.innerHTML = html;
+}
+// ============== UTILS ==============
+function esc(s) { if (!s) return ''; return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function escAttr(s) { if (!s) return ''; return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
+
+function switchTab(tab) {
+  document.querySelectorAll('.tab').forEach(function(t,i){ var tabs=['quick','runmei','calc']; t.classList.toggle('active',tabs[i]===tab); });
+  document.getElementById('panel-quick').classList.toggle('active', tab==='quick');
+  document.getElementById('panel-runmei').classList.toggle('active', tab==='runmei');
+  document.getElementById('panel-calc').classList.toggle('active', tab==='calc');
+  if (tab==='runmei' && !window._runmeiLoaded) { initRunmeiBrowser(); }
+}
+
+// ============== RUNMEI PRODUCT BROWSER ==============
+
+// Fallback param config (used when data.json lacks paramConfig, for backward compatibility)
+var TDS_PARAM_CONFIG_FALLBACK = {
+  kv40: { label: '运动粘度40℃(mm²/s)', standard: 'GB/T 265' },
+  kv100: { label: '运动粘度100℃(mm²/s)', standard: 'GB/T 265' },
+  vi: { label: '粘度指数', standard: 'GB/T 1995' },
+  pour_point: { label: '倾点(℃)', standard: 'GB/T 3535' },
+  flash_point: { label: '闪点(℃)', standard: 'GB/T 3536' },
+  copper_corrosion: { label: '铜片腐蚀(100℃,3h)', standard: 'GB/T 5096' },
+  rust_a: { label: '液相锈蚀A法', standard: 'GB/T 11143' },
+  rust_b: { label: '液相锈蚀B法', standard: 'GB/T 11143' },
+  cleanliness_nas: { label: '清洁度(NAS1638)', standard: 'NAS 1638' },
+  cleanliness_iso: { label: '清洁度(ISO 4406)', standard: 'ISO 4406' },
+  wear_scar: { label: '磨斑直径(mm)', standard: 'SH/T 0189' },
+  weld_load: { label: '烧结负荷(N)', standard: 'GB/T 3142' }
+};
+
+// Use dynamic PARAM_CONFIG when available, fallback to hard-coded
+function getParamConfig() {
+  if (window.PARAM_CONFIG && window.PARAM_CONFIG.length > 0) {
+    return window.PARAM_CONFIG;
+  }
+  // Convert fallback object to same array format
+  return Object.keys(TDS_PARAM_CONFIG_FALLBACK).map(function(k) {
+    return { key: k, label: TDS_PARAM_CONFIG_FALLBACK[k].label, standard: TDS_PARAM_CONFIG_FALLBACK[k].standard };
+  });
+}
+
+function initRunmeiBrowser() {
+  if (window._runmeiLoaded) return;
+  window._runmeiLoaded = true;
+  filterRunmei();
+}
+
+function filterRunmei() {
+  var series = document.getElementById('runmei-series').value;
+  var query = (document.getElementById('runmei-search').value || '').trim().toLowerCase();
+  if (!series && !query) {
+    document.getElementById('runmei-results').innerHTML = '';
+    return;
+  }
+  var filtered = RUNMEI_CATALOG.filter(function(p) {
+    if (series && p.series !== series) return false;
+    if (query) {
+      var tokens = (query.match(/[a-z0-9\-]+|[\u4e00-\u9fa5]+/gi) || []).filter(function(t){return t.length >= 1;});
+      var txt = (p.product_cn + ' ' + p.series + ' ' + p.features + ' ' + p.industry + ' ' + p.notes).toLowerCase();
+      if (!tokens.every(function(t){return txt.indexOf(t) >= 0;})) return false;
+    }
+    return true;
+  });
+  renderRunmeiGrid(filtered);
+}
+
+function renderRunmeiGrid(products) {
+  var container = document.getElementById('runmei-results');
+  if (products.length === 0) {
+    container.innerHTML = '<div class="empty-state">暂无润美产品数据<div class="example">请先在Excel中填写润美产品目录</div></div>';
+    return;
+  }
+  var html = '<div class="result-summary">润美产品 <strong>' + products.length + '</strong> 款</div>';
+  html += '<div class="runmei-grid">';
+  products.forEach(function(p) {
+    var hasParams = getParamConfig().some(function(k) { return p[k.key]; });
+    html += '<div class="runmei-card" onclick="showRunmeiDetail(\'' + escAttr(p.product_cn) + '\')">';
+    html += '<div class="runmei-card-name">' + esc(p.product_cn) + '</div>';
+    if (p.series) html += '<div class="runmei-card-tags"><span class="tag">' + esc(p.series) + '</span></div>';
+    if (p.features) html += '<div class="runmei-card-features">' + esc(p.features.split('\n')[0]) + '</div>';
+    if (p.industry) html += '<div class="runmei-card-industry">' + esc(p.industry) + '</div>';
+    if (!p.features && !hasParams) html += '<div class="runmei-card-features" style="color:#bbb;">参数待填写</div>';
+    html += '</div>';
+  });
+  html += '</div>';
+  container.innerHTML = html;
+}
+
+function downloadPDF(url) {
+  if (!url) return;
+  if (window.AndroidBridge && AndroidBridge.openInBrowser) {
+    AndroidBridge.openInBrowser(url);
+  } else {
+    window.open(url, '_blank');
+  }
+}
+
+// ============== PRODUCT INFO CARD (IMAGE GENERATION) ==============
+/**
+ * Lazy-load html2canvas from CDN
+ */
+function ensureHtml2Canvas(callback) {
+  if (window.html2canvas) { callback(window.html2canvas); return; }
+  if (window._loadingHtml2Canvas) { setTimeout(function() { ensureHtml2Canvas(callback); }, 300); return; }
+  window._loadingHtml2Canvas = true;
+  var s = document.createElement('script');
+  s.src = 'https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js';
+  s.onload = function() { window._loadingHtml2Canvas = false; callback(window.html2canvas); };
+  s.onerror = function() { window._loadingHtml2Canvas = false; showToast('无法加载图片生成库，请检查网络连接', 3000); };
+  document.head.appendChild(s);
+}
+
+/**
+ * Build the product info card HTML in the offscreen container.
+ * @param {object} product - Runmei catalog product object
+ * @returns {HTMLElement} The card element
+ */
+function generateProductImageCard(product) {
+  var p = product;
+  var container = document.getElementById('product-image-card-container');
+
+  // Features as bullet list
+  var featuresHtml = '';
+  if (p.features) {
+    var lines = p.features.split('\n').filter(function(l) { return l.trim(); });
+    featuresHtml = '<ul class="product-image-card-features">';
+    lines.forEach(function(line) {
+      featuresHtml += '<li>' + esc(line.trim()) + '</li>';
+    });
+    featuresHtml += '</ul>';
+  }
+
+  // Parameter tiles — show only parameters that have data
+  var paramConfig = getParamConfig();
+  var paramTilesHtml = '';
+  paramConfig.forEach(function(item) {
+    var val = p[item.key];
+    if (val && val !== '-' && val !== '') {
+      paramTilesHtml += '<div class="product-image-card-param-tile">' +
+        '<div class="param-value">' + esc(val) + '</div>' +
+        '<div class="param-label">' + esc(item.label) + '</div>' +
+        '<div class="param-standard">' + esc(item.standard || '') + '</div>' +
+        '</div>';
+    }
+  });
+
+  // Info grid: left column (industry + application_site), right column (packaging + notes)
+  var leftInfo = '';
+  if (p.industry) {
+    leftInfo += '<div class="product-image-card-info-item">' +
+      '<div class="info-label">应用行业</div>' +
+      '<div class="info-value">' + esc(p.industry) + '</div></div>';
+  }
+  if (p.application_site) {
+    leftInfo += '<div class="product-image-card-info-item">' +
+      '<div class="info-label">主要应用部位</div>' +
+      '<div class="info-value">' + esc(p.application_site) + '</div></div>';
+  }
+
+  var rightInfo = '';
+  if (p.packaging) {
+    rightInfo += '<div class="product-image-card-info-item">' +
+      '<div class="info-label">包装规格</div>' +
+      '<div class="info-value">' + esc(p.packaging) + '</div></div>';
+  }
+  if (p.notes) {
+    rightInfo += '<div class="product-image-card-info-item">' +
+      '<div class="info-label">备注</div>' +
+      '<div class="info-value">' + esc(p.notes) + '</div></div>';
+  }
+
+  var today = new Date();
+  var dateStr = today.getFullYear() + '/' + String(today.getMonth()+1).padStart(2,'0') + '/' + String(today.getDate()).padStart(2,'0');
+
+  // Build full card HTML
+  container.innerHTML =
+    '<div class="product-image-card">' +
+      '<div class="product-image-card-header">' +
+        '<div class="brand-row">' +
+          '<span class="brand-name">中科润美</span>' +
+        '</div>' +
+        '<div class="header-accent"></div>' +
+        '<div class="product-name">' + esc(p.product_cn) + '</div>' +
+        (p.series ? '<span class="series-badge">' + esc(p.series) + '</span>' : '') +
+      '</div>' +
+      '<div class="product-image-card-body">' +
+        (featuresHtml ? '<div class="product-image-card-section">' +
+          '<div class="product-image-card-section-title"><span class="accent-bar"></span>产品特性</div>' +
+          featuresHtml + '</div>' : '') +
+        (paramTilesHtml ? '<div class="product-image-card-section">' +
+          '<div class="product-image-card-section-title"><span class="accent-bar"></span>关键技术参数</div>' +
+          '<div class="product-image-card-params">' + paramTilesHtml + '</div></div>' : '') +
+        ((leftInfo || rightInfo) ? '<div class="product-image-card-section">' +
+          '<div class="product-image-card-section-title"><span class="accent-bar"></span>应用信息</div>' +
+          '<div class="product-image-card-info-grid">' +
+            '<div>' + leftInfo + '</div>' +
+            '<div>' + rightInfo + '</div>' +
+          '</div></div>' : '') +
+      '</div>' +
+      '<div class="product-image-card-footer">' +
+        '<span>数据来源：中科润美</span>' +
+        '<span>生成日期：' + dateStr + '</span>' +
+      '</div>' +
+    '</div>';
+
+  return container.querySelector('.product-image-card');
+}
+
+/**
+ * Generate and download product info card as PNG image.
+ */
+function downloadProductImage(productName) {
+  var p = RUNMEI_CATALOG.find(function(x) { return x.product_cn === productName; });
+  if (!p) { showToast('未找到产品数据', 3000); return; }
+
+  // Show loading overlay
+  document.getElementById('image-generate-overlay').style.display = 'flex';
+
+  ensureHtml2Canvas(function(html2canvas) {
+    // Small delay for layout to settle
+    setTimeout(function() {
+      try {
+        var card = generateProductImageCard(p);
+
+        html2canvas(card, {
+          scale: 2,
+          useCORS: true,
+          backgroundColor: '#ffffff',
+          logging: false,
+          width: 680,
+          windowWidth: 680
+        }).then(function(canvas) {
+          document.getElementById('image-generate-overlay').style.display = 'none';
+
+          var filename = (p.product_cn || 'product').replace(/[\/\\?%*:|"<>]/g, '_') + '_产品数据卡.jpg';
+
+          if (window.AndroidBridge && AndroidBridge.saveBase64Image) {
+            // Android WebView: use native bridge to save image directly to Downloads folder
+            var dataUrl = canvas.toDataURL('image/jpeg', 0.90);
+            var saved = AndroidBridge.saveBase64Image(dataUrl, filename);
+            if (saved) {
+              showToast('产品数据卡已保存到下载目录', 3000);
+            } else {
+              // Fallback: try openInBrowser
+              if (AndroidBridge.openInBrowser) {
+                AndroidBridge.openInBrowser(dataUrl);
+              }
+              showToast('产品数据卡已生成', 2000);
+            }
+          } else {
+            // Browser download
+            canvas.toBlob(function(blob) {
+              var url = URL.createObjectURL(blob);
+              var a = document.createElement('a');
+              a.href = url;
+              a.download = filename.replace('.jpg', '.png');
+              document.body.appendChild(a);
+              a.click();
+              document.body.removeChild(a);
+              URL.revokeObjectURL(url);
+              showToast('产品数据卡已生成', 2000);
+            }, 'image/png');
+          }
+
+        }).catch(function(err) {
+          document.getElementById('image-generate-overlay').style.display = 'none';
+          showToast('图片生成失败，请重试', 3000);
+          console.error('html2canvas error:', err);
+        });
+      } catch (err) {
+        document.getElementById('image-generate-overlay').style.display = 'none';
+        showToast('图片生成出错', 3000);
+        console.error(err);
+      }
+    }, 150);
+  });
+}
+
+function showRunmeiDetail(productName) {
+  var p = RUNMEI_CATALOG.find(function(x) { return x.product_cn === productName; });
+  if (!p) return;
+
+  var paramRows = '';
+  getParamConfig().forEach(function(item) {
+    if (p[item.key] && p[item.key] !== '-' && p[item.key] !== '') {
+      paramRows += '<tr><td>' + item.label + '</td><td>' + (item.standard || '') + '</td><td>' + esc(p[item.key]) + '</td></tr>';
+    }
+  });
+
+  var paramTableHTML = '';
+  if (paramRows) {
+    paramTableHTML = '<div class="runmei-detail-section"><h3>技术参数</h3><table class="param-table">' +
+      '<thead><tr style="border-bottom: 2px solid var(--primary-surface); font-weight: bold; color: var(--primary);"><td style="padding: 8px 12px; font-size:12px;">分析项目</td><td style="padding: 8px 12px; font-size:12px;">试验方法</td><td style="padding: 8px 12px; font-size:12px;">典型数据</td></tr></thead>' +
+      '<tbody>' + paramRows + '</tbody></table></div>';
+  }
+
+  var imgBtn = '<a class="download-btn" onclick="downloadProductImage(\'' + escAttr(p.product_cn) + '\')">' +
+    '<svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M19 12v7H5v-7H3v7c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zm-6 .67l2.59-2.58L17 11.5l-5 5-5-5 1.41-1.41L11 12.67V3h2v9.67z"/></svg>' +
+    '生成产品数据卡</a>';
+
+  var tdsBtn = '';
+  if (p.tds_file) {
+    tdsBtn = '<a class="download-btn" onclick="downloadPDF(\'' + escAttr(p.tds_file) + '\')">' +
+      '<svg viewBox="0 0 24 24"><path d="M19 12v7H5v-7H3v7c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zm-6 .67l2.59-2.58L17 11.5l-5 5-5-5 1.41-1.41L11 12.67V3h2v9.67z"/></svg>' +
+      '下载 TDS</a>';
+  }
+
+  var msdsBtn = '';
+  if (p.msds_file) {
+    msdsBtn = '<a class="download-btn" onclick="downloadPDF(\'' + escAttr(p.msds_file) + '\')">' +
+      '<svg viewBox="0 0 24 24"><path d="M19 12v7H5v-7H3v7c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zm-6 .67l2.59-2.58L17 11.5l-5 5-5-5 1.41-1.41L11 12.67V3h2v9.67z"/></svg>' +
+      '下载 MSDS</a>';
+  }
+
+  var downloadAreaHTML = '<div class="runmei-detail-section"><h3>产品资料</h3><div class="download-area">' + imgBtn + tdsBtn + msdsBtn + '</div></div>';
+
+  document.getElementById('runmei-detail-body').innerHTML =
+    '<div class="runmei-detail-header"><h2>' + esc(p.product_cn) + '</h2></div>' +
+    (p.series ? '<div style="margin-bottom:12px;"><span class="tag">' + esc(p.series) + '</span></div>' : '') +
+    (p.features ? '<div class="runmei-detail-section"><h3>产品特性</h3><p>' + esc(p.features).replace(/\n/g, '<br>') + '</p></div>' : '') +
+    (p.industry ? '<div class="runmei-detail-section"><h3>应用行业</h3><p>' + esc(p.industry) + '</p></div>' : '') +
+    (p.application_site ? '<div class="runmei-detail-section"><h3>主要应用部位</h3><p>' + esc(p.application_site) + '</p></div>' : '') +
+    paramTableHTML +
+    (p.packaging ? '<div class="runmei-detail-section"><h3>包装规格</h3><p>' + esc(p.packaging) + '</p></div>' : '') +
+    (p.notes ? '<div class="runmei-detail-section"><h3>备注</h3><p>' + esc(p.notes) + '</p></div>' : '') +
+    downloadAreaHTML;
+
+  document.getElementById('runmei-modal').style.display = 'flex';
+}
+
+function closeRunmeiDetail(e) {
+  if (e && e.target !== e.currentTarget) return;
+  document.getElementById('runmei-modal').style.display = 'none';
+}
+
+function copyRunmei(btn) {
+  var text = btn.getAttribute('data-runmei');
+  if (!text) return;
+
+  // 1) Android原生剪贴板（最可靠）
+  if (window.AndroidBridge && AndroidBridge.copyToClipboard) {
+    var ok = AndroidBridge.copyToClipboard(text);
+    if (ok) {
+      btn.textContent = '已复制';
+      setTimeout(function() { btn.textContent = '复制'; }, 1500);
+      return;
+    }
+  }
+
+  // 2) navigator.clipboard API（Promise必须catch）
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(function() {
+      btn.textContent = '已复制';
+      setTimeout(function() { btn.textContent = '复制'; }, 1500);
+    }).catch(function() {
+      copyRunmeiFallback(text, btn);
+    });
+    return;
+  }
+
+  // 3) execCommand 兜底
+  copyRunmeiFallback(text, btn);
+}
+
+function copyRunmeiFallback(text, btn) {
+  try {
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    btn.textContent = '已复制';
+    setTimeout(function() { btn.textContent = '复制'; }, 1500);
+  } catch(e) {
+    btn.textContent = '复制失败';
+    setTimeout(function() { btn.textContent = '复制'; }, 2000);
+  }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  // Load data then check for updates
+  loadData().then(function() { checkForUpdates(); });
+
+  // Event delegation for result cards (copy button + detail/TDS button + viscosity selector + expand/collapse)
+  document.getElementById('quick-results').addEventListener('click', function(e) {
+    // Copy button
+    var btn = e.target.closest('.copy-btn');
+    if (btn) {
+      e.stopPropagation();
+      copyRunmei(btn);
+      return;
+    }
+    // Viscosity selection button
+    var visBtn = e.target.closest('.vis-btn');
+    if (visBtn) {
+      e.stopPropagation();
+      var vis = visBtn.getAttribute('data-vis');
+      var template = visBtn.getAttribute('data-runmei-template');
+      var targetName = template.replace(/(\d+(?:\/\d+)+)/, vis);
+      var foundProduct = RUNMEI_CATALOG.find(function(rp) {
+        var n_rp = rp.product_cn.toLowerCase().replace(/\s+/g, '');
+        var n_tgt = targetName.toLowerCase().replace(/\s+/g, '');
+        return n_rp === n_tgt || n_rp.indexOf(n_tgt) >= 0 || n_tgt.indexOf(n_rp) >= 0;
+      });
+      if (foundProduct) {
+        showRunmeiDetail(foundProduct.product_cn);
+      } else {
+        var matchedFallback = RUNMEI_CATALOG.find(function(rp) {
+          return rp.product_cn.indexOf(vis) >= 0 && (
+            template.indexOf(rp.series) >= 0 || rp.series.indexOf(template.slice(0, 5)) >= 0
+          );
+        });
+        if (matchedFallback) {
+          showRunmeiDetail(matchedFallback.product_cn);
+        } else {
+          showRunmeiDetail(targetName);
+        }
+      }
+      return;
+    }
+    // Detail button
+    var dbtn = e.target.closest('.detail-btn');
+    if (dbtn) {
+      e.stopPropagation();
+      var runmei = dbtn.getAttribute('data-runmei');
+      var visMatch = runmei.match(/(\d+(?:\/\d+)+)/);
+      if (visMatch) {
+        var card = dbtn.closest('.result-card');
+        var selector = card.querySelector('.viscosity-selector');
+        if (!selector) {
+          var visList = visMatch[1].split('/');
+          var html = '<div class="viscosity-selector active">';
+          html += '<div class="vis-selector-title">请选择需要查看的粘度牌号：</div>';
+          html += '<div class="vis-btn-group">';
+          visList.forEach(function(v) {
+            html += '<button class="vis-btn" data-vis="' + v + '" data-runmei-template="' + escAttr(runmei) + '">' + v + '</button>';
+          });
+          html += '</div></div>';
+          var runmeiBox = card.querySelector('.runmei-box');
+          runmeiBox.insertAdjacentHTML('afterend', html);
+        } else {
+          selector.classList.toggle('active');
+        }
+      } else {
+        var exactProduct = RUNMEI_CATALOG.find(function(rp) {
+          return rp.product_cn.toLowerCase() === runmei.toLowerCase();
+        });
+        if (exactProduct) {
+          showRunmeiDetail(exactProduct.product_cn);
+        } else {
+          showRunmeiDetail(runmei);
+        }
+      }
+      return;
+    }
+    // Card expand/collapse
+    var card = e.target.closest('.result-card');
+    if (card) {
+      card.classList.toggle('expanded');
+    }
+  });
+});
+
+// ============== VISCOSITY CALCULATOR (ASTM D2270) ==============
+
+// ASTM D2270 Table 1: L and H values for Y (kv100) from 2.0 to 70.0
+
+function log10(x) { return Math.log(x) / Math.LN10; }
+
+function calcLH(Y) {
+  if (Y < 2) throw new Error('100℃运动粘度必须≥ 2 mm²/s');
+  var H, L;
+  if (Y < 4) {
+    H = 0.827 * Y * Y + 1.632 * Y - 0.181;
+    L = H + (0.3094 * Y * Y + 0.182 * Y);
+  } else if (Y < 6.1) {
+    H = -2.6758 * Y * Y + 96.671 * Y - 269.664 * Math.sqrt(Y) + 215.025;
+    L = H + (-7.1955 * Y * Y + 241.992 * Y - 725.478 * Math.sqrt(Y) + 603.88);
+  } else if (Y < 7.2) {
+    H = 2.32 * Math.pow(Y, 1.5626);
+    L = H + (2.838 * Y * Y - 27.35 * Y + 81.83);
+  } else if (Y < 12.4) {
+    H = 0.1922 * Y * Y + 8.25 * Y - 18.728;
+    L = H + (0.5463 * Y * Y + 2.442 * Y - 14.16);
+  } else if (Y <= 70) {
+    H = 1795.2 / (Y * Y) + 0.1818 * Y * Y + 10.357 * Y - 54.547;
+    L = H + (0.6995 * Y * Y - 1.19 * Y + 7.6);
+  } else {
+    H = 0.1684 * Y * Y + 11.85 * Y - 97;
+    L = 0.8353 * Y * Y + 14.67 * Y - 216;
+  }
+  return { L: L, H: H };
+}
+
+function computeVI(U, Y) {
+  if (U <= 0 || Y <= 0) throw new Error('运动粘度必须大于 0');
+  var lh = calcLH(Y);
+  if (U > lh.L) throw new Error('kv40 超出参考范围 (kv40 > L)');
+  var VI = (lh.L - U) / (lh.L - lh.H) * 100;
+  if (VI > 100) {
+    var N = log10(lh.H / U) / log10(Y);
+    VI = (Math.pow(10, N) - 1) / 0.00715 + 100;
+  }
+  return VI;
+}
+
+function computeKV40(Y, VI) {
+  if (Y <= 0) throw new Error('100℃运动粘度必须大于 0');
+  var lh = calcLH(Y);
+  if (VI <= 100) {
+    return lh.L - VI * (lh.L - lh.H) / 100;
+  } else {
+    var N = log10(1 + 0.00715 * (VI - 100));
+    return lh.H / Math.pow(10, N * log10(Y));
+  }
+}
+
+function computeKV100(U, targetVI) {
+  if (U <= 0) throw new Error('40℃运动粘度必须大于 0');
+  var lo = 2.0, hi = 200.0;
+  for (var iter = 0; iter < 200; iter++) {
+    var mid = (lo + hi) / 2;
+    var lh = calcLH(mid);
+    var calcVI = (lh.L - U) / (lh.L - lh.H) * 100;
+    if (calcVI > 100) calcVI = (Math.pow(10, log10(lh.H / U) / log10(mid)) - 1) / 0.00715 + 100;
+    if (Math.abs(calcVI - targetVI) < 1e-6) return mid;
+    if (calcVI < targetVI) lo = mid; else hi = mid;
+  }
+  return (lo + hi) / 2;
+}
+
+function countFilled() {
+  var n = 0;
+  for (var i = 0; i < arguments.length; i++) { if (!isNaN(arguments[i]) && arguments[i] !== '') n++; }
+  return n;
+}
+
+function clearCalcStyles() {
+  document.getElementById('calc-kv40').classList.remove('calc-highlight');
+  document.getElementById('calc-kv100').classList.remove('calc-highlight');
+  document.getElementById('calc-vi').classList.remove('calc-highlight');
+  document.getElementById('calc-error').textContent = '';
+}
+
+var _calcBusy = false;
+var _lastComputed = null;
+
+function calcViscosity(changed) {
+  if (_calcBusy) return;
+  var el40 = document.getElementById('calc-kv40');
+  var el100 = document.getElementById('calc-kv100');
+  var elVI = document.getElementById('calc-vi');
+
+  var kv40 = parseFloat(el40.value);
+  var kv100 = parseFloat(el100.value);
+  var vi = parseFloat(elVI.value);
+
+  clearCalcStyles();
+
+  var filled = countFilled(kv40, kv100, vi);
+  if (filled < 2) { _lastComputed = null; return; }
+
+  // 三个字段都有值时，如果用户改了输入字段，重算输出字段
+  if (filled === 3) {
+    if (_lastComputed && changed && changed !== _lastComputed) {
+      _calcBusy = true;
+      try {
+        if (_lastComputed === 'kv40') {
+          el40.value = computeKV40(kv100, vi).toFixed(2);
+          el40.classList.add('calc-highlight');
+        } else if (_lastComputed === 'kv100') {
+          el100.value = computeKV100(kv40, vi).toFixed(2);
+          el100.classList.add('calc-highlight');
+        } else if (_lastComputed === 'vi') {
+          elVI.value = Math.round(computeVI(kv40, kv100));
+          elVI.classList.add('calc-highlight');
+        }
+      } catch (e) {
+        document.getElementById('calc-error').textContent = e.message;
+      }
+      _calcBusy = false;
+    }
+    return;
+  }
+
+  _calcBusy = true;
+  try {
+    if (isNaN(kv40)) {
+      kv40 = computeKV40(kv100, vi);
+      el40.value = kv40.toFixed(2);
+      el40.classList.add('calc-highlight');
+      _lastComputed = 'kv40';
+    } else if (isNaN(kv100)) {
+      kv100 = computeKV100(kv40, vi);
+      el100.value = kv100.toFixed(2);
+      el100.classList.add('calc-highlight');
+      _lastComputed = 'kv100';
+    } else if (isNaN(vi)) {
+      vi = computeVI(kv40, kv100);
+      elVI.value = Math.round(vi);
+      elVI.classList.add('calc-highlight');
+      _lastComputed = 'vi';
+    }
+  } catch (e) {
+    document.getElementById('calc-error').textContent = e.message;
+  }
+  _calcBusy = false;
+}
+
+function clearCalc() {
+  document.getElementById('calc-kv40').value = '';
+  document.getElementById('calc-kv100').value = '';
+  document.getElementById('calc-vi').value = '';
+  clearCalcStyles();
+  _lastComputed = null;
+}
+
+// ============== BLEND VISCOSITY CALCULATOR (chinalubricant.com 公式) ==============
+// 基于 40°C 运动粘度数据，K=4.1 为 40°C 温度常数
+// 公式来源：http://www.chinalubricant.com/tools/mixture.html
+
+function calcBlendViscosity(vA, pctA, vB) {
+  var K = 4.1; // 40°C 常数
+  var x1 = pctA / 100;
+  return Math.round(100 * (Math.exp(Math.log(vB + K) * Math.exp(x1 * Math.log(Math.log(vA + K) / Math.log(vB + K)))) - K)) / 100;
+}
+
+function calcBlendRatio(vA, vB, target) {
+  // 直接公式法（chinalubricant.com calculmix），非二分法
+  var K = 4.1;
+  var a = Math.log(target + K);
+  var b = Math.log(vA + K);
+  var c = Math.log(vB + K);
+  var pctA = Math.round(10000 * (Math.log(a / c) / Math.log(b / c))) / 100;
+  if (pctA < 0 || pctA > 100) return NaN;
+  return pctA;
+}
+
+function switchBlendMode(mode) {
+  document.getElementById('mode-a-label').classList.toggle('active', mode === 'a');
+  document.getElementById('mode-b-label').classList.toggle('active', mode === 'b');
+  document.getElementById('blend-mode-a').style.display = mode === 'a' ? '' : 'none';
+  document.getElementById('blend-mode-b').style.display = mode === 'b' ? '' : 'none';
+}
+
+function calcBlendModeA() {
+  var vA = parseFloat(document.getElementById('blend-va').value);
+  var pA = parseFloat(document.getElementById('blend-pa').value);
+  var vB = parseFloat(document.getElementById('blend-vb').value);
+  if (isNaN(vA) || isNaN(pA) || isNaN(vB)) return;
+  var pB = 100 - pA;
+  document.getElementById('blend-pb-result').textContent = pB.toFixed(1) + '%';
+  var blend = calcBlendViscosity(vA, pA, vB);
+  if (isFinite(blend)) {
+    document.getElementById('blend-result-a').textContent = blend.toFixed(2) + ' mm²/s';
+  }
+}
+
+function calcBlendModeB() {
+  var vA = parseFloat(document.getElementById('blend-b-va').value);
+  var vB = parseFloat(document.getElementById('blend-b-vb').value);
+  var target = parseFloat(document.getElementById('blend-b-target').value);
+  if (isNaN(vA) || isNaN(vB) || isNaN(target)) return;
+  var ratio = calcBlendRatio(vA, vB, target);
+  if (isFinite(ratio)) {
+    document.getElementById('blend-result-b-a').textContent = ratio.toFixed(1) + '%';
+    document.getElementById('blend-result-b-b').textContent = (100 - ratio).toFixed(1) + '%';
+  } else {
+    document.getElementById('blend-result-b-a').textContent = '— 目标超出范围';
+    document.getElementById('blend-result-b-b').textContent = '—';
+  }
+}
+
+// ============== VISCOSITY-TEMPERATURE CALCULATOR (ASTM D341 Walther) ==============
+
+function calcKVT() {
+  var t1 = parseFloat(document.getElementById('kvt-t1').value);
+  var v1 = parseFloat(document.getElementById('kvt-v1').value);
+  var t2 = parseFloat(document.getElementById('kvt-t2').value);
+  var v2 = parseFloat(document.getElementById('kvt-v2').value);
+  var t3 = parseFloat(document.getElementById('kvt-t3').value);
+  var resultEl = document.getElementById('kvt-result');
+  var resultT = document.getElementById('kvt-result-t');
+  var resultV = document.getElementById('kvt-result-v');
+
+  if (isNaN(t1) || isNaN(v1) || isNaN(t2) || isNaN(v2) || isNaN(t3)) {
+    resultEl.style.display = 'none';
+    return;
+  }
+
+  // Walther equation: log(log(v + 0.6)) = A - B * log(T), T in Kelvin
+  var a = Math.log(Math.log(v1 + 0.6));
+  var b = Math.log(Math.log(v2 + 0.6));
+  b = (a - b) / (Math.log(t2 + 273) - Math.log(t1 + 273));
+  a = a + b * Math.log(t1 + 273);
+  var v3 = Math.exp(Math.exp(a - b * Math.log(t3 + 273))) - 0.6;
+
+  if (isFinite(v3) && v3 > 0) {
+    resultT.textContent = t3;
+    resultV.textContent = v3.toFixed(2);
+    resultEl.style.display = 'block';
+  } else {
+    resultEl.style.display = 'none';
+  }
+}
+
+// ====== App version update detection ======
+function compareVersion(a, b) {
+  var pa = a.split('.').map(Number);
+  var pb = b.split('.').map(Number);
+  for (var i = 0; i < 3; i++) {
+    var na = pa[i] || 0, nb = pb[i] || 0;
+    if (na > nb) return 1;
+    if (na < nb) return -1;
+  }
+  return 0;
+}
+
+function checkAppUpdate(json) {
+  if (!json || !json.appUpdate) return;
+  if (APP_SKIP_VERSION === json.appUpdate.latestVersion) return;
+  if (!APP_VERSION) return;
+  if (compareVersion(APP_VERSION, json.appUpdate.latestVersion) >= 0) return;
+
+  // 24h cooldown: only suppress same-version repeated notifications
+  var lastShown = localStorage.getItem('app_update_last_shown');
+  var lastVer = localStorage.getItem('app_update_last_ver');
+  if (lastShown && lastVer === json.appUpdate.latestVersion) {
+    if (Date.now() - parseInt(lastShown) < 24 * 60 * 60 * 1000) return;
+  }
+  localStorage.setItem('app_update_last_shown', String(Date.now()));
+  localStorage.setItem('app_update_last_ver', json.appUpdate.latestVersion);
+
+  document.getElementById('update-version').textContent = json.appUpdate.latestVersion;
+  document.getElementById('update-notes').textContent = json.appUpdate.updateNotes || '';
+  document.getElementById('update-modal').classList.add('show');
+}
+
+function skipUpdate() {
+  var ver = document.getElementById('update-version').textContent;
+  localStorage.setItem('app_skip_version', ver);
+  APP_SKIP_VERSION = ver;
+  localStorage.removeItem('app_update_last_shown');
+  localStorage.removeItem('app_update_last_ver');
+  document.getElementById('update-modal').classList.remove('show');
+}
+
+function showToast(msg, duration) {
+  var el = document.getElementById('toast');
+  if (!el) return;
+  el.textContent = msg;
+  el.classList.add('show');
+  setTimeout(function(){ el.classList.remove('show'); }, duration || 3000);
+}
+
+function doUpdate() {
+  var url = '';
+  var cached = localStorage.getItem('oil_pm_data');
+  if (cached) {
+    try {
+      var json = JSON.parse(cached);
+      if (json.appUpdate && json.appUpdate.apkUrl) url = json.appUpdate.apkUrl;
+    } catch(e) {}
+  }
+  if (!url && typeof EMBEDDED_DATA !== 'undefined' && EMBEDDED_DATA.appUpdate && EMBEDDED_DATA.appUpdate.apkUrl) {
+    url = EMBEDDED_DATA.appUpdate.apkUrl;
+  }
+  if (!url) {
+    showToast('无法获取下载地址，请检查网络');
+    return;
+  }
+
+  if (window.AndroidBridge && AndroidBridge.downloadApk) {
+    var ok = AndroidBridge.downloadApk(url, 'RunmeiMatching.apk');
+    if (ok) {
+      showToast('下载已开始，请在通知栏查看进度', 4000);
+      document.getElementById('update-modal').classList.remove('show');
+    } else {
+      document.getElementById('manual-download-link').href = url;
+      document.getElementById('manual-download-link').textContent = url;
+      document.getElementById('manual-download-area').style.display = 'block';
+      document.getElementById('update-btn-go').textContent = '重试';
+      showToast('自动下载失败，请点击下方链接手动下载', 5000);
+    }
+  } else {
+    window.location.href = url;
+    document.getElementById('update-modal').classList.remove('show');
+  }
+}
+// ====== Version UI / Changelog ======
+var VERSION_HISTORY = [];
+var RELEASE_PAGES = {};
+var LATEST_APP_UPDATE = null;
+
+function initVersionUI() {
+  if (typeof EMBEDDED_DATA === 'undefined') return;
+  updateVersionUI(EMBEDDED_DATA);
+}
+
+function updateVersionUI(json) {
+  if (!json) return;
+  if (json.versionHistory) VERSION_HISTORY = json.versionHistory;
+  if (json.releasePages) RELEASE_PAGES = json.releasePages;
+  if (json.appUpdate) LATEST_APP_UPDATE = json.appUpdate;
+
+  var badge = document.getElementById('version-badge');
+  if (badge) {
+    if (APP_VERSION) {
+      badge.textContent = 'v' + APP_VERSION;
+      badge.style.display = 'inline';
+    } else if (json.appUpdate && json.appUpdate.latestVersion) {
+      badge.textContent = 'v' + json.appUpdate.latestVersion;
+      badge.style.display = 'inline';
+    } else {
+      badge.style.display = 'none';
+    }
+  }
+}
+
+function openReleasePage(name) {
+  var url = RELEASE_PAGES[name];
+  if (!url) return;
+  if (window.AndroidBridge && AndroidBridge.openInBrowser) {
+    AndroidBridge.openInBrowser(url);
+  } else {
+    window.open(url, '_blank');
+  }
+}
+
+function showChangelog() {
+  var list = document.getElementById('changelog-list');
+  if (!list) return;
+
+  // Show latest version info
+  var ver = LATEST_APP_UPDATE;
+  if (ver && ver.latestVersion) {
+    list.innerHTML = '<div class="changelog-item">' +
+      '<div class="changelog-version">v' + ver.latestVersion + '</div>' +
+      '<div class="changelog-notes">' + (ver.updateNotes || '') + '</div>' +
+      '</div>';
+  } else {
+    list.innerHTML = '<div class="changelog-empty">暂无更新记录</div>';
+  }
+
+  // Show download buttons for release pages
+  var dl = document.getElementById('changelog-download');
+  var btns = document.getElementById('changelog-download-buttons');
+  if (dl && btns) {
+    var keys = Object.keys(RELEASE_PAGES);
+    if (keys.length > 0) {
+      dl.style.display = 'block';
+      var html = '';
+      for (var i = 0; i < keys.length; i++) {
+        var label = keys[i];
+        html += '<button class="changelog-download-btn" data-rel="' + label.replace(/"/g, '&quot;') + '">' + label + '</button>';
+      }
+      btns.innerHTML = html;
+      // Bind click events using data-rel attribute
+      var btns_list = btns.querySelectorAll('.changelog-download-btn');
+      for (var j = 0; j < btns_list.length; j++) {
+        btns_list[j].addEventListener('click', function(e) {
+          var name = this.getAttribute('data-rel');
+          openReleasePage(name);
+        });
+      }
+    } else {
+      dl.style.display = 'none';
+    }
+  }
+
+  document.getElementById('changelog-modal').classList.add('show');
+}
+
+function hideChangelog() {
+  document.getElementById('changelog-modal').classList.remove('show');
+}
+
+// Init version UI on page load
+initVersionUI();
+
+</script>
+
+<!-- ====== Update modal ====== -->
+<div class="update-modal" id="update-modal">
+  <div class="update-modal-content">
+    <h2>发现新版本 v<span id="update-version"></span></h2>
+    <div class="update-notes-box" id="update-notes"></div>
+    <div class="update-actions">
+      <button class="update-btn-skip" onclick="skipUpdate()">跳过此版本</button>
+      <button class="update-btn-go" id="update-btn-go" onclick="doUpdate()">立即更新</button>
+    </div>
+    <div class="manual-download-area" id="manual-download-area">
+      <div class="manual-download-label">自动下载失败，请点击链接手动下载：</div>
+      <a id="manual-download-link" href="#" target="_blank" rel="noopener" class="manual-download-link"></a>
+    </div>
+  </div>
+</div>
+
+<!-- ====== Changelog modal ====== -->
+<div class="changelog-modal" id="changelog-modal" onclick="if(event.target===this)hideChangelog()">
+  <div class="changelog-modal-content">
+    <span class="changelog-modal-close" onclick="hideChangelog()">&times;</span>
+    <h2>版本更新历史</h2>
+    <div id="changelog-list"></div>
+    <div class="changelog-download" id="changelog-download" style="display:none">
+      <div class="changelog-download-label">下载最新 APK</div>
+      <div id="changelog-download-buttons"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Hidden container for product image card generation -->
+<div class="product-image-card-container" id="product-image-card-container"></div>
+
+<!-- Loading overlay for image generation -->
+<div class="image-generate-overlay" id="image-generate-overlay">
+  <div class="image-generate-spinner">
+    <svg class="spinner-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1a5276" stroke-width="2.5">
+      <circle cx="12" cy="12" r="10" stroke-dasharray="31.4" stroke-dashoffset="10" stroke-linecap="round"/>
+    </svg>
+    正在生成产品数据卡...
+  </div>
+</div>
+
+<!-- Product detail modal (Moved to body level to prevent display:none nesting bugs) -->
+<div class="runmei-modal" id="runmei-modal" style="display:none" onclick="closeRunmeiDetail(event)">
+  <div class="runmei-modal-content">
+    <span class="runmei-modal-close" onclick="closeRunmeiDetail()">&times;</span>
+    <div id="runmei-detail-body"></div>
+  </div>
+</div>
+</body>
+</html>
