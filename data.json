@@ -1,8 +1,8 @@
 {
-  "version": "2026-06-12-v1",
-  "updatedAt": "2026-06-12",
+  "version": "2026-07-01-v1",
+  "updatedAt": "2026-07-01",
   "versionNote": "请前往云之家或网盘下载最新版进行使用 2026.06.12",
-  "totalProducts": 326,
+  "totalProducts": 328,
   "products": [
     {
       "brand": "壳牌/Shell",
@@ -236,7 +236,7 @@
       "brand": "壳牌/Shell",
       "category": "轴承油",
       "product_cn": "壳牌万利得S4 B (Shell Morlina S4 B) 220",
-      "product_en": "Shell Morlina S4 B",
+      "product_en": "Shell Morlina S4 B 220",
       "viscosity": "VG 220",
       "source": "",
       "runmei": "",
@@ -1715,7 +1715,19 @@
       "product_en": "Mobil Vacuoline 533",
       "viscosity": "220",
       "source": "",
-      "runmei": "Lubemater FB 220油膜轴承油",
+      "runmei": "Lubemater FB 220 油膜轴承油",
+      "application": "",
+      "compSpecs": {},
+      "runmeiSpecs": {}
+    },
+    {
+      "brand": "美孚/Mobil",
+      "category": "轴承油",
+      "product_cn": "美孚威格力137",
+      "product_en": "Mobil Vacuoline 137",
+      "viscosity": "320",
+      "source": "",
+      "runmei": "Lubemater FB 320  油膜轴承油",
       "application": "",
       "compSpecs": {},
       "runmeiSpecs": {}
@@ -3131,7 +3143,7 @@
       "product_en": "TOTAL DACNIS VS",
       "viscosity": "32 46 68 100 150",
       "source": "",
-      "runmei": "",
+      "runmei": "L-TSA 46 防锈汽轮机油",
       "application": "",
       "compSpecs": {},
       "runmeiSpecs": {}
@@ -3240,6 +3252,18 @@
       "viscosity": "46",
       "source": "",
       "runmei": "Clean 46 无灰抗磨液压油",
+      "application": "",
+      "compSpecs": {},
+      "runmeiSpecs": {}
+    },
+    {
+      "brand": "福斯",
+      "category": "齿轮油",
+      "product_cn": "CLP 320",
+      "product_en": "",
+      "viscosity": "320",
+      "source": "",
+      "runmei": "L-CKD 320 重负荷工业齿轮油",
       "application": "",
       "compSpecs": {},
       "runmeiSpecs": {}
@@ -5521,34 +5545,73 @@
       "foam": "10/0\n20/0\n10/0"
     },
     {
-      "series": "",
+      "series": "油膜轴承油",
       "product_cn": "Lubemater FB 100 油膜轴承油",
-      "packaging": "170",
+      "packaging": "170kg",
       "industry": "钢铁轧钢 油膜轴承",
       "application_site": "高速线材轧机循环油",
       "features": "优异的分水性能与抗磨性能",
       "notes": "",
       "appearance": "",
-      "kv40": "98.5",
+      "kv40": "98",
+      "kv100": "11.14",
       "vi": "98",
       "pour_point": "-24",
       "flash_point": "240",
-      "copper_corrosion": "1b"
+      "copper_corrosion": "1b",
+      "rust_a": "无锈",
+      "rust_b": "无锈",
+      "demulsibility_82": "15",
+      "demulsibility_82_detail": "＜0.025\n1.1\n84.5",
+      "foam": "10/0\n10/0\n10/0",
+      "density": "0.89",
+      "fzg": "12"
     },
     {
-      "series": "",
+      "series": "油膜轴承油",
       "product_cn": "Lubemater FB 220 油膜轴承油",
-      "packaging": "170",
+      "packaging": "170kg",
       "industry": "钢铁轧钢 油膜轴承",
       "application_site": "高速线材轧机循环油",
       "features": "优异的分水性能与抗磨性能",
       "notes": "",
       "appearance": "",
       "kv40": "218",
+      "kv100": "19.25",
       "vi": "99",
       "pour_point": "-15",
       "flash_point": "255",
-      "copper_corrosion": "1b"
+      "copper_corrosion": "1b",
+      "rust_a": "无锈",
+      "rust_b": "无锈",
+      "demulsibility_82": "15",
+      "demulsibility_82_detail": "＜0.025\n1.2\n84.0",
+      "foam": "10/0\n10/0\n10/0",
+      "density": "0.89",
+      "fzg": "12"
+    },
+    {
+      "series": "油膜轴承油",
+      "product_cn": "Lubemater FB 320 油膜轴承油",
+      "packaging": "170kg",
+      "industry": "",
+      "application_site": "",
+      "features": "",
+      "notes": "",
+      "appearance": "",
+      "kv40": "312",
+      "kv100": "14.6",
+      "vi": "100",
+      "pour_point": "-12",
+      "flash_point": "280",
+      "copper_corrosion": "1a",
+      "rust_a": "无锈",
+      "rust_b": "无锈",
+      "demulsibility_82": "15",
+      "demulsibility_82_detail": "＜0.025\n1.2\n84.0",
+      "foam": "10/0\n10/0\n10/0",
+      "density": "0.89",
+      "fzg": "12"
     }
   ],
   "paramConfig": [
@@ -5668,12 +5731,6 @@
       "standard": "NB/SH/T 0306-2013"
     }
   ],
-  "appUpdate": {
-    "latestVersion": "1.1.6",
-    "updateNotes": "1.修复产品数据卡功能：Android端直接保存到下载目录\n3.优化匹配后技术规格展示",
-    "apkUrl": "https://kaiz1995.github.io/Oil-Matching-Search/RunmeiMatching.apk",
-    "forceUpdate": true
-  },
   "versionHistory": [
     {
       "version": "1.0.1",
