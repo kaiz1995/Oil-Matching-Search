@@ -1,8 +1,8 @@
 {
-  "version": "2026-07-01-v1",
-  "updatedAt": "2026-07-01",
-  "versionNote": "请前往云之家或网盘下载最新版进行使用 2026.06.12",
-  "totalProducts": 328,
+  "version": "2026-07-08-v1",
+  "updatedAt": "2026-07-08",
+  "versionNote": "1.请前往云之家或网盘下载最新版进行使用 2026.06.12\n2.更新嘉实多部分产品 2026.07.08",
+  "totalProducts": 341,
   "products": [
     {
       "brand": "壳牌/Shell",
@@ -1357,6 +1357,78 @@
       "source": "",
       "runmei": "L-CKD 680 重负荷工业齿轮油",
       "application": "PAO",
+      "compSpecs": {},
+      "runmeiSpecs": {}
+    },
+    {
+      "brand": "嘉实多Castrol BP",
+      "category": "齿轮油",
+      "product_cn": "Castrol Alpha SP 100",
+      "product_en": "",
+      "viscosity": "100",
+      "source": "",
+      "runmei": "L-CKD 100 重负荷工业齿轮油",
+      "application": "",
+      "compSpecs": {},
+      "runmeiSpecs": {}
+    },
+    {
+      "brand": "嘉实多Castrol BP",
+      "category": "齿轮油",
+      "product_cn": "Castrol Alpha SP 150",
+      "product_en": "",
+      "viscosity": "150",
+      "source": "",
+      "runmei": "L-CKD 150 重负荷工业齿轮油",
+      "application": "",
+      "compSpecs": {},
+      "runmeiSpecs": {}
+    },
+    {
+      "brand": "嘉实多Castrol BP",
+      "category": "齿轮油",
+      "product_cn": "Castrol Alpha SP 220",
+      "product_en": "",
+      "viscosity": "220",
+      "source": "",
+      "runmei": "L-CKD 220 重负荷工业齿轮油",
+      "application": "",
+      "compSpecs": {},
+      "runmeiSpecs": {}
+    },
+    {
+      "brand": "嘉实多Castrol BP",
+      "category": "齿轮油",
+      "product_cn": "Castrol Alpha SP 320",
+      "product_en": "",
+      "viscosity": "320",
+      "source": "",
+      "runmei": "L-CKD 320 重负荷工业齿轮油",
+      "application": "",
+      "compSpecs": {},
+      "runmeiSpecs": {}
+    },
+    {
+      "brand": "嘉实多Castrol BP",
+      "category": "齿轮油",
+      "product_cn": "Castrol Alpha SP 460",
+      "product_en": "",
+      "viscosity": "460",
+      "source": "",
+      "runmei": "L-CKD 460 重负荷工业齿轮油",
+      "application": "",
+      "compSpecs": {},
+      "runmeiSpecs": {}
+    },
+    {
+      "brand": "嘉实多Castrol BP",
+      "category": "齿轮油",
+      "product_cn": "Castrol Alpha SP 680",
+      "product_en": "",
+      "viscosity": "680",
+      "source": "",
+      "runmei": "L-CKD 680 重负荷工业齿轮油",
+      "application": "",
       "compSpecs": {},
       "runmeiSpecs": {}
     },
@@ -3143,7 +3215,7 @@
       "product_en": "TOTAL DACNIS VS",
       "viscosity": "32 46 68 100 150",
       "source": "",
-      "runmei": "L-TSA 46 防锈汽轮机油",
+      "runmei": "Lubemater AIR S6046 空气压缩机油",
       "application": "",
       "compSpecs": {},
       "runmeiSpecs": {}
@@ -3233,7 +3305,7 @@
       "runmeiSpecs": {}
     },
     {
-      "brand": "嘉实多",
+      "brand": "嘉实多Castrol BP",
       "category": "齿轮油",
       "product_cn": "BP 高性能极压齿轮油",
       "product_en": "Castrol Alpha SP 220",
@@ -3245,7 +3317,7 @@
       "runmeiSpecs": {}
     },
     {
-      "brand": "嘉实多",
+      "brand": "嘉实多Castrol BP",
       "category": "液压油",
       "product_cn": "无锌抗磨液压油HLP-46",
       "product_en": "",
@@ -3264,6 +3336,90 @@
       "viscosity": "320",
       "source": "",
       "runmei": "L-CKD 320 重负荷工业齿轮油",
+      "application": "",
+      "compSpecs": {},
+      "runmeiSpecs": {}
+    },
+    {
+      "brand": "雪佛龙",
+      "category": "汽轮机油",
+      "product_cn": "RENOLIN,DT46",
+      "product_en": "",
+      "viscosity": "46",
+      "source": "",
+      "runmei": "L-TSA 46 防锈汽轮机油",
+      "application": "",
+      "compSpecs": {},
+      "runmeiSpecs": {}
+    },
+    {
+      "brand": "嘉实多Castrol BP",
+      "category": "汽轮机油",
+      "product_cn": "Castrol Perfecto X32",
+      "product_en": "",
+      "viscosity": "32",
+      "source": "",
+      "runmei": "L-TSA 32 汽轮机油",
+      "application": "",
+      "compSpecs": {},
+      "runmeiSpecs": {}
+    },
+    {
+      "brand": "嘉实多Castrol BP",
+      "category": "汽轮机油",
+      "product_cn": "Castrol Perfecto X46",
+      "product_en": "",
+      "viscosity": "46",
+      "source": "",
+      "runmei": "L-TSA 46 汽轮机油",
+      "application": "",
+      "compSpecs": {},
+      "runmeiSpecs": {}
+    },
+    {
+      "brand": "嘉实多Castrol BP",
+      "category": "汽轮机油",
+      "product_cn": "Castrol Perfecto X68",
+      "product_en": "",
+      "viscosity": "68",
+      "source": "",
+      "runmei": "L-TSA 68 汽轮机油",
+      "application": "",
+      "compSpecs": {},
+      "runmeiSpecs": {}
+    },
+    {
+      "brand": "嘉实多Castrol BP",
+      "category": "液压油",
+      "product_cn": "Castrol Hyspin AWS32",
+      "product_en": "",
+      "viscosity": "32",
+      "source": "",
+      "runmei": "L-HM 32 抗磨液压油",
+      "application": "",
+      "compSpecs": {},
+      "runmeiSpecs": {}
+    },
+    {
+      "brand": "嘉实多Castrol BP",
+      "category": "液压油",
+      "product_cn": "Castrol Hyspin AWS46",
+      "product_en": "",
+      "viscosity": "46",
+      "source": "",
+      "runmei": "L-HM 46 抗磨液压油",
+      "application": "",
+      "compSpecs": {},
+      "runmeiSpecs": {}
+    },
+    {
+      "brand": "嘉实多Castrol BP",
+      "category": "液压油",
+      "product_cn": "Castrol Hyspin AWS68",
+      "product_en": "",
+      "viscosity": "68",
+      "source": "",
+      "runmei": "L-HM 68 抗磨液压油",
       "application": "",
       "compSpecs": {},
       "runmeiSpecs": {}
